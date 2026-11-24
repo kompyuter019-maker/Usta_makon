@@ -268,3 +268,17 @@ function init(){
     try{ localStorage.removeItem(MK); }catch(e){}
     me = null; showAuth();
   });
+
+  $("q").addEventListener("input", function(e){state.q = e.target.value; render();});
+  $("region").addEventListener("change", function(e){state.region = e.target.value; render();});
+  $("chips").addEventListener("click", function(e){
+    var b = e.target.closest(".chip"); if(!b) return;
+    state.job = b.getAttribute("data-job"); renderChips(); render();
+  });
+
+  if(currentUser()) showApp(); else showAuth();
+}
+init();
+</script>
+</body>
+</html>
