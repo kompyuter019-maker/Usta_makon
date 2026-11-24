@@ -83,6 +83,20 @@ nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-to
 nav.tabs button{flex:1;background:none;border:0;border-radius:10px;padding:8px 4px;font-weight:700;font-size:12px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px}
 nav.tabs button b{font-size:20px;line-height:1}
 nav.tabs button[aria-current=page]{color:var(--link);background:var(--soft)}
+.chead{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.chead small{display:block;color:var(--muted);font-size:13px}
+.cnote{background:var(--sunbg);color:var(--sunink);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:14px;font-weight:600}
+.msgs{display:flex;flex-direction:column;gap:8px;padding:16px 0;max-height:52vh;overflow-y:auto}
+.bub{max-width:82%;padding:10px 12px;border-radius:14px;overflow-wrap:anywhere}
+.bub small{display:block;font-size:11px;opacity:.7;margin-top:3px}
+.bub.me{align-self:flex-end;background:var(--cobalt);color:#fff;border-bottom-right-radius:4px}
+.bub.he{align-self:flex-start;background:var(--soft);border-bottom-left-radius:4px}
+.cform{display:flex;gap:8px}
+.cform .btn{flex:none}
+.inb{display:flex;gap:14px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:16px 0;color:var(--ink)}
+.inb .mono{width:44px;height:44px;font-size:18px}
+.inb span{display:block;color:var(--muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inb em{font-style:normal;color:var(--muted);font-size:12px}
 </style>
 </head>
 <body>
@@ -142,11 +156,13 @@ nav.tabs button[aria-current=page]{color:var(--link);background:var(--soft)}
       <div class="note" id="note" hidden>Siz usta sifatida roʻyxatdan oʻtgansiz. Profilingiz mijozlarga koʻrinadi.</div>
     </div>
     <div id="vMe" hidden></div>
+    <div id="vChat" hidden></div>
     <div class="count" id="count"></div>
     <div class="list" id="list"></div>
   </main>
   <nav class="tabs" aria-label="Boʻlimlar">
     <button type="button" data-tab="home"><b>⌕</b>Ustalar</button>
+    <button type="button" data-tab="chat"><b>✉</b>Xabarlar</button>
     <button type="button" data-tab="saved"><b>★</b>Saqlanganlar</button>
     <button type="button" data-tab="me"><b>☺</b>Profil</button>
   </nav>
@@ -236,16 +252,18 @@ function showApp(){
 function setTab(t){
   state.tab=t;
   var first=me.name.split(" ")[0];
-  $("title").textContent=t==="home"?"Usta toping":t==="saved"?"Saqlangan ustalar":"Profilim";
-  $("hello").textContent=t==="home"?"Salom, "+first+". Kerakli ustani tanlang.":t==="saved"?"Keyinroq bogʻlanish uchun belgilaganlaringiz.":first+" · "+(me.role==="usta"?"usta":"mijoz");
+  $("title").textContent=t==="home"?"Usta toping":t==="saved"?"Saqlangan ustalar":t==="chat"?"Xabarlar":"Profilim";
+  $("hello").textContent=t==="home"?"Salom, "+first+". Kerakli ustani tanlang.":t==="saved"?"Keyinroq bogʻlanish uchun belgilaganlaringiz.":t==="chat"?"Ustalar va mijozlar bilan yozishmalar.":first+" · "+(me.role==="usta"?"usta":"mijoz");
   $("vHome").hidden=t!=="home";
   $("vMe").hidden=t!=="me";
-  $("list").hidden=t==="me";
-  $("count").hidden=t==="me";
+  var other=t==="me"||t==="chat";
+  $("vChat").hidden=t!=="chat";
+  $("list").hidden=other;
+  $("count").hidden=other;
   document.querySelectorAll("nav.tabs button").forEach(function(b){
     if(b.getAttribute("data-tab")===t)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
   });
-  if(t==="me")renderMe();else render();
+  if(t==="me")renderMe();else if(t==="chat")renderChat();else render();
   window.scrollTo(0,0);
 }
 function renderChips(){
@@ -287,13 +305,72 @@ function render(){
     var tg=m.tg?'<a class="btn alt" target="_blank" rel="noopener" href="https://t.me/'+esc(m.tg.replace("@",""))+'">Telegram</a>':"";
     var rate=m.rating?'<span class="rate">★ '+m.rating.toFixed(1)+'</span>':'<span class="rate new">Yangi</span>';
     var acts=own?'<div class="mine">Bu sizning profilingiz</div>'
-      :'<div class="acts"><a class="btn" href="tel:'+esc(m.phone)+'">Qoʻngʻiroq qilish</a>'+tg+'</div>';
+      :'<div class="acts"><a class="btn" href="tel:'+esc(m.phone)+'">Qoʻngʻiroq qilish</a><button type="button" class="btn alt" data-msg="'+esc(key)+'">Xabar</button>'+tg+'</div>';
     return '<article class="row"><div class="head"><div class="mono" aria-hidden="true">'+esc(m.name.charAt(0).toUpperCase())+'</div>'+
       '<div class="who"><h3 class="name">'+esc(m.name)+'</h3><p class="job">'+esc(m.job)+'</p></div>'+rate+
       '<button type="button" class="fav" data-fav="'+esc(key)+'" aria-pressed="'+on+'" aria-label="'+(on?"Saqlanganlardan olib tashlash":"Saqlash")+'">'+(on?"★":"☆")+'</button></div>'+
       '<div class="facts"><div><small>Hudud</small>'+esc(m.region)+'</div><div><small>Tajriba</small>'+esc(m.exp)+' yil</div><div><small>Narx</small>'+esc(m.price)+'</div></div>'+
       '<p class="about">'+esc(m.about)+'</p>'+acts+'</article>';
   }).join("");
+}
+
+/* Xabarlar */
+var CK="um_chats";
+function getChats(){return read(CK,[]);}
+function findPerson(key){
+  return allMasters().concat(getUsers()).find(function(u){return norm(u.phone)===key;})||null;
+}
+function isSeed(key){return SEED.some(function(s){return norm(s.phone)===key;});}
+function threadWith(key){
+  var my=norm(me.phone);
+  return getChats().filter(function(m){return (m.from===my&&m.to===key)||(m.from===key&&m.to===my);});
+}
+function fmt(t){
+  var d=new Date(t);
+  return ("0"+d.getDate()).slice(-2)+"."+("0"+(d.getMonth()+1)).slice(-2)+" "+d.getHours()+":"+("0"+d.getMinutes()).slice(-2);
+}
+function openChat(key){state.chatWith=key;setTab("chat");}
+function sendMsg(){
+  var inp=$("ctext"), text=inp.value.trim();
+  if(!text)return;
+  var c=getChats();
+  c.push({from:norm(me.phone),to:state.chatWith,text:text,t:Date.now()});
+  write(CK,c);renderChat();$("ctext").focus();
+}
+function renderChat(){
+  var box=$("vChat"), my=norm(me.phone), key=state.chatWith;
+  if(key){
+    var p=findPerson(key), msgs=threadWith(key);
+    var html='<div class="chat"><div class="chead"><button class="link" type="button" id="cback">‹ Orqaga</button><div><b>'+esc(p?p.name:"Foydalanuvchi")+'</b><small>'+esc(p&&p.job?p.job:"Mijoz")+'</small></div></div>';
+    if(isSeed(key))html+='<div class="cnote">Bu namunaviy profil, javob kelmaydi. Haqiqiy roʻyxatdan oʻtgan ustalarga yozing.</div>';
+    html+='<div class="msgs" id="msgs">'+(msgs.length?msgs.map(function(m){
+      return '<div class="bub '+(m.from===my?"me":"he")+'">'+esc(m.text)+'<small>'+fmt(m.t)+'</small></div>';
+    }).join(""):'<div class="empty">Birinchi xabarni yozing.</div>')+'</div>';
+    html+='<div class="cform"><input id="ctext" placeholder="Xabar yozing" maxlength="500" aria-label="Xabar"><button class="btn" type="button" id="csend">Yuborish</button></div></div>';
+    box.innerHTML=html;
+    $("cback").addEventListener("click",function(){state.chatWith=null;setTab("chat");});
+    $("csend").addEventListener("click",sendMsg);
+    $("ctext").addEventListener("keydown",function(e){if(e.key==="Enter")sendMsg();});
+    var ms=$("msgs");ms.scrollTop=ms.scrollHeight;
+    return;
+  }
+  var last={};
+  getChats().forEach(function(m){
+    if(m.from!==my&&m.to!==my)return;
+    last[m.from===my?m.to:m.from]=m;
+  });
+  var keys=Object.keys(last).sort(function(a,b){return last[b].t-last[a].t;});
+  if(!keys.length){
+    box.innerHTML='<div class="empty"><b>Xabarlar yoʻq</b>Ustalar sahifasida usta kartasidagi “Xabar” tugmasini bosib yozishni boshlang.</div>';
+    return;
+  }
+  box.innerHTML='<div>'+keys.map(function(k){
+    var p=findPerson(k), l=last[k];
+    return '<button type="button" class="inb" data-open="'+esc(k)+'"><div class="mono" aria-hidden="true">'+esc((p?p.name:"?").charAt(0).toUpperCase())+'</div><div class="who"><b>'+esc(p?p.name:"Foydalanuvchi")+'</b><span>'+(l.from===my?"Siz: ":"")+esc(l.text)+'</span></div><em>'+fmt(l.t)+'</em></button>';
+  }).join("")+'</div>';
+  box.querySelectorAll("[data-open]").forEach(function(b){
+    b.addEventListener("click",function(){state.chatWith=b.getAttribute("data-open");renderChat();});
+  });
 }
 
 function init(){
@@ -313,13 +390,15 @@ function init(){
     state.job=b.getAttribute("data-job");renderChips();render();
   });
   $("list").addEventListener("click",function(e){
+    var mb=e.target.closest("[data-msg]");
+    if(mb){openChat(mb.getAttribute("data-msg"));return;}
     var b=e.target.closest(".fav");if(!b)return;
     var k=b.getAttribute("data-fav"), f=getFavs(), i=f.indexOf(k);
     if(i===-1)f.push(k);else f.splice(i,1);
     write(FK,f);render();
   });
   document.querySelectorAll("nav.tabs button").forEach(function(b){
-    b.addEventListener("click",function(){setTab(b.getAttribute("data-tab"));});
+    b.addEventListener("click",function(){state.chatWith=null;setTab(b.getAttribute("data-tab"));});
   });
   if(currentUser())showApp();else showAuth();
 }
