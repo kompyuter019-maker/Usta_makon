@@ -3,206 +3,120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#F2F2F7">
 <title>Usta Makon</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap">
 <style>
-:root{
-  --bg:#F2F2F7;--grouped:#F2F2F7;--card:#FFFFFF;
-  --ink:#000000;--muted:#8E8E93;
-  --accent:#007AFF;--accent-soft:rgba(0,122,255,0.12);
-  --green:#34C759;--green-soft:rgba(52,199,89,0.15);
-  --red:#FF3B30;--red-soft:rgba(255,59,48,0.15);
-  --orange:#FF9500;--yellow:#FF9500;--yellow-soft:rgba(255,149,0,0.15);--yellow-ink:#A05C00;
-  --rose:#FF2D55;--rose-soft:rgba(255,45,85,0.15);
-  --fill:rgba(120,120,128,0.12);--fill2:rgba(120,120,128,0.16);
-  --line:rgba(60,60,67,0.12);--sep:rgba(60,60,67,0.29);
-  --shadow:0 0.5px 2px rgba(0,0,0,0.06),0 1px 1px rgba(0,0,0,0.02);
-  --tabbar:rgba(249,249,249,0.94);
-  color-scheme: light dark;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#000000;--grouped:#000000;--card:#1C1C1E;
-    --ink:#FFFFFF;--muted:#8E8E93;
-    --accent:#0A84FF;--accent-soft:rgba(10,132,255,0.18);
-    --green:#30D158;--red:#FF453A;--orange:#FF9F0A;--yellow:#FFD60A;--yellow-soft:rgba(255,214,10,0.18);--yellow-ink:#FFD60A;
-    --rose:#FF375F;--rose-soft:rgba(255,55,95,0.2);
-    --fill:rgba(120,120,128,0.24);--fill2:rgba(120,120,128,0.32);
-    --line:rgba(84,84,88,0.65);--sep:rgba(84,84,88,0.65);
-    --shadow:none;
-    --tabbar:rgba(28,28,30,0.94);
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#000000;--grouped:#000000;--card:#1C1C1E;
-  --ink:#FFFFFF;--muted:#8E8E93;
-  --accent:#0A84FF;--accent-soft:rgba(10,132,255,0.18);
-  --green:#30D158;--red:#FF453A;--orange:#FF9F0A;--yellow:#FFD60A;--yellow-soft:rgba(255,214,10,0.18);--yellow-ink:#FFD60A;
-  --rose:#FF375F;--rose-soft:rgba(255,55,95,0.2);
-  --fill:rgba(120,120,128,0.24);--fill2:rgba(120,120,128,0.32);
-  --line:rgba(84,84,88,0.65);--sep:rgba(84,84,88,0.65);
-  --shadow:none;
-  --tabbar:rgba(28,28,30,0.94);
-}
-
+:root{--bg:#f4f6fb;--ink:#10193a;--card:#fff;--line:#dfe4f0;--cobalt:#1b3fa0;--link:#1b3fa0;--sun:#f5b400;--sunbg:#fff3cc;--sunink:#6b4d00;--muted:#5b6586;--ok:#0b7a52;--okbg:#dff5ea;--soft:#e8edfb;--field:#eef1f9;--err:#b3261e}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1226;--ink:#eef1fb;--card:#161d38;--line:#2a3358;--cobalt:#3556d6;--link:#9bb3ff;--sunbg:#3a2f08;--sunink:#ffd75e;--muted:#a3adcf;--ok:#6fe0ae;--okbg:#10382a;--soft:#1f2850;--field:#1f2850;--err:#ff8a80}}
+:root[data-theme="dark"]{--bg:#0d1226;--ink:#eef1fb;--card:#161d38;--line:#2a3358;--cobalt:#3556d6;--link:#9bb3ff;--sunbg:#3a2f08;--sunink:#ffd75e;--muted:#a3adcf;--ok:#6fe0ae;--okbg:#10382a;--soft:#1f2850;--field:#1f2850;--err:#ff8a80}
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
-html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
 [hidden]{display:none!important}
-
-body{
-  margin:0;background:var(--grouped);color:var(--ink);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Segoe UI",Roboto,sans-serif;
-  font-size:16px;line-height:1.4;
-  -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;
-}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.45}
 button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer;background:none;border:0;padding:0}
-a{color:var(--accent);text-decoration:none}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.wrap{max-width:620px;margin:0 auto;padding:0 16px}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.wrap{max-width:620px;margin:0 auto;padding:0 18px}
 
-/* Kirish (onboarding) */
-.hero{background:var(--grouped);padding:64px 0 20px}
-.brand{font-weight:600;font-size:15px;display:flex;align-items:center;gap:10px;margin-bottom:26px;color:var(--ink)}
-.logo{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--accent);border-radius:9px;font-size:18px;color:#fff}
-.hero h1{margin:0;font-size:34px;line-height:1.12;font-weight:700;letter-spacing:-0.6px}
-.hero p{margin:12px 0 0;max-width:36ch;color:var(--muted);font-size:17px}
-.sheet{background:var(--grouped);padding:8px 0 48px}
-.sheet h2{margin:0 0 14px;font-size:20px;font-weight:700;letter-spacing:-0.3px}
-.role{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border-radius:14px;padding:16px;margin-bottom:10px;box-shadow:var(--shadow);color:var(--ink);transition:transform .12s ease}
-.role:active{transform:scale(0.985);background:var(--fill)}
-.role .ic{flex:none;width:44px;height:44px;border-radius:10px;background:var(--accent-soft);display:grid;place-items:center;font-size:22px}
-.role b{display:block;font-size:17px;font-weight:600}
+/* Kirish */
+.hero{background:var(--cobalt);color:#fff;padding:34px 0 40px;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 2px,transparent 2px 18px)}
+.brand{font-weight:800;font-size:15px;letter-spacing:.2px;display:flex;align-items:center;gap:8px;margin-bottom:26px}
+.brand i{width:22px;height:22px;background:var(--sun);border-radius:6px;display:inline-block}
+.hero h1{margin:0;font-size:34px;line-height:1.1;font-weight:800;max-width:14ch}
+.hero p{margin:12px 0 0;max-width:36ch;opacity:.9}
+.sheet{background:var(--card);border-radius:22px 22px 0 0;margin-top:-18px;padding:24px 0 40px;min-height:50vh}
+.sheet h2{margin:0 0 14px;font-size:20px}
+.role{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.role:hover{border-color:var(--cobalt)}
+.role .ic{flex:none;width:44px;height:44px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:22px}
+.role b{display:block;font-size:17px}
 .role span{color:var(--muted);font-size:14px}
-
-.link{background:none;border:0;color:var(--accent);font-weight:600;padding:8px 0;font-size:16px}
-
-label{display:block;font-size:14px;font-weight:600;margin:16px 0 6px;color:var(--muted)}
-input,select,textarea{
-  width:100%;background:var(--fill);border:1.5px solid transparent;border-radius:10px;
-  padding:12px 14px;font-size:16px;color:var(--ink);
-}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
-textarea{resize:vertical;min-height:70px}
-.err{color:var(--red);font-size:14px;min-height:22px;margin:10px 0 0}
-
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-weight:600;font-size:16px;border:0;border-radius:12px;padding:13px 16px;background:var(--accent);color:#fff;transition:opacity .12s,transform .12s}
-.btn:active{opacity:.75;transform:scale(0.985)}
+.link{background:none;border:0;color:var(--link);font-weight:700;padding:10px 0}
+label{display:block;font-size:14px;font-weight:700;margin:14px 0 6px}
+input,select,textarea{width:100%;background:var(--field);border:1.5px solid transparent;border-radius:12px;padding:13px 14px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--cobalt)}
+.err{color:var(--err);font-size:14px;min-height:22px;margin:10px 0 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-weight:800;border:0;border-radius:12px;padding:13px 16px;background:var(--cobalt);color:#fff}
 .btn.wide{width:100%}
-.btn.alt{background:var(--accent-soft);color:var(--accent)}
-.btn.line{background:transparent;border:1.5px solid var(--sep);color:var(--ink)}
+.btn.alt{background:var(--soft);color:var(--link)}
+.btn.line{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
 
 /* Ilova */
-.top{background:var(--grouped);padding:8px 0 4px}
-.top h1{margin:0;font-size:34px;font-weight:700;line-height:1.1;letter-spacing:-0.6px}
-.top p{margin:4px 0 0;color:var(--muted);font-size:15px}
-
-.finder{margin-top:14px;background:var(--card);border-radius:14px;padding:12px;box-shadow:var(--shadow)}
+.top{background:var(--cobalt);color:#fff;padding:22px 0 64px;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 2px,transparent 2px 18px)}
+.top h1{margin:0;font-size:26px;font-weight:800;line-height:1.15}
+.top p{margin:6px 0 0;opacity:.9;font-size:15px}
+.finder{margin-top:-44px;background:var(--card);border-radius:16px;padding:12px;border:1px solid var(--line)}
 .finder .two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-
-.chips{display:flex;gap:8px;overflow-x:auto;padding:16px 16px 4px;margin:0 -16px;scrollbar-width:none}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:16px 18px 4px;margin:0 -18px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:none;background:var(--card);border:0.5px solid var(--sep);border-radius:18px;padding:8px 14px;font-weight:500;font-size:14px;color:var(--ink);white-space:nowrap;transition:transform .1s}
-.chip:active{transform:scale(0.95)}
-.chip[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
-.chip-female[aria-pressed=true]{background:var(--rose);border-color:var(--rose)}
-
-.count{margin:16px 0 4px;color:var(--muted);font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:0.4px}
-.note{background:var(--green-soft);color:var(--green);border-radius:12px;padding:12px 14px;margin-top:14px;font-size:14px;font-weight:600}
-
-.list{display:flex;flex-direction:column;gap:10px;padding:12px 0 24px}
-.row{background:var(--card);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
-.head{display:flex;gap:12px;align-items:flex-start}
-.mono{flex:none;width:48px;height:48px;border-radius:50%;color:#fff;font-weight:600;font-size:20px;display:grid;place-items:center;background:var(--accent)}
+.chip{flex:none;background:transparent;border:1.5px solid var(--line);border-radius:10px;padding:8px 14px;font-weight:700;font-size:14px;color:var(--ink)}
+.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.count{margin:14px 0 4px;color:var(--muted);font-size:14px;font-weight:600}
+.note{background:var(--okbg);color:var(--ok);border-radius:12px;padding:12px 14px;margin-top:14px;font-size:14px;font-weight:700}
+.list{border-top:1.5px solid var(--ink)}
+.row{padding:18px 0;border-bottom:1px solid var(--line)}
+.head{display:flex;gap:14px;align-items:flex-start}
+.mono{flex:none;width:52px;height:52px;border-radius:12px;background:var(--cobalt);color:#fff;font-weight:800;font-size:22px;display:grid;place-items:center;border-bottom:4px solid var(--sun)}
 .who{flex:1;min-width:0}
-.name{margin:0;font-size:17px;font-weight:600;line-height:1.25;letter-spacing:-0.2px}
-.job{margin:3px 0 0;color:var(--accent);font-weight:500;font-size:14px}
-.rate{background:var(--yellow-soft);color:var(--yellow-ink);border-radius:8px;padding:3px 9px;font-weight:600;font-size:13px;white-space:nowrap;align-self:flex-start}
-.rate.new{background:var(--green-soft);color:var(--green)}
-.fav{flex:none;width:36px;height:36px;border-radius:50%;background:var(--fill);font-size:18px;line-height:1;color:var(--muted);display:grid;place-items:center;transition:transform .12s}
-.fav:active{transform:scale(0.9)}
-.fav[aria-pressed=true]{background:var(--yellow-soft);color:var(--yellow-ink)}
-
-.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 10px;padding:10px 0;border-top:0.5px solid var(--sep);border-bottom:0.5px solid var(--sep)}
-.facts div{font-size:14px;font-weight:600;text-align:center}
-.facts small{display:block;color:var(--muted);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px}
-.about{margin:0 0 14px;color:var(--muted);font-size:14px;line-height:1.45}
-
-.acts{display:flex;gap:8px;flex-wrap:wrap}
-.acts .btn{flex:1;min-width:0;font-size:15px;padding:11px 12px}
-.acts .btn.alt{flex:0.8}
-
-.mine{background:var(--green-soft);color:var(--green);border-radius:10px;padding:10px;text-align:center;font-weight:600;font-size:14px}
-
+.name{margin:0;font-size:18px;font-weight:800;line-height:1.2}
+.job{margin:2px 0 0;color:var(--link);font-weight:700;font-size:15px}
+.rate{background:var(--sunbg);color:var(--sunink);border-radius:8px;padding:4px 9px;font-weight:800;font-size:14px;white-space:nowrap}
+.rate.new{background:var(--okbg);color:var(--ok)}
+.fav{flex:none;width:40px;height:40px;border-radius:10px;border:1.5px solid var(--line);background:transparent;font-size:19px;line-height:1;color:var(--muted)}
+.fav[aria-pressed=true]{background:var(--sunbg);border-color:var(--sun);color:var(--sunink)}
+.facts{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:4px 22px;margin:14px 0 10px}
+.facts div{font-size:14px;font-weight:700}
+.facts small{display:block;color:var(--muted);font-weight:600;font-size:12px}
+.about{margin:0 0 14px;color:var(--muted);font-size:15px}
+.acts{display:flex;gap:10px}
+.acts .btn{flex:1}
+.mine{background:var(--okbg);color:var(--ok);border-radius:12px;padding:11px;text-align:center;font-weight:800}
 .empty{text-align:center;color:var(--muted);padding:44px 12px}
-.empty b{display:block;color:var(--ink);font-size:17px;margin-bottom:6px;font-weight:600}
-
-.prof{padding:8px 0}
-.prof dl{margin:0 0 18px;background:var(--card);border-radius:14px;padding:4px 16px;box-shadow:var(--shadow);display:grid;grid-template-columns:auto 1fr}
-.prof dt{color:var(--muted);font-weight:500;padding:12px 0;border-bottom:0.5px solid var(--sep)}
-.prof dd{margin:0;font-weight:500;padding:12px 0;text-align:right;border-bottom:0.5px solid var(--sep)}
-.prof dl>:nth-last-child(-n+2){border-bottom:0}
-
-main.pad{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
-nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--tabbar);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:0.5px solid var(--sep);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
-nav.tabs button{flex:1;background:none;border:0;border-radius:10px;padding:6px 2px;font-weight:500;font-size:10px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;transition:color .12s}
-nav.tabs button svg{width:24px;height:24px}
-nav.tabs button[aria-current=page]{color:var(--accent)}
-
-.chead{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:0.5px solid var(--sep);margin-bottom:8px}
+.empty b{display:block;color:var(--ink);font-size:18px;margin-bottom:6px}
+.prof{padding:22px 0}
+.prof dl{margin:16px 0;display:grid;grid-template-columns:auto 1fr;gap:10px 18px}
+.prof dt{color:var(--muted);font-weight:600}
+.prof dd{margin:0;font-weight:700}
+main.pad{padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
+nav.tabs button{flex:1;background:none;border:0;border-radius:10px;padding:8px 4px;font-weight:700;font-size:12px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px}
+nav.tabs button b{font-size:20px;line-height:1}
+nav.tabs button[aria-current=page]{color:var(--link);background:var(--soft)}
+.chead{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
 .chead small{display:block;color:var(--muted);font-size:13px}
-.cnote{background:var(--yellow-soft);color:var(--yellow-ink);border-radius:10px;padding:10px 12px;margin:12px 0;font-size:13px;font-weight:500}
-.msgs{display:flex;flex-direction:column;gap:8px;padding:8px 0 16px;max-height:52vh;overflow-y:auto}
-.bub{max-width:82%;padding:9px 12px;border-radius:16px;overflow-wrap:anywhere;font-size:15px}
-.bub small{display:block;font-size:10px;opacity:.65;margin-top:3px}
-.bub.me{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:4px}
-.bub.he{align-self:flex-start;background:var(--fill2);border-bottom-left-radius:4px}
-.cform{display:flex;gap:8px;margin-top:8px}
+.cnote{background:var(--sunbg);color:var(--sunink);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:14px;font-weight:600}
+.msgs{display:flex;flex-direction:column;gap:8px;padding:16px 0;max-height:52vh;overflow-y:auto}
+.bub{max-width:82%;padding:10px 12px;border-radius:14px;overflow-wrap:anywhere}
+.bub small{display:block;font-size:11px;opacity:.7;margin-top:3px}
+.bub.me{align-self:flex-end;background:var(--cobalt);color:#fff;border-bottom-right-radius:4px}
+.bub.he{align-self:flex-start;background:var(--soft);border-bottom-left-radius:4px}
+.cform{display:flex;gap:8px}
 .cform .btn{flex:none}
-
-.inb{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--card);border-radius:14px;padding:12px 14px;margin-bottom:8px;box-shadow:var(--shadow);color:var(--ink)}
-.inb .mono{width:42px;height:42px;font-size:16px}
-.inb span{display:block;color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-.inb em{font-style:normal;color:var(--muted);font-size:11px;align-self:flex-start;margin-top:2px}
-.inb .who{display:flex;flex-direction:column;min-width:0;gap:1px}
-.inb b{font-weight:600;font-size:15px}
-
-.badge{display:inline-block;border-radius:6px;padding:2px 7px;font-weight:600;font-size:11px;margin-left:6px;vertical-align:middle}
-.badge.free{background:var(--green-soft);color:var(--green)}
-.badge.busy{background:var(--red-soft);color:var(--red)}
-.female-badge{display:inline-block;background:var(--rose-soft);color:var(--rose);font-size:11px;font-weight:600;padding:2px 6px;border-radius:6px;margin-left:6px;vertical-align:middle}
-
-.calc{margin:10px 0 0;background:var(--fill);border-radius:12px;padding:10px 12px}
-.calc summary{cursor:pointer;font-weight:600;color:var(--accent);font-size:14px;padding:2px 0;list-style:none}
-.calc summary::-webkit-details-marker{display:none}
-.calc summary::after{content:"›";float:right;transform:rotate(90deg);transition:transform .15s;color:var(--muted)}
-.calc[open] summary::after{transform:rotate(-90deg)}
-.calc input{margin-top:8px;background:var(--card)}
-.res{margin-top:8px;font-weight:600;font-size:14px;color:var(--green)}
-
-.offer{background:var(--fill);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:14px}
-.offer b{display:block;font-weight:600}
-.offer a{font-weight:600;display:inline-block;margin-top:4px}
-
-.finder details[open] summary::after{transform:rotate(-90deg)}
-#vOrders{margin-top:0}
-
-/* Skeleton uchun kichik animatsiya */
-@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-.row,.inb,.role{animation:fadeIn .2s ease-out both}
+.inb{display:flex;gap:14px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:16px 0;color:var(--ink)}
+.inb .mono{width:44px;height:44px;font-size:18px}
+.inb span{display:block;color:var(--muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inb em{font-style:normal;color:var(--muted);font-size:12px}
+.badge{display:inline-block;border-radius:8px;padding:3px 9px;font-weight:800;font-size:12px;margin-left:8px;vertical-align:middle}
+.badge.free{background:var(--okbg);color:var(--ok)}
+.badge.busy{background:color-mix(in srgb,var(--err) 16%,transparent);color:var(--err)}
+.calc{margin:0 0 14px;background:var(--field);border-radius:12px;padding:10px 12px}
+.calc summary{cursor:pointer;font-weight:800;color:var(--link)}
+.calc input{margin-top:8px}
+.res{margin-top:8px;font-weight:700}
+.offer{background:var(--field);border-radius:12px;padding:10px 12px;margin-top:10px;font-size:14px}
+.offer b{display:block}
+.offer a{color:var(--link);font-weight:800}
+#vOrders{margin-top:-44px}
 </style>
 </head>
 <body>
 
 <section id="auth" hidden>
   <div class="hero"><div class="wrap">
-    <div class="brand"><span class="logo">🛠️</span>Usta Makon</div>
-    <h1>Ishonchli usta,<br>yaqin joyda</h1>
-    <p>Santexnika, elektrika, remont, tozalash va boshqa ustalarni topib, bevosita bogʻlaning.</p>
+    <div class="brand"><i></i>Usta Makon</div>
+    <h1>Ishonchli usta, yaqin joyda</h1>
+    <p>Elektrik, santexnik, duradgor va boshqa ustalarni topib, bevosita bogʻlaning.</p>
   </div></div>
   <div class="sheet"><div class="wrap">
     <div id="stepRole">
@@ -226,7 +140,6 @@ nav.tabs button[aria-current=page]{color:var(--accent)}
       <input id="fPass" type="password" autocomplete="new-password">
       <div id="ustaBox">
         <label for="fJob">Kasb</label><select id="fJob"></select>
-        <label for="fGender">Jinsi</label><select id="fGender"><option value="">Koʻrsatmaslik</option><option value="m">Erkak</option><option value="f">Ayol</option></select>
         <label for="fRegion">Hudud</label><select id="fRegion"></select>
         <label for="fTg">Telegram (ixtiyoriy)</label><input id="fTg" placeholder="@foydalanuvchi">
         <label for="fPrice">Narx (masalan: 100 000 soʻmdan)</label><input id="fPrice">
@@ -267,11 +180,11 @@ nav.tabs button[aria-current=page]{color:var(--accent)}
     <div class="list" id="list"></div>
   </main>
   <nav class="tabs" aria-label="Boʻlimlar">
-    <button type="button" data-tab="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8v9a2 2 0 0 1-2 2h-5v-7H10v7H5a2 2 0 0 1-2-2z"/></svg><span>Ustalar</span></button>
-    <button type="button" data-tab="orders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Eʼlonlar</span></button>
-    <button type="button" data-tab="chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/></svg><span>Xabarlar</span></button>
-    <button type="button" data-tab="saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><span>Saqlangan</span></button>
-    <button type="button" data-tab="me"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg><span>Profil</span></button>
+    <button type="button" data-tab="home"><b>⌕</b>Ustalar</button>
+    <button type="button" data-tab="orders"><b>▤</b>Eʼlonlar</button>
+    <button type="button" data-tab="chat"><b>✉</b>Xabarlar</button>
+    <button type="button" data-tab="saved"><b>★</b>Saqlanganlar</button>
+    <button type="button" data-tab="me"><b>☺</b>Profil</button>
   </nav>
 </section>
 
@@ -289,35 +202,359 @@ var firebaseConfig={
 };
 var fbApp=initializeApp(firebaseConfig), auth=getAuth(fbApp), db=getFirestore(fbApp);
 var C={users:[],orders:[],offers:[]}, unsubs=[], regBusy=false;
-
-/* 10 ta asosiy boʻlim */
-var JOB_ICONS = {
-  "Santexnika":"🚿",
-  "Elektrika":"⚡",
-  "Remont va taʼmir":"🛠️",
-  "Konditsioner va isitish":"❄️",
-  "Kafel va boʻyoq":"🎨",
-  "Mebel yigʻish":"🪑",
-  "Oyna va eshik":"🪟",
-  "Tozalash":"🧹",
-  "Maishiy texnika":"🔌",
-  "Favqulodda xizmat":"🚨"
-};
-var JOBS = Object.keys(JOB_ICONS);
-var JOB_COLORS = {
-  "Santexnika":"#32ADE6","Elektrika":"#FF9500","Remont va taʼmir":"#FF6B35",
-  "Konditsioner va isitish":"#5AC8FA","Kafel va boʻyoq":"#AF52DE","Mebel yigʻish":"#A2845E",
-  "Oyna va eshik":"#30B0C7","Tozalash":"#34C759","Maishiy texnika":"#5856D6","Favqulodda xizmat":"#FF3B30"
-};
-function jobColor(job){return JOB_COLORS[job]||"#8E8E93";}
-function jobIcon(job){return JOB_ICONS[job]||"🛠️";}
-
+var JOBS = ["Elektrik","Santexnik","Quruvchi","Duradgor","Plitka ustasi","Pardozchi","Konditsioner ustasi","Maishiy texnika"];
 var REGIONS = ["Toshkent","Samarqand","Buxoro","Andijon","Fargʻona","Namangan","Qashqadaryo","Xorazm"];
-
 var SEED = [
- {name:"Aziz Karimov",job:"Elektrika",region:"Toshkent",phone:"+998901112233",tg:"",price:"80 000 soʻmdan",exp:9,rating:4.8,about:"Simlarni almashtirish, rozetka va shitlar, yoritish."},
- {name:"Bobur Rahmonov",job:"Santexnika",region:"Samarqand",phone:"+998933334455",tg:"",price:"100 000 soʻmdan",exp:6,rating:4.6,busy:true,about:"Quvur, kran, unitaz va isitish tizimlari."},
- {name:"Dilshod Yoʻldoshev",job:"Kafel va boʻyoq",region:"Toshkent",phone:"+998975556677",tg:"",price:"45 000 soʻm/m²",exp:12,rating:4.9,about:"Hammom va oshxona plitkasi, aniq va tekis."},
- {name:"Sardor Tursunov",job:"Mebel yigʻish",region:"Andijon",phone:"+998887778899",tg:"",price:"Kelishilgan holda",exp:15,rating:4.7,about:"Eshik, shkaf va mebel yasash hamda taʼmirlash."},
- {name:"Jasur Ergashev",job:"Konditsioner va isitish",region:"Buxoro",phone:"+998901239876",tg:"",price:"120 000 soʻmdan",exp:5,rating:4.5,about:"Oʻrnatish, tozalash va gaz toʻldirish."},
- {name:"Nilufar Saidova",
+ {name:"Aziz Karimov",job:"Elektrik",region:"Toshkent",phone:"+998901112233",tg:"",price:"80 000 soʻmdan",exp:9,rating:4.8,about:"Simlarni almashtirish, rozetka va shitlar, yoritish."},
+ {name:"Bobur Rahmonov",job:"Santexnik",region:"Samarqand",phone:"+998933334455",tg:"",price:"100 000 soʻmdan",exp:6,rating:4.6,busy:true,about:"Quvur, kran, unitaz va isitish tizimlari."},
+ {name:"Dilshod Yoʻldoshev",job:"Plitka ustasi",region:"Toshkent",phone:"+998975556677",tg:"",price:"45 000 soʻm/m²",exp:12,rating:4.9,about:"Hammom va oshxona plitkasi, aniq va tekis."},
+ {name:"Sardor Tursunov",job:"Duradgor",region:"Andijon",phone:"+998887778899",tg:"",price:"Kelishilgan holda",exp:15,rating:4.7,about:"Eshik, shkaf va mebel yasash hamda taʼmirlash."},
+ {name:"Jasur Ergashev",job:"Konditsioner ustasi",region:"Buxoro",phone:"+998901239876",tg:"",price:"120 000 soʻmdan",exp:5,rating:4.5,about:"Oʻrnatish, tozalash va gaz toʻldirish."}
+];
+var UK="um_users", MK="um_me", FK="um_fav";
+var state={q:"",region:"Barcha hudud",job:"Hammasi",sort:"rating",tab:"home"};
+var formMode="mijoz", me=null;
+
+function $(id){return document.getElementById(id);}
+function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function fillSelect(el,items){el.innerHTML=items.map(function(x){return "<option>"+esc(x)+"</option>";}).join("");}
+function norm(p){var d=String(p).replace(/\D/g,"");if(d.length===9)d="998"+d;return d;}
+function read(k,def){try{return JSON.parse(localStorage.getItem(k))||def;}catch(e){return def;}}
+function write(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function getUsers(){return C.users;}
+function getFavs(){return read(FK,[]);}
+function setMe(){}
+function currentUser(){
+  var id=auth.currentUser?auth.currentUser.uid:"";
+  return id?(C.users.find(function(u){return u.uid===id;})||null):null;
+}
+function allMasters(){
+  var mine=getUsers().filter(function(u){return u.role==="usta";}).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0);});
+  return mine.concat(SEED);
+}
+
+/* Kirish */
+function showAuth(){
+  $("app").hidden=true;$("auth").hidden=false;
+  $("stepRole").hidden=false;$("stepPick").hidden=true;$("stepForm").hidden=true;
+  window.scrollTo(0,0);
+}
+function openForm(mode){
+  formMode=mode;
+  $("formTitle").textContent=mode==="usta"?"Usta sifatida roʻyxatdan oʻtish":mode==="mijoz"?"Mijoz sifatida roʻyxatdan oʻtish":"Akkauntga kirish";
+  $("submit").textContent=mode==="kirish"?"Kirish":"Roʻyxatdan oʻtish";
+  $("nameBox").hidden=mode==="kirish";
+  $("ustaBox").hidden=mode!=="usta";
+  $("err").textContent="";
+  $("fPass").autocomplete=mode==="kirish"?"current-password":"new-password";
+  $("stepRole").hidden=true;$("stepPick").hidden=true;$("stepForm").hidden=false;
+}
+function fbErr(e){
+  var c=e&&e.code||"";
+  if(c==="auth/email-already-in-use")return "Bu raqam roʻyxatdan oʻtgan. Orqaga qaytib, Kirish ni tanlang.";
+  if(c==="auth/invalid-credential"||c==="auth/user-not-found"||c==="auth/wrong-password")return "Raqam yoki parol notoʻgʻri.";
+  if(c==="auth/weak-password")return "Parol kamida 6 ta belgi boʻlsin.";
+  if(c==="auth/network-request-failed")return "Internet yoʻq. Qayta urinib koʻring.";
+  if(c==="auth/operation-not-allowed")return "Firebase'da Email/Password yoqilmagan.";
+  return "Xatolik: "+(c||e);
+}
+async function submitForm(){
+  var d=norm($("fPhone").value), pass=$("fPass").value, btn=$("submit");
+  if(d.length!==12){$("err").textContent="Telefon raqamni toʻliq kiriting: +998 90 123 45 67";return;}
+  if(pass.length<6){$("err").textContent="Parol kamida 6 ta belgi boʻlsin.";return;}
+  var email=d+"@usta-makon.app", name=$("fName").value.trim();
+  if(formMode!=="kirish"&&name.length<2){$("err").textContent="Ismingizni kiriting.";return;}
+  btn.disabled=true;$("err").textContent="";
+  try{
+    if(formMode==="kirish"){
+      await signInWithEmailAndPassword(auth,email,pass);
+    }else{
+      var u={role:formMode,name:name,phone:"+"+d,createdAt:Date.now()};
+      if(formMode==="usta"){
+        u.job=$("fJob").value;u.region=$("fRegion").value;u.tg=$("fTg").value.trim();
+        u.price=$("fPrice").value.trim()||"Kelishilgan holda";
+        u.exp=Number($("fExp").value)||0;u.rating=0;u.busy=false;
+        u.about=$("fAbout").value.trim()||"Maʼlumot kiritilmagan.";
+      }
+      regBusy=true;
+      var cred=await createUserWithEmailAndPassword(auth,email,pass);
+      await setDoc(doc(db,"users",cred.user.uid),u);
+    }
+    ["fName","fPhone","fPass","fTg","fPrice","fExp","fAbout"].forEach(function(id){$(id).value="";});
+  }catch(e){$("err").textContent=fbErr(e);}
+  regBusy=false;btn.disabled=false;
+}
+
+/* Ilova */
+function showApp(){
+  me=currentUser();
+  if(!me){showAuth();return;}
+  $("auth").hidden=true;$("app").hidden=false;
+  $("note").hidden=me.role!=="usta";
+  state={q:"",region:"Barcha hudud",job:"Hammasi",sort:"rating",tab:"home"};
+  $("q").value="";$("region").value="Barcha hudud";$("sort").value="rating";
+  renderChips();setTab("home");
+}
+function setTab(t){
+  state.tab=t;
+  var first=me.name.split(" ")[0];
+  $("title").textContent=t==="home"?"Usta toping":t==="orders"?"Eʼlonlar":t==="saved"?"Saqlangan ustalar":t==="chat"?"Xabarlar":"Profilim";
+  $("hello").textContent=t==="home"?"Salom, "+first+". Kerakli ustani tanlang.":t==="orders"?(me.role==="usta"?"Mijozlar eʼlonlariga taklif yuboring.":"Ishni eʼlon qiling, ustalar taklif yuboradi."):t==="saved"?"Keyinroq bogʻlanish uchun belgilaganlaringiz.":t==="chat"?"Ustalar va mijozlar bilan yozishmalar.":first+" · "+(me.role==="usta"?"usta":"mijoz");
+  $("vHome").hidden=t!=="home";
+  $("vMe").hidden=t!=="me";
+  var other=t==="me"||t==="chat"||t==="orders";
+  $("vOrders").hidden=t!=="orders";
+  $("vChat").hidden=t!=="chat";
+  $("list").hidden=other;
+  $("count").hidden=other;
+  document.querySelectorAll("nav.tabs button").forEach(function(b){
+    if(b.getAttribute("data-tab")===t)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
+  });
+  if(t==="me")renderMe();else if(t==="chat")renderChat();else if(t==="orders")renderOrders();else render();
+  window.scrollTo(0,0);
+}
+function renderChips(){
+  $("chips").innerHTML=["Hammasi"].concat(JOBS).map(function(j){
+    return '<button type="button" class="chip" data-job="'+esc(j)+'" aria-pressed="'+(state.job===j)+'">'+esc(j)+'</button>';
+  }).join("");
+}
+function renderMe(){
+  var rows='<dt>Ism</dt><dd>'+esc(me.name)+'</dd><dt>Telefon</dt><dd>'+esc(me.phone)+'</dd><dt>Rol</dt><dd>'+(me.role==="usta"?"Usta":"Mijoz")+'</dd>';
+  if(me.role==="usta")rows+='<dt>Kasb</dt><dd>'+esc(me.job)+'</dd><dt>Hudud</dt><dd>'+esc(me.region)+'</dd><dt>Narx</dt><dd>'+esc(me.price)+'</dd><dt>Tajriba</dt><dd>'+esc(me.exp)+' yil</dd>';
+  $("vMe").innerHTML='<div class="prof"><dl>'+rows+'</dl><button class="btn line wide" type="button" id="logout">Akkauntdan chiqish</button></div>';
+  $("logout").addEventListener("click",function(){signOut(auth);});
+}
+function render(){
+  var q=state.q.trim().toLowerCase(), favs=getFavs(), saved=state.tab==="saved";
+  var res=allMasters().filter(function(m){
+    if(saved&&favs.indexOf(norm(m.phone))===-1)return false;
+    if(!saved){
+      if(state.job!=="Hammasi"&&m.job!==state.job)return false;
+      if(state.region!=="Barcha hudud"&&m.region!==state.region)return false;
+      if(q&&(m.name+" "+m.job+" "+m.about).toLowerCase().indexOf(q)===-1)return false;
+    }
+    return true;
+  });
+  if(!saved&&state.sort==="rating")res.sort(function(a,b){return b.rating-a.rating;});
+  if(!saved&&state.sort==="exp")res.sort(function(a,b){return b.exp-a.exp;});
+  $("count").textContent=res.length?res.length+" ta usta":"";
+  if(!res.length){
+    $("list").innerHTML=saved
+      ?'<div class="empty"><b>Hali hech kim saqlanmagan</b>Usta kartasidagi ★ tugmasini bosing, usta shu yerda paydo boʻladi.</div>'
+      :'<div class="empty"><b>Hech narsa topilmadi</b>Boshqa kasb yoki hududni tanlab koʻring.</div>';
+    return;
+  }
+  $("list").innerHTML=res.map(function(m){
+    var key=norm(m.phone), own=me&&key===norm(me.phone), on=favs.indexOf(key)!==-1;
+    var tg=m.tg?'<a class="btn alt" target="_blank" rel="noopener" href="https://t.me/'+esc(m.tg.replace("@",""))+'">Telegram</a>':"";
+    var rate=m.rating?'<span class="rate">★ '+m.rating.toFixed(1)+'</span>':'<span class="rate new">Yangi</span>';
+    var share='<button type="button" class="btn line wide" data-share="'+esc(m.name+" — "+m.job+", "+m.region)+'" style="margin-top:10px">Ulashish</button>';
+    var acts=own?'<div class="mine">Bu sizning profilingiz</div><button type="button" class="btn alt wide" data-busy="1" style="margin-top:10px">'+(m.busy?"Boʻsh deb belgilash":"Band deb belgilash")+'</button>'+share
+      :'<div class="acts"><a class="btn" href="tel:'+esc(m.phone)+'">Qoʻngʻiroq qilish</a><button type="button" class="btn alt" data-msg="'+esc(key)+'">Xabar</button>'+tg+'</div>'+share;
+    var base=pbase(m.price), unit=String(m.price).indexOf("m²")>-1?"m²":"marta";
+    var calc=base?'<details class="calc"><summary>Narxni hisoblash</summary><label>Miqdor ('+unit+')</label><input type="number" min="0" data-base="'+base+'" placeholder="Masalan: 12"><div class="res" aria-live="polite"></div></details>':"";
+    var badge='<span class="badge '+(m.busy?"busy":"free")+'">'+(m.busy?"Band":"Boʻsh")+'</span>';
+    return '<article class="row"><div class="head"><div class="mono" aria-hidden="true">'+esc(m.name.charAt(0).toUpperCase())+'</div>'+
+      '<div class="who"><h3 class="name">'+esc(m.name)+badge+'</h3><p class="job">'+esc(m.job)+'</p></div>'+rate+
+      '<button type="button" class="fav" data-fav="'+esc(key)+'" aria-pressed="'+on+'" aria-label="'+(on?"Saqlanganlardan olib tashlash":"Saqlash")+'">'+(on?"★":"☆")+'</button></div>'+
+      '<div class="facts"><div><small>Hudud</small>'+esc(m.region)+'</div><div><small>Tajriba</small>'+esc(m.exp)+' yil</div><div><small>Narx</small>'+esc(m.price)+'</div></div>'+
+      '<p class="about">'+esc(m.about)+'</p>'+calc+acts+'</article>';
+  }).join("");
+}
+
+/* Eʼlonlar */
+var OK="um_orders", FO="um_offers", ojob="Barcha kasb";
+var OSEED=[
+ {id:"s1",name:"Malika Aliyeva",phone:"+998901000011",job:"Plitka ustasi",region:"Toshkent",about:"Hammomga 8 m² plitka yotqizish kerak, material tayyor.",budget:"400 000 soʻm",ts:0},
+ {id:"s2",name:"Otabek Nazarov",phone:"+998901000022",job:"Elektrik",region:"Samarqand",about:"Yangi uyda rozetka va yoritishni ulash kerak.",budget:"",ts:0}
+];
+function pbase(p){var m=String(p).replace(/\s/g,"").match(/\d+/);return m?Number(m[0]):0;}
+function money(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g," ");}
+function ago(ts){
+  if(!ts)return "";
+  var d=Math.floor((Date.now()-ts)/86400000);
+  return d<=0?"Bugun":d===1?"Kecha":d<7?d+" kun oldin":fmt(ts).split(" ")[0];
+}
+function renderOrders(){
+  var box=$("vOrders"), offers=C.offers, my=norm(me.phone), h='<div class="finder">';
+  if(me.role==="mijoz")h+='<details class="calc" style="margin-bottom:8px"><summary>+ Yangi eʼlon berish</summary><label for="nJob">Qanday usta kerak?</label><select id="nJob"></select><label for="nReg">Hudud</label><select id="nReg"></select><label for="nAbout">Ish haqida</label><textarea id="nAbout" rows="3" placeholder="Masalan: hammomga 12 m² plitka kerak"></textarea><label for="nBud">Byudjet (ixtiyoriy)</label><input id="nBud" placeholder="500 000 soʻm"><div class="err" id="oerr" role="alert"></div><button class="btn wide" type="button" id="opost">Joylash</button></details>';
+  h+='<select id="ojob" aria-label="Kasb"></select></div><div class="count">Eʼlonlar</div><div class="list">';
+  var res=C.orders.slice().sort(function(a,b){return b.ts-a.ts;}).concat(OSEED).filter(function(o){return ojob==="Barcha kasb"||o.job===ojob;});
+  if(!res.length)h+='<div class="empty"><b>Eʼlon yoʻq</b>Boshqa kasbni tanlab koʻring.</div>';
+  h+=res.map(function(o){
+    var own=norm(o.phone)===my, of=offers.filter(function(x){return x.oid===o.id;}), acts="";
+    if(own){
+      acts=(of.length?of.map(function(x){return '<div class="offer"><b>'+esc(x.name)+' · '+esc(x.price)+'</b>'+(x.msg?esc(x.msg)+'<br>':'')+'<a href="tel:'+esc(x.phone)+'">Qoʻngʻiroq qilish</a></div>';}).join(""):'<p class="about">Hozircha takliflar yoʻq.</p>')+'<button type="button" class="btn line wide" data-odel="'+esc(o.id)+'" style="margin-top:10px">Eʼlonni oʻchirish</button>';
+    }else if(me.role==="usta"){
+      var sent=of.find(function(x){return norm(x.phone)===my;});
+      acts='<a class="btn wide" href="tel:'+esc(o.phone)+'">Qoʻngʻiroq qilish</a>'+(sent?'<div class="mine" style="margin-top:10px">Taklifingiz yuborilgan: '+esc(sent.price)+'</div>':'<details class="calc" style="margin:10px 0 0"><summary>Taklif yuborish</summary><input data-op placeholder="Narx: 300 000 soʻm"><input data-om placeholder="Qisqa izoh (ixtiyoriy)"><div class="err" data-oe role="alert"></div><button type="button" class="btn wide" data-offer="'+esc(o.id)+'">Yuborish</button></details>');
+    }
+    return '<article class="row"><div class="head"><div class="who"><h3 class="name">'+esc(o.job)+'</h3><p class="job">'+esc(o.region)+(o.budget?' · '+esc(o.budget):'')+'</p></div>'+(o.ts?'<span class="rate">'+esc(ago(o.ts))+'</span>':'')+'</div><p class="about" style="margin-top:10px">'+esc(o.about)+'<br>Mijoz: '+esc(o.name)+'</p>'+acts+'</article>';
+  }).join("")+'</div>';
+  box.innerHTML=h;
+  fillSelect($("ojob"),["Barcha kasb"].concat(JOBS));$("ojob").value=ojob;
+  if($("nJob")){fillSelect($("nJob"),JOBS);fillSelect($("nReg"),REGIONS);}
+}
+
+/* Xabarlar */
+var CK="um_chats";
+function getChats(){return read(CK,[]);}
+function findPerson(key){
+  return allMasters().concat(getUsers()).find(function(u){return norm(u.phone)===key;})||null;
+}
+function isSeed(key){return SEED.some(function(s){return norm(s.phone)===key;});}
+function threadWith(key){
+  var my=norm(me.phone);
+  return getChats().filter(function(m){return (m.from===my&&m.to===key)||(m.from===key&&m.to===my);});
+}
+function fmt(t){
+  var d=new Date(t);
+  return ("0"+d.getDate()).slice(-2)+"."+("0"+(d.getMonth()+1)).slice(-2)+" "+d.getHours()+":"+("0"+d.getMinutes()).slice(-2);
+}
+function openChat(key){state.chatWith=key;setTab("chat");}
+function sendMsg(){
+  var inp=$("ctext"), text=inp.value.trim();
+  if(!text)return;
+  var c=getChats();
+  c.push({from:norm(me.phone),to:state.chatWith,text:text,t:Date.now()});
+  write(CK,c);renderChat();$("ctext").focus();
+}
+function renderChat(){
+  var box=$("vChat"), my=norm(me.phone), key=state.chatWith;
+  if(key){
+    var p=findPerson(key), msgs=threadWith(key);
+    var html='<div class="chat"><div class="chead"><button class="link" type="button" id="cback">‹ Orqaga</button><div><b>'+esc(p?p.name:"Foydalanuvchi")+'</b><small>'+esc(p&&p.job?p.job:"Mijoz")+'</small></div></div>';
+    if(isSeed(key))html+='<div class="cnote">Bu namunaviy profil, javob kelmaydi. Haqiqiy roʻyxatdan oʻtgan ustalarga yozing.</div>';
+    html+='<div class="msgs" id="msgs">'+(msgs.length?msgs.map(function(m){
+      return '<div class="bub '+(m.from===my?"me":"he")+'">'+esc(m.text)+'<small>'+fmt(m.t)+'</small></div>';
+    }).join(""):'<div class="empty">Birinchi xabarni yozing.</div>')+'</div>';
+    html+='<div class="cform"><input id="ctext" placeholder="Xabar yozing" maxlength="500" aria-label="Xabar"><button class="btn" type="button" id="csend">Yuborish</button></div></div>';
+    box.innerHTML=html;
+    $("cback").addEventListener("click",function(){state.chatWith=null;setTab("chat");});
+    $("csend").addEventListener("click",sendMsg);
+    $("ctext").addEventListener("keydown",function(e){if(e.key==="Enter")sendMsg();});
+    var ms=$("msgs");ms.scrollTop=ms.scrollHeight;
+    return;
+  }
+  var last={};
+  getChats().forEach(function(m){
+    if(m.from!==my&&m.to!==my)return;
+    last[m.from===my?m.to:m.from]=m;
+  });
+  var keys=Object.keys(last).sort(function(a,b){return last[b].t-last[a].t;});
+  if(!keys.length){
+    box.innerHTML='<div class="empty"><b>Xabarlar yoʻq</b>Ustalar sahifasida usta kartasidagi “Xabar” tugmasini bosib yozishni boshlang.</div>';
+    return;
+  }
+  box.innerHTML='<div>'+keys.map(function(k){
+    var p=findPerson(k), l=last[k];
+    return '<button type="button" class="inb" data-open="'+esc(k)+'"><div class="mono" aria-hidden="true">'+esc((p?p.name:"?").charAt(0).toUpperCase())+'</div><div class="who"><b>'+esc(p?p.name:"Foydalanuvchi")+'</b><span>'+(l.from===my?"Siz: ":"")+esc(l.text)+'</span></div><em>'+fmt(l.t)+'</em></button>';
+  }).join("")+'</div>';
+  box.querySelectorAll("[data-open]").forEach(function(b){
+    b.addEventListener("click",function(){state.chatWith=b.getAttribute("data-open");renderChat();});
+  });
+}
+
+function init(){
+  fillSelect($("region"),["Barcha hudud"].concat(REGIONS));
+  fillSelect($("fJob"),JOBS);
+  fillSelect($("fRegion"),REGIONS);
+  document.querySelectorAll("[data-mode]").forEach(function(b){
+    b.addEventListener("click",function(){openForm(b.getAttribute("data-mode"));});
+  });
+  $("back").addEventListener("click",showAuth);
+  $("goReg").addEventListener("click",function(){$("stepRole").hidden=true;$("stepPick").hidden=false;});
+  $("pickBack").addEventListener("click",showAuth);
+  $("submit").addEventListener("click",submitForm);
+  $("q").addEventListener("input",function(e){state.q=e.target.value;render();});
+  $("region").addEventListener("change",function(e){state.region=e.target.value;render();});
+  $("sort").addEventListener("change",function(e){state.sort=e.target.value;render();});
+  $("chips").addEventListener("click",function(e){
+    var b=e.target.closest(".chip");if(!b)return;
+    state.job=b.getAttribute("data-job");renderChips();render();
+  });
+  $("list").addEventListener("click",function(e){
+    var bz=e.target.closest("[data-busy]");
+    if(bz){
+      updateDoc(doc(db,"users",me.uid),{busy:!me.busy});return;
+    }
+    var sh=e.target.closest("[data-share]");
+    if(sh){
+      var txt=sh.getAttribute("data-share")+". Usta Makon ilovasida:", url=location.href.split("#")[0];
+      if(navigator.share){navigator.share({title:"Usta Makon",text:txt,url:url}).catch(function(){});return;}
+      try{navigator.clipboard.writeText(txt+" "+url).then(function(){sh.textContent="Nusxalandi";});}catch(err){sh.textContent=url;}
+      return;
+    }
+    var mb=e.target.closest("[data-msg]");
+    if(mb){openChat(mb.getAttribute("data-msg"));return;}
+    var b=e.target.closest(".fav");if(!b)return;
+    var k=b.getAttribute("data-fav"), f=getFavs(), i=f.indexOf(k);
+    if(i===-1)f.push(k);else f.splice(i,1);
+    write(FK,f);render();
+  });
+  $("list").addEventListener("input",function(e){
+    var i=e.target.closest("[data-base]");if(!i)return;
+    var q=Number(i.value);
+    i.parentNode.querySelector(".res").textContent=q>0?"Taxminan "+money(q*Number(i.getAttribute("data-base")))+" soʻm. Aniq narx usta bilan kelishiladi.":"";
+  });
+  $("vOrders").addEventListener("change",function(e){if(e.target.id==="ojob"){ojob=e.target.value;renderOrders();}});
+  $("vOrders").addEventListener("click",function(e){
+    var t=e.target;
+    if(t.id==="opost"){
+      var about=$("nAbout").value.trim();
+      if(about.length<5){$("oerr").textContent="Ish haqida qisqacha yozing.";return;}
+      addDoc(collection(db,"orders"),{uid:me.uid,name:me.name,phone:me.phone,job:$("nJob").value,region:$("nReg").value,about:about,budget:$("nBud").value.trim(),ts:Date.now()}).then(renderOrders);return;
+    }
+    var f=t.closest("[data-offer]");
+    if(f){
+      var bx=f.parentNode, pr=bx.querySelector("[data-op]").value.trim();
+      if(pr.length<2){bx.querySelector("[data-oe]").textContent="Narxni yozing.";return;}
+      var oid=f.getAttribute("data-offer"), ord=C.orders.find(function(o){return o.id===oid;});
+      addDoc(collection(db,"offers"),{oid:oid,uid:me.uid,ownerUid:ord?ord.uid:"",name:me.name,phone:me.phone,price:pr,msg:bx.querySelector("[data-om]").value.trim()});return;
+    }
+    var d=t.closest("[data-odel]");
+    if(d&&confirm("Eʼlon oʻchirilsinmi?")){
+      var id=d.getAttribute("data-odel");
+      C.offers.filter(function(x){return x.oid===id;}).forEach(function(x){deleteDoc(doc(db,"offers",x.id));});
+      deleteDoc(doc(db,"orders",id));
+    }
+  });
+  document.querySelectorAll("nav.tabs button").forEach(function(b){
+    b.addEventListener("click",function(){state.chatWith=null;setTab(b.getAttribute("data-tab"));});
+  });
+}
+init();
+
+function refresh(){
+  if(!me)return;
+  var a=document.activeElement;
+  if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)&&(a.closest("#vOrders")||a.closest("#list")))return;
+  if(state.tab==="orders")renderOrders();
+  else if(state.tab==="home"||state.tab==="saved")render();
+}
+function dbErr(e){console.error(e);alert("Maʼlumotlar bazasiga ulanib boʻlmadi ("+(e.code||e)+"). Firestore qoidalarini tekshiring.");}
+function pack(s){return s.docs.map(function(d){return Object.assign({},d.data(),{id:d.id});});}
+function listen(){
+  if(unsubs.length)return;
+  unsubs=[
+    onSnapshot(collection(db,"users"),function(s){
+      C.users=s.docs.map(function(d){return Object.assign({},d.data(),{uid:d.id});});
+      if(!auth.currentUser)return;
+      var u=currentUser();
+      if(u){if($("app").hidden)showApp();else{me=u;refresh();}}
+      else if(!regBusy)signOut(auth);
+    },dbErr),
+    onSnapshot(collection(db,"orders"),function(s){C.orders=pack(s);refresh();},dbErr),
+    onSnapshot(collection(db,"offers"),function(s){C.offers=pack(s);refresh();},dbErr)
+  ];
+}
+onAuthStateChanged(auth,function(user){
+  if(user)listen();
+  else{
+    unsubs.forEach(function(f){f();});unsubs=[];
+    C={users:[],orders:[],offers:[]};me=null;showAuth();
+  }
+});
+</script>
+</body>
+</html>
