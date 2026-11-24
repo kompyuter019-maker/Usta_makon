@@ -97,11 +97,22 @@ nav.tabs button[aria-current=page]{color:var(--link);background:var(--soft)}
 .inb .mono{width:44px;height:44px;font-size:18px}
 .inb span{display:block;color:var(--muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .inb em{font-style:normal;color:var(--muted);font-size:12px}
+.badge{display:inline-block;border-radius:8px;padding:3px 9px;font-weight:800;font-size:12px;margin-left:8px;vertical-align:middle}
+.badge.free{background:var(--okbg);color:var(--ok)}
+.badge.busy{background:color-mix(in srgb,var(--err) 16%,transparent);color:var(--err)}
+.calc{margin:0 0 14px;background:var(--field);border-radius:12px;padding:10px 12px}
+.calc summary{cursor:pointer;font-weight:800;color:var(--link)}
+.calc input{margin-top:8px}
+.res{margin-top:8px;font-weight:700}
+.offer{background:var(--field);border-radius:12px;padding:10px 12px;margin-top:10px;font-size:14px}
+.offer b{display:block}
+.offer a{color:var(--link);font-weight:800}
+#vOrders{margin-top:-44px}
 </style>
 </head>
 <body>
 
-<section id="auth">
+<section id="auth" hidden>
   <div class="hero"><div class="wrap">
     <div class="brand"><i></i>Usta Makon</div>
     <h1>Ishonchli usta, yaqin joyda</h1>
@@ -109,10 +120,15 @@ nav.tabs button[aria-current=page]{color:var(--link);background:var(--soft)}
   </div></div>
   <div class="sheet"><div class="wrap">
     <div id="stepRole">
-      <h2>Kim sifatida kirasiz?</h2>
+      <h2>Xush kelibsiz</h2>
+      <button class="btn wide" type="button" id="goReg">Roʻyxatdan oʻtish</button>
+      <button class="btn line wide" type="button" data-mode="kirish" style="margin-top:12px">Akkauntim bor, kirish</button>
+    </div>
+    <div id="stepPick" hidden>
+      <button class="link" type="button" id="pickBack">‹ Orqaga</button>
+      <h2>Kim sifatida roʻyxatdan oʻtasiz?</h2>
       <button class="role" type="button" data-mode="mijoz"><span class="ic">🔍</span><span><b>Men mijozman</b><span>Kerakli ustani qidiraman</span></span></button>
       <button class="role" type="button" data-mode="usta"><span class="ic">🛠️</span><span><b>Men ustaman</b><span>Mijozlar meni topsin</span></span></button>
-      <button class="link" type="button" data-mode="kirish">Akkauntim bor, kirish</button>
     </div>
     <div id="stepForm" hidden>
       <button class="link" type="button" id="back">‹ Orqaga</button>
@@ -120,6 +136,8 @@ nav.tabs button[aria-current=page]{color:var(--link);background:var(--soft)}
       <div id="nameBox"><label for="fName">Ism</label><input id="fName" autocomplete="name"></div>
       <label for="fPhone">Telefon raqam</label>
       <input id="fPhone" type="tel" placeholder="+998 90 123 45 67" autocomplete="tel">
+      <label for="fPass">Parol (kamida 6 belgi)</label>
+      <input id="fPass" type="password" autocomplete="new-password">
       <div id="ustaBox">
         <label for="fJob">Kasb</label><select id="fJob"></select>
         <label for="fRegion">Hudud</label><select id="fRegion"></select>
@@ -157,23 +175,38 @@ nav.tabs button[aria-current=page]{color:var(--link);background:var(--soft)}
     </div>
     <div id="vMe" hidden></div>
     <div id="vChat" hidden></div>
+    <div id="vOrders" hidden></div>
     <div class="count" id="count"></div>
     <div class="list" id="list"></div>
   </main>
   <nav class="tabs" aria-label="Boʻlimlar">
     <button type="button" data-tab="home"><b>⌕</b>Ustalar</button>
+    <button type="button" data-tab="orders"><b>▤</b>Eʼlonlar</button>
     <button type="button" data-tab="chat"><b>✉</b>Xabarlar</button>
     <button type="button" data-tab="saved"><b>★</b>Saqlanganlar</button>
     <button type="button" data-tab="me"><b>☺</b>Profil</button>
   </nav>
 </section>
 
-<script>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getFirestore,collection,doc,setDoc,addDoc,updateDoc,deleteDoc,onSnapshot} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+var firebaseConfig={
+  apiKey:"AIzaSyCtmkSBt20R1jzpFGC2YdVQfSdCy5XkqPc",
+  authDomain:"usta-makon.firebaseapp.com",
+  projectId:"usta-makon",
+  storageBucket:"usta-makon.firebasestorage.app",
+  messagingSenderId:"28126756580",
+  appId:"1:28126756580:web:2d9776785f684f24b4b6f1"
+};
+var fbApp=initializeApp(firebaseConfig), auth=getAuth(fbApp), db=getFirestore(fbApp);
+var C={users:[],orders:[],offers:[]}, unsubs=[], regBusy=false;
 var JOBS = ["Elektrik","Santexnik","Quruvchi","Duradgor","Plitka ustasi","Pardozchi","Konditsioner ustasi","Maishiy texnika"];
 var REGIONS = ["Toshkent","Samarqand","Buxoro","Andijon","Fargʻona","Namangan","Qashqadaryo","Xorazm"];
 var SEED = [
  {name:"Aziz Karimov",job:"Elektrik",region:"Toshkent",phone:"+998901112233",tg:"",price:"80 000 soʻmdan",exp:9,rating:4.8,about:"Simlarni almashtirish, rozetka va shitlar, yoritish."},
- {name:"Bobur Rahmonov",job:"Santexnik",region:"Samarqand",phone:"+998933334455",tg:"",price:"100 000 soʻmdan",exp:6,rating:4.6,about:"Quvur, kran, unitaz va isitish tizimlari."},
+ {name:"Bobur Rahmonov",job:"Santexnik",region:"Samarqand",phone:"+998933334455",tg:"",price:"100 000 soʻmdan",exp:6,rating:4.6,busy:true,about:"Quvur, kran, unitaz va isitish tizimlari."},
  {name:"Dilshod Yoʻldoshev",job:"Plitka ustasi",region:"Toshkent",phone:"+998975556677",tg:"",price:"45 000 soʻm/m²",exp:12,rating:4.9,about:"Hammom va oshxona plitkasi, aniq va tekis."},
  {name:"Sardor Tursunov",job:"Duradgor",region:"Andijon",phone:"+998887778899",tg:"",price:"Kelishilgan holda",exp:15,rating:4.7,about:"Eshik, shkaf va mebel yasash hamda taʼmirlash."},
  {name:"Jasur Ergashev",job:"Konditsioner ustasi",region:"Buxoro",phone:"+998901239876",tg:"",price:"120 000 soʻmdan",exp:5,rating:4.5,about:"Oʻrnatish, tozalash va gaz toʻldirish."}
@@ -188,23 +221,22 @@ function fillSelect(el,items){el.innerHTML=items.map(function(x){return "<option
 function norm(p){var d=String(p).replace(/\D/g,"");if(d.length===9)d="998"+d;return d;}
 function read(k,def){try{return JSON.parse(localStorage.getItem(k))||def;}catch(e){return def;}}
 function write(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
-function getUsers(){return read(UK,[]);}
+function getUsers(){return C.users;}
 function getFavs(){return read(FK,[]);}
-function setMe(d){try{localStorage.setItem(MK,d);}catch(e){}}
+function setMe(){}
 function currentUser(){
-  var d="";try{d=localStorage.getItem(MK)||"";}catch(e){}
-  if(!d)return null;
-  return getUsers().find(function(u){return norm(u.phone)===d;})||null;
+  var id=auth.currentUser?auth.currentUser.uid:"";
+  return id?(C.users.find(function(u){return u.uid===id;})||null):null;
 }
 function allMasters(){
-  var mine=getUsers().filter(function(u){return u.role==="usta";}).reverse();
+  var mine=getUsers().filter(function(u){return u.role==="usta";}).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0);});
   return mine.concat(SEED);
 }
 
 /* Kirish */
 function showAuth(){
   $("app").hidden=true;$("auth").hidden=false;
-  $("stepRole").hidden=false;$("stepForm").hidden=true;
+  $("stepRole").hidden=false;$("stepPick").hidden=true;$("stepForm").hidden=true;
   window.scrollTo(0,0);
 }
 function openForm(mode){
@@ -214,29 +246,43 @@ function openForm(mode){
   $("nameBox").hidden=mode==="kirish";
   $("ustaBox").hidden=mode!=="usta";
   $("err").textContent="";
-  $("stepRole").hidden=true;$("stepForm").hidden=false;
+  $("fPass").autocomplete=mode==="kirish"?"current-password":"new-password";
+  $("stepRole").hidden=true;$("stepPick").hidden=true;$("stepForm").hidden=false;
 }
-function submitForm(){
-  var d=norm($("fPhone").value), users=getUsers();
-  var found=users.find(function(u){return norm(u.phone)===d;});
+function fbErr(e){
+  var c=e&&e.code||"";
+  if(c==="auth/email-already-in-use")return "Bu raqam roʻyxatdan oʻtgan. Orqaga qaytib, Kirish ni tanlang.";
+  if(c==="auth/invalid-credential"||c==="auth/user-not-found"||c==="auth/wrong-password")return "Raqam yoki parol notoʻgʻri.";
+  if(c==="auth/weak-password")return "Parol kamida 6 ta belgi boʻlsin.";
+  if(c==="auth/network-request-failed")return "Internet yoʻq. Qayta urinib koʻring.";
+  if(c==="auth/operation-not-allowed")return "Firebase'da Email/Password yoqilmagan.";
+  return "Xatolik: "+(c||e);
+}
+async function submitForm(){
+  var d=norm($("fPhone").value), pass=$("fPass").value, btn=$("submit");
   if(d.length!==12){$("err").textContent="Telefon raqamni toʻliq kiriting: +998 90 123 45 67";return;}
-  if(formMode==="kirish"){
-    if(!found){$("err").textContent="Bu raqam topilmadi. Avval roʻyxatdan oʻting.";return;}
-    setMe(d);showApp();return;
-  }
-  var name=$("fName").value.trim();
-  if(name.length<2){$("err").textContent="Ismingizni kiriting.";return;}
-  if(found){$("err").textContent="Bu raqam roʻyxatdan oʻtgan. Orqaga qaytib, Kirish ni tanlang.";return;}
-  var u={role:formMode,name:name,phone:"+"+d};
-  if(formMode==="usta"){
-    u.job=$("fJob").value;u.region=$("fRegion").value;u.tg=$("fTg").value.trim();
-    u.price=$("fPrice").value.trim()||"Kelishilgan holda";
-    u.exp=Number($("fExp").value)||0;u.rating=0;
-    u.about=$("fAbout").value.trim()||"Maʼlumot kiritilmagan.";
-  }
-  users.push(u);write(UK,users);setMe(d);
-  ["fName","fPhone","fTg","fPrice","fExp","fAbout"].forEach(function(id){$(id).value="";});
-  showApp();
+  if(pass.length<6){$("err").textContent="Parol kamida 6 ta belgi boʻlsin.";return;}
+  var email=d+"@usta-makon.app", name=$("fName").value.trim();
+  if(formMode!=="kirish"&&name.length<2){$("err").textContent="Ismingizni kiriting.";return;}
+  btn.disabled=true;$("err").textContent="";
+  try{
+    if(formMode==="kirish"){
+      await signInWithEmailAndPassword(auth,email,pass);
+    }else{
+      var u={role:formMode,name:name,phone:"+"+d,createdAt:Date.now()};
+      if(formMode==="usta"){
+        u.job=$("fJob").value;u.region=$("fRegion").value;u.tg=$("fTg").value.trim();
+        u.price=$("fPrice").value.trim()||"Kelishilgan holda";
+        u.exp=Number($("fExp").value)||0;u.rating=0;u.busy=false;
+        u.about=$("fAbout").value.trim()||"Maʼlumot kiritilmagan.";
+      }
+      regBusy=true;
+      var cred=await createUserWithEmailAndPassword(auth,email,pass);
+      await setDoc(doc(db,"users",cred.user.uid),u);
+    }
+    ["fName","fPhone","fPass","fTg","fPrice","fExp","fAbout"].forEach(function(id){$(id).value="";});
+  }catch(e){$("err").textContent=fbErr(e);}
+  regBusy=false;btn.disabled=false;
 }
 
 /* Ilova */
@@ -252,18 +298,19 @@ function showApp(){
 function setTab(t){
   state.tab=t;
   var first=me.name.split(" ")[0];
-  $("title").textContent=t==="home"?"Usta toping":t==="saved"?"Saqlangan ustalar":t==="chat"?"Xabarlar":"Profilim";
-  $("hello").textContent=t==="home"?"Salom, "+first+". Kerakli ustani tanlang.":t==="saved"?"Keyinroq bogʻlanish uchun belgilaganlaringiz.":t==="chat"?"Ustalar va mijozlar bilan yozishmalar.":first+" · "+(me.role==="usta"?"usta":"mijoz");
+  $("title").textContent=t==="home"?"Usta toping":t==="orders"?"Eʼlonlar":t==="saved"?"Saqlangan ustalar":t==="chat"?"Xabarlar":"Profilim";
+  $("hello").textContent=t==="home"?"Salom, "+first+". Kerakli ustani tanlang.":t==="orders"?(me.role==="usta"?"Mijozlar eʼlonlariga taklif yuboring.":"Ishni eʼlon qiling, ustalar taklif yuboradi."):t==="saved"?"Keyinroq bogʻlanish uchun belgilaganlaringiz.":t==="chat"?"Ustalar va mijozlar bilan yozishmalar.":first+" · "+(me.role==="usta"?"usta":"mijoz");
   $("vHome").hidden=t!=="home";
   $("vMe").hidden=t!=="me";
-  var other=t==="me"||t==="chat";
+  var other=t==="me"||t==="chat"||t==="orders";
+  $("vOrders").hidden=t!=="orders";
   $("vChat").hidden=t!=="chat";
   $("list").hidden=other;
   $("count").hidden=other;
   document.querySelectorAll("nav.tabs button").forEach(function(b){
     if(b.getAttribute("data-tab")===t)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
   });
-  if(t==="me")renderMe();else if(t==="chat")renderChat();else render();
+  if(t==="me")renderMe();else if(t==="chat")renderChat();else if(t==="orders")renderOrders();else render();
   window.scrollTo(0,0);
 }
 function renderChips(){
@@ -275,10 +322,7 @@ function renderMe(){
   var rows='<dt>Ism</dt><dd>'+esc(me.name)+'</dd><dt>Telefon</dt><dd>'+esc(me.phone)+'</dd><dt>Rol</dt><dd>'+(me.role==="usta"?"Usta":"Mijoz")+'</dd>';
   if(me.role==="usta")rows+='<dt>Kasb</dt><dd>'+esc(me.job)+'</dd><dt>Hudud</dt><dd>'+esc(me.region)+'</dd><dt>Narx</dt><dd>'+esc(me.price)+'</dd><dt>Tajriba</dt><dd>'+esc(me.exp)+' yil</dd>';
   $("vMe").innerHTML='<div class="prof"><dl>'+rows+'</dl><button class="btn line wide" type="button" id="logout">Akkauntdan chiqish</button></div>';
-  $("logout").addEventListener("click",function(){
-    try{localStorage.removeItem(MK);}catch(e){}
-    me=null;showAuth();
-  });
+  $("logout").addEventListener("click",function(){signOut(auth);});
 }
 function render(){
   var q=state.q.trim().toLowerCase(), favs=getFavs(), saved=state.tab==="saved";
@@ -304,14 +348,52 @@ function render(){
     var key=norm(m.phone), own=me&&key===norm(me.phone), on=favs.indexOf(key)!==-1;
     var tg=m.tg?'<a class="btn alt" target="_blank" rel="noopener" href="https://t.me/'+esc(m.tg.replace("@",""))+'">Telegram</a>':"";
     var rate=m.rating?'<span class="rate">★ '+m.rating.toFixed(1)+'</span>':'<span class="rate new">Yangi</span>';
-    var acts=own?'<div class="mine">Bu sizning profilingiz</div>'
-      :'<div class="acts"><a class="btn" href="tel:'+esc(m.phone)+'">Qoʻngʻiroq qilish</a><button type="button" class="btn alt" data-msg="'+esc(key)+'">Xabar</button>'+tg+'</div>';
+    var share='<button type="button" class="btn line wide" data-share="'+esc(m.name+" — "+m.job+", "+m.region)+'" style="margin-top:10px">Ulashish</button>';
+    var acts=own?'<div class="mine">Bu sizning profilingiz</div><button type="button" class="btn alt wide" data-busy="1" style="margin-top:10px">'+(m.busy?"Boʻsh deb belgilash":"Band deb belgilash")+'</button>'+share
+      :'<div class="acts"><a class="btn" href="tel:'+esc(m.phone)+'">Qoʻngʻiroq qilish</a><button type="button" class="btn alt" data-msg="'+esc(key)+'">Xabar</button>'+tg+'</div>'+share;
+    var base=pbase(m.price), unit=String(m.price).indexOf("m²")>-1?"m²":"marta";
+    var calc=base?'<details class="calc"><summary>Narxni hisoblash</summary><label>Miqdor ('+unit+')</label><input type="number" min="0" data-base="'+base+'" placeholder="Masalan: 12"><div class="res" aria-live="polite"></div></details>':"";
+    var badge='<span class="badge '+(m.busy?"busy":"free")+'">'+(m.busy?"Band":"Boʻsh")+'</span>';
     return '<article class="row"><div class="head"><div class="mono" aria-hidden="true">'+esc(m.name.charAt(0).toUpperCase())+'</div>'+
-      '<div class="who"><h3 class="name">'+esc(m.name)+'</h3><p class="job">'+esc(m.job)+'</p></div>'+rate+
+      '<div class="who"><h3 class="name">'+esc(m.name)+badge+'</h3><p class="job">'+esc(m.job)+'</p></div>'+rate+
       '<button type="button" class="fav" data-fav="'+esc(key)+'" aria-pressed="'+on+'" aria-label="'+(on?"Saqlanganlardan olib tashlash":"Saqlash")+'">'+(on?"★":"☆")+'</button></div>'+
       '<div class="facts"><div><small>Hudud</small>'+esc(m.region)+'</div><div><small>Tajriba</small>'+esc(m.exp)+' yil</div><div><small>Narx</small>'+esc(m.price)+'</div></div>'+
-      '<p class="about">'+esc(m.about)+'</p>'+acts+'</article>';
+      '<p class="about">'+esc(m.about)+'</p>'+calc+acts+'</article>';
   }).join("");
+}
+
+/* Eʼlonlar */
+var OK="um_orders", FO="um_offers", ojob="Barcha kasb";
+var OSEED=[
+ {id:"s1",name:"Malika Aliyeva",phone:"+998901000011",job:"Plitka ustasi",region:"Toshkent",about:"Hammomga 8 m² plitka yotqizish kerak, material tayyor.",budget:"400 000 soʻm",ts:0},
+ {id:"s2",name:"Otabek Nazarov",phone:"+998901000022",job:"Elektrik",region:"Samarqand",about:"Yangi uyda rozetka va yoritishni ulash kerak.",budget:"",ts:0}
+];
+function pbase(p){var m=String(p).replace(/\s/g,"").match(/\d+/);return m?Number(m[0]):0;}
+function money(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g," ");}
+function ago(ts){
+  if(!ts)return "";
+  var d=Math.floor((Date.now()-ts)/86400000);
+  return d<=0?"Bugun":d===1?"Kecha":d<7?d+" kun oldin":fmt(ts).split(" ")[0];
+}
+function renderOrders(){
+  var box=$("vOrders"), offers=C.offers, my=norm(me.phone), h='<div class="finder">';
+  if(me.role==="mijoz")h+='<details class="calc" style="margin-bottom:8px"><summary>+ Yangi eʼlon berish</summary><label for="nJob">Qanday usta kerak?</label><select id="nJob"></select><label for="nReg">Hudud</label><select id="nReg"></select><label for="nAbout">Ish haqida</label><textarea id="nAbout" rows="3" placeholder="Masalan: hammomga 12 m² plitka kerak"></textarea><label for="nBud">Byudjet (ixtiyoriy)</label><input id="nBud" placeholder="500 000 soʻm"><div class="err" id="oerr" role="alert"></div><button class="btn wide" type="button" id="opost">Joylash</button></details>';
+  h+='<select id="ojob" aria-label="Kasb"></select></div><div class="count">Eʼlonlar</div><div class="list">';
+  var res=C.orders.slice().sort(function(a,b){return b.ts-a.ts;}).concat(OSEED).filter(function(o){return ojob==="Barcha kasb"||o.job===ojob;});
+  if(!res.length)h+='<div class="empty"><b>Eʼlon yoʻq</b>Boshqa kasbni tanlab koʻring.</div>';
+  h+=res.map(function(o){
+    var own=norm(o.phone)===my, of=offers.filter(function(x){return x.oid===o.id;}), acts="";
+    if(own){
+      acts=(of.length?of.map(function(x){return '<div class="offer"><b>'+esc(x.name)+' · '+esc(x.price)+'</b>'+(x.msg?esc(x.msg)+'<br>':'')+'<a href="tel:'+esc(x.phone)+'">Qoʻngʻiroq qilish</a></div>';}).join(""):'<p class="about">Hozircha takliflar yoʻq.</p>')+'<button type="button" class="btn line wide" data-odel="'+esc(o.id)+'" style="margin-top:10px">Eʼlonni oʻchirish</button>';
+    }else if(me.role==="usta"){
+      var sent=of.find(function(x){return norm(x.phone)===my;});
+      acts='<a class="btn wide" href="tel:'+esc(o.phone)+'">Qoʻngʻiroq qilish</a>'+(sent?'<div class="mine" style="margin-top:10px">Taklifingiz yuborilgan: '+esc(sent.price)+'</div>':'<details class="calc" style="margin:10px 0 0"><summary>Taklif yuborish</summary><input data-op placeholder="Narx: 300 000 soʻm"><input data-om placeholder="Qisqa izoh (ixtiyoriy)"><div class="err" data-oe role="alert"></div><button type="button" class="btn wide" data-offer="'+esc(o.id)+'">Yuborish</button></details>');
+    }
+    return '<article class="row"><div class="head"><div class="who"><h3 class="name">'+esc(o.job)+'</h3><p class="job">'+esc(o.region)+(o.budget?' · '+esc(o.budget):'')+'</p></div>'+(o.ts?'<span class="rate">'+esc(ago(o.ts))+'</span>':'')+'</div><p class="about" style="margin-top:10px">'+esc(o.about)+'<br>Mijoz: '+esc(o.name)+'</p>'+acts+'</article>';
+  }).join("")+'</div>';
+  box.innerHTML=h;
+  fillSelect($("ojob"),["Barcha kasb"].concat(JOBS));$("ojob").value=ojob;
+  if($("nJob")){fillSelect($("nJob"),JOBS);fillSelect($("nReg"),REGIONS);}
 }
 
 /* Xabarlar */
@@ -381,6 +463,8 @@ function init(){
     b.addEventListener("click",function(){openForm(b.getAttribute("data-mode"));});
   });
   $("back").addEventListener("click",showAuth);
+  $("goReg").addEventListener("click",function(){$("stepRole").hidden=true;$("stepPick").hidden=false;});
+  $("pickBack").addEventListener("click",showAuth);
   $("submit").addEventListener("click",submitForm);
   $("q").addEventListener("input",function(e){state.q=e.target.value;render();});
   $("region").addEventListener("change",function(e){state.region=e.target.value;render();});
@@ -390,6 +474,17 @@ function init(){
     state.job=b.getAttribute("data-job");renderChips();render();
   });
   $("list").addEventListener("click",function(e){
+    var bz=e.target.closest("[data-busy]");
+    if(bz){
+      updateDoc(doc(db,"users",me.uid),{busy:!me.busy});return;
+    }
+    var sh=e.target.closest("[data-share]");
+    if(sh){
+      var txt=sh.getAttribute("data-share")+". Usta Makon ilovasida:", url=location.href.split("#")[0];
+      if(navigator.share){navigator.share({title:"Usta Makon",text:txt,url:url}).catch(function(){});return;}
+      try{navigator.clipboard.writeText(txt+" "+url).then(function(){sh.textContent="Nusxalandi";});}catch(err){sh.textContent=url;}
+      return;
+    }
     var mb=e.target.closest("[data-msg]");
     if(mb){openChat(mb.getAttribute("data-msg"));return;}
     var b=e.target.closest(".fav");if(!b)return;
@@ -397,12 +492,69 @@ function init(){
     if(i===-1)f.push(k);else f.splice(i,1);
     write(FK,f);render();
   });
+  $("list").addEventListener("input",function(e){
+    var i=e.target.closest("[data-base]");if(!i)return;
+    var q=Number(i.value);
+    i.parentNode.querySelector(".res").textContent=q>0?"Taxminan "+money(q*Number(i.getAttribute("data-base")))+" soʻm. Aniq narx usta bilan kelishiladi.":"";
+  });
+  $("vOrders").addEventListener("change",function(e){if(e.target.id==="ojob"){ojob=e.target.value;renderOrders();}});
+  $("vOrders").addEventListener("click",function(e){
+    var t=e.target;
+    if(t.id==="opost"){
+      var about=$("nAbout").value.trim();
+      if(about.length<5){$("oerr").textContent="Ish haqida qisqacha yozing.";return;}
+      addDoc(collection(db,"orders"),{uid:me.uid,name:me.name,phone:me.phone,job:$("nJob").value,region:$("nReg").value,about:about,budget:$("nBud").value.trim(),ts:Date.now()}).then(renderOrders);return;
+    }
+    var f=t.closest("[data-offer]");
+    if(f){
+      var bx=f.parentNode, pr=bx.querySelector("[data-op]").value.trim();
+      if(pr.length<2){bx.querySelector("[data-oe]").textContent="Narxni yozing.";return;}
+      var oid=f.getAttribute("data-offer"), ord=C.orders.find(function(o){return o.id===oid;});
+      addDoc(collection(db,"offers"),{oid:oid,uid:me.uid,ownerUid:ord?ord.uid:"",name:me.name,phone:me.phone,price:pr,msg:bx.querySelector("[data-om]").value.trim()});return;
+    }
+    var d=t.closest("[data-odel]");
+    if(d&&confirm("Eʼlon oʻchirilsinmi?")){
+      var id=d.getAttribute("data-odel");
+      C.offers.filter(function(x){return x.oid===id;}).forEach(function(x){deleteDoc(doc(db,"offers",x.id));});
+      deleteDoc(doc(db,"orders",id));
+    }
+  });
   document.querySelectorAll("nav.tabs button").forEach(function(b){
     b.addEventListener("click",function(){state.chatWith=null;setTab(b.getAttribute("data-tab"));});
   });
-  if(currentUser())showApp();else showAuth();
 }
 init();
+
+function refresh(){
+  if(!me)return;
+  var a=document.activeElement;
+  if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)&&(a.closest("#vOrders")||a.closest("#list")))return;
+  if(state.tab==="orders")renderOrders();
+  else if(state.tab==="home"||state.tab==="saved")render();
+}
+function dbErr(e){console.error(e);alert("Maʼlumotlar bazasiga ulanib boʻlmadi ("+(e.code||e)+"). Firestore qoidalarini tekshiring.");}
+function pack(s){return s.docs.map(function(d){return Object.assign({},d.data(),{id:d.id});});}
+function listen(){
+  if(unsubs.length)return;
+  unsubs=[
+    onSnapshot(collection(db,"users"),function(s){
+      C.users=s.docs.map(function(d){return Object.assign({},d.data(),{uid:d.id});});
+      if(!auth.currentUser)return;
+      var u=currentUser();
+      if(u){if($("app").hidden)showApp();else{me=u;refresh();}}
+      else if(!regBusy)signOut(auth);
+    },dbErr),
+    onSnapshot(collection(db,"orders"),function(s){C.orders=pack(s);refresh();},dbErr),
+    onSnapshot(collection(db,"offers"),function(s){C.offers=pack(s);refresh();},dbErr)
+  ];
+}
+onAuthStateChanged(auth,function(user){
+  if(user)listen();
+  else{
+    unsubs.forEach(function(f){f();});unsubs=[];
+    C={users:[],orders:[],offers:[]};me=null;showAuth();
+  }
+});
 </script>
 </body>
 </html>
