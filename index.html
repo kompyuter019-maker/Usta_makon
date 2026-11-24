@@ -8,11 +8,11 @@
 :root{--ink:#0f2a3d;--bg:#eaf6f6;--card:#fff;--line:#d3e6e6;--teal:#0fb5a6;--blue:#2563eb;--muted:#587184;--ok:#0b8a5a}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+:root{--ink:#2b1d14;--bg:#fff4ea;--card:#fff;--line:#f0d9c4;--teal:#f59e0b;--blue:#ea580c;--muted:#7a6554;--ok:#0b8a5a}
 header{background:linear-gradient(135deg,var(--teal),var(--blue));color:#fff;padding:26px 18px 58px;border-radius:0 0 30px 30px}
 header h1{margin:0;font-size:30px;font-weight:800}
 header p{margin:6px 0 0;font-size:15px;opacity:.92}
-.bar{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+header{background:linear-gradient(120deg,var(--teal),var(--blue));color:#fff;padding:30px 18px 64px;border-radius:0 0 50% 50%/0 0 36px 36px}
 .out{background:rgba(255,255,255,.22);color:#fff;border:0;border-radius:999px;padding:8px 14px;font:inherit;font-weight:600;cursor:pointer}
 main{max-width:640px;margin:-34px auto 0;padding:0 14px 40px}
 .panel{background:var(--card);border-radius:24px;padding:20px;box-shadow:0 8px 24px rgba(15,42,61,.12);margin-bottom:14px}
@@ -20,7 +20,7 @@ main{max-width:640px;margin:-34px auto 0;padding:0 14px 40px}
 .role{display:flex;flex-direction:column;gap:2px;width:100%;text-align:left;border:2px solid var(--line);background:#fff;border-radius:18px;padding:16px;margin-top:12px;font:inherit;cursor:pointer;color:var(--ink)}
 .role b{font-size:18px}
 .role span{color:var(--muted);font-size:14px}
-.role:hover{border-color:var(--teal)}
+.role{display:flex;flex-direction:column;gap:2px;width:100%;text-align:left;border:2px solid var(--line);border-left:6px solid var(--teal);background:#fff;border-radius:14px;padding:16px;margin-top:12px;font:inherit;cursor:pointer;color:var(--ink)}
 .link{background:none;border:0;color:var(--blue);font:inherit;font-weight:600;padding:14px 0 0;cursor:pointer}
 input,select,textarea{width:100%;font:inherit;color:var(--ink);background:#f3fafa;border:2px solid transparent;border-radius:14px;padding:13px 14px}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal)}
