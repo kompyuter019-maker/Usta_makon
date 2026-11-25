@@ -7,14 +7,15 @@
     <style>
         /* Asosiy sozlamalar */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #0f1219; /* Orqa fon rangi */
+            /* Orqa fonni biroz jonlantirdik */
+            background: radial-gradient(circle at top right, #1e293b, #0f1219);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -22,38 +23,40 @@
             padding: 20px;
         }
 
-        /* Asosiy karta */
-        .register-card {
-            background-color: #1a1f2b;
-            border: 1px solid #2a3142;
+        /* Asosiy karta - shishasimon effekt (glassmorphism) */
+        .card {
+            background: rgba(26, 31, 43, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
-            padding: 30px;
+            padding: 32px;
             width: 100%;
             max-width: 420px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
         }
 
-        /* Logo */
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
+        /* Logo dizayni - biroz kattaroq va yorqinroq */
         .logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            border-radius: 16px;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            border-radius: 18px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 30px;
+            margin: 0 auto 16px;
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
         }
 
-        /* Sarlavha */
-        .title {
-            color: #ffffff;
+        .logo svg {
+            width: 32px;
+            height: 32px;
+            fill: #fff;
+        }
+
+        h1 {
+            color: #fff;
             text-align: center;
             font-size: 24px;
             font-weight: 700;
@@ -61,92 +64,121 @@
         }
 
         .subtitle {
-            color: #9ca3af;
+            color: #94a3b8;
             text-align: center;
             font-size: 14px;
-            margin-bottom: 25px;
+            margin-bottom: 24px;
         }
 
-        /* Tab tugmalari (Kirish / Ro'yxatdan o'tish) */
+        /* Tab tugmalari - yangilangan dizayn */
         .tabs {
             display: flex;
-            background-color: #11151c;
-            border-radius: 12px;
-            padding: 5px;
-            margin-bottom: 25px;
+            background-color: #0f1219;
+            border-radius: 14px;
+            padding: 6px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .tab-btn {
+        .tab {
             flex: 1;
             padding: 12px;
             border: none;
             background: none;
-            color: #9ca3af;
+            color: #94a3b8;
             font-weight: 600;
-            font-size: 14px;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: 0.3s;
+            font-size: 14px;
+            transition: all 0.3s ease;
         }
 
-        .tab-btn.active {
+        .tab.active {
             background: linear-gradient(90deg, #06b6d4, #8b5cf6);
-            color: #ffffff;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
         }
 
-        /* Form elementlari */
+        .tab:not(.active):hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Form guruhlari */
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
-        .form-group label {
+        label {
             display: block;
-            color: #d1d5db;
-            font-size: 12px;
-            font-weight: 600;
+            color: #cbd5e1;
+            font-size: 11px;
+            font-weight: 700;
             margin-bottom: 8px;
             letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
-        .input-wrapper {
+        .input-box {
             position: relative;
             display: flex;
             align-items: center;
         }
 
-        .input-icon {
+        .input-box svg {
             position: absolute;
-            left: 14px;
-            font-size: 16px;
+            left: 16px;
+            width: 20px;
+            height: 20px;
+            fill: #64748b;
+            transition: fill 0.3s;
         }
 
-        .input-field {
+        input {
             width: 100%;
-            background-color: #1f2533;
-            border: 1px solid #374151;
-            border-radius: 12px;
-            padding: 14px 14px 14px 45px;
-            color: #ffffff;
+            background-color: #1e2432;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 14px 14px 14px 48px;
+            color: #fff;
             font-size: 14px;
             outline: none;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
-        .input-field::placeholder {
-            color: #6b7280;
+        input::placeholder {
+            color: #64748b;
         }
 
-        .input-field:focus {
-            border-color: #3b82f6;
+        /* Focus bo'lganda chiroyli effekt */
+        input:focus {
+            border-color: #8b5cf6;
+            background-color: #232a3b;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
         }
 
-        /* Parol ko'z belgisi */
-        .password-toggle {
+        input:focus + svg, .input-box:focus-within svg {
+            fill: #8b5cf6;
+        }
+
+        .toggle-pass {
             position: absolute;
-            right: 14px;
+            right: 16px;
             cursor: pointer;
-            font-size: 16px;
-            color: #9ca3af;
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-pass svg {
+            position: static;
+            width: 20px;
+            height: 20px;
+            fill: #64748b;
+            transition: fill 0.3s;
+        }
+
+        .toggle-pass:hover svg {
+            fill: #cbd5e1;
         }
 
         /* Asosiy tugma */
@@ -155,46 +187,44 @@
             background: linear-gradient(90deg, #06b6d4, #8b5cf6);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 16px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            margin-top: 10px;
-            transition: opacity 0.3s;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(6, 182, 212, 0.25);
         }
 
         .submit-btn:hover {
-            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(139, 92, 246, 0.4);
         }
 
-        /* "yoki quyidagilar orqali" qismi */
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Ajratuvchi chiziq */
         .divider {
             display: flex;
             align-items: center;
-            text-align: center;
-            color: #6b7280;
+            color: #64748b;
             font-size: 13px;
             margin: 24px 0;
+            gap: 12px;
         }
 
-        .divider::before,
-        .divider::after {
+        .divider::before, .divider::after {
             content: '';
             flex: 1;
-            border-bottom: 1px solid #374151;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        .divider::before {
-            margin-right: 15px;
-        }
-
-        .divider::after {
-            margin-left: 15px;
-        }
-
-        /* Ijtimoiy tarmoq tugmalari */
-        .social-buttons {
+        /* Ijtimoiy tarmoqlar */
+        .socials {
             display: flex;
             gap: 12px;
         }
@@ -205,94 +235,109 @@
             justify-content: center;
             align-items: center;
             gap: 8px;
-            background-color: #1f2533;
-            border: 1px solid #374151;
-            border-radius: 12px;
-            padding: 12px;
-            color: #ffffff;
+            background-color: #1e2432;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 14px;
+            color: #fff;
             font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
         .social-btn:hover {
             background-color: #2a3142;
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .social-btn svg {
+            width: 20px;
+            height: 20px;
         }
     </style>
 </head>
 <body>
 
-    <div class="register-card">
+    <div class="card">
         <!-- Logo -->
-        <div class="logo-container">
-            <div class="logo">⚡</div>
+        <div class="logo">
+            <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
         </div>
 
-        <!-- Sarlavha -->
-        <h1 class="title">Ro'yxatdan O'tish</h1>
+        <h1>Ro'yxatdan O'tish</h1>
         <p class="subtitle">Yangi hisob yaratish uchun formani to'ldiring</p>
 
         <!-- Tablar -->
         <div class="tabs">
-            <button class="tab-btn">Kirish</button>
-            <button class="tab-btn active">Ro'yxatdan o'tish</button>
+            <button class="tab">Kirish</button>
+            <button class="tab active">Ro'yxatdan o'tish</button>
         </div>
 
         <!-- Forma -->
-        <form>
-            <!-- Ism Familiya -->
+        <form onsubmit="event.preventDefault(); alert('Muvaffaqiyatli ro\'yxatdan o\'tdingiz!');">
+            
             <div class="form-group">
-                <label>TO'LIQ ISMINGIZ</label>
-                <div class="input-wrapper">
-                    <span class="input-icon">📝</span>
-                    <input type="text" class="input-field" placeholder="Ism Familiya">
+                <label>To'liq Ismingiz</label>
+                <div class="input-box">
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    <input type="text" placeholder="Ism Familiya" required>
                 </div>
             </div>
 
-            <!-- Gmail -->
             <div class="form-group">
-                <label>GMAIL POCHTA</label>
-                <div class="input-wrapper">
-                    <span class="input-icon">✉️</span>
-                    <input type="email" class="input-field" placeholder="nomi@gmail.com">
+                <label>Gmail Pochta</label>
+                <div class="input-box">
+                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <input type="email" placeholder="nomi@gmail.com" required>
                 </div>
             </div>
 
-            <!-- Parol -->
             <div class="form-group">
-                <label>PAROL</label>
-                <div class="input-wrapper">
-                    <span class="input-icon">🔑</span>
-                    <input type="password" class="input-field" placeholder="••••••••">
-                    <span class="password-toggle">👁️</span>
+                <label>Parol</label>
+                <div class="input-box">
+                    <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                    <input type="password" id="pass" placeholder="••••••••" required>
+                    <span class="toggle-pass" onclick="togglePassword()">
+                        <svg id="eye-icon" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                    </span>
                 </div>
             </div>
 
-            <!-- SMS Kod -->
             <div class="form-group">
-                <label>GMAIL'GA YUBORILGAN 6 XONALIK SMS KOD</label>
-                <div class="input-wrapper">
-                    <span class="input-icon">🔢</span>
-                    <input type="text" class="input-field" placeholder="123456">
+                <label>SMS Kod (6 xonalik)</label>
+                <div class="input-box">
+                    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/></svg>
+                    <input type="text" placeholder="123456" maxlength="6" required>
                 </div>
             </div>
 
-            <!-- Asosiy tugma -->
-            <button type="button" class="submit-btn">Davom Etish (Captcha)</button>
+            <button type="submit" class="submit-btn">Davom Etish</button>
         </form>
 
-        <!-- Ijtimoiy tarmoqlar -->
         <div class="divider">yoki quyidagilar orqali</div>
-        
-        <div class="social-buttons">
+
+        <div class="socials">
             <button class="social-btn">
-                🌐 Google
+                <svg viewBox="0 0 24 24" fill="#4285F4"><path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.344-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z"/></svg>
+                Google
             </button>
             <button class="social-btn">
-                ✈️ Telegram
+                <svg viewBox="0 0 24 24" fill="#0088cc"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                Telegram
             </button>
         </div>
     </div>
 
+    <script>
+        function togglePassword() {
+            var x = document.getElementById("pass");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
 </body>
 </html>
