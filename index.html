@@ -21,31 +21,42 @@ button:active,.btn:active{opacity:.55}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 .wrap{max-width:620px;margin:0 auto;padding:0 16px}
 
-/* Kirish */
-.hero{padding:44px 0 6px;text-align:center}
-.brand{display:flex;flex-direction:column;align-items:center;gap:10px;font-weight:600;font-size:15px;color:var(--muted);margin-bottom:22px}
-.brand i{width:84px;height:84px;border-radius:22px;background:linear-gradient(160deg,#5ac8fa,#007aff 55%,#0a4fd6);display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,122,255,.3)}
-.brand i::after{content:"🛠️";font-size:42px;line-height:1}
-.hero h1{margin:0 auto;font-size:30px;line-height:1.12;font-weight:700;letter-spacing:.3px;max-width:16ch}
-.hero p{margin:12px auto 0;max-width:34ch;color:var(--muted);font-size:16px}
-.sheet{padding:26px 0 40px}
-.sheet h2{margin:0 0 12px 4px;font-size:22px;font-weight:700;letter-spacing:.3px}
-.role{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:0;border-radius:12px;padding:12px 14px;margin-bottom:10px;position:relative}
-.role::after{content:"";flex:none;width:8px;height:14px;margin-left:auto;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14'%3E%3Cpath d='M1 1l6 6-6 6' fill='none' stroke='%23c4c4c7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-.role .ic{flex:none;width:40px;height:40px;border-radius:10px;background:var(--tint);display:grid;place-items:center;font-size:21px}
-.role b{display:block;font-size:17px;font-weight:600}
-.role span{color:var(--muted);font-size:14px}
-.link{background:none;border:0;color:var(--blue);font-weight:400;font-size:17px;padding:10px 4px}
-label{display:block;font-size:13px;font-weight:400;color:var(--muted);margin:16px 0 6px 14px}
-input,select,textarea{width:100%;background:var(--card);border:0;border-radius:10px;padding:12px 14px;font-size:17px}
+/* Kirish — iOS uslubi */
+#auth{min-height:100vh;display:flex;flex-direction:column;background:var(--bg)}
+.authWrap{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 0 40px}
+.authHead{text-align:center;padding:0 24px 28px}
+.authIcon{width:96px;height:96px;margin:0 auto 18px;border-radius:26px;background:linear-gradient(160deg,#5ac8fa,#007aff 55%,#0a4fd6);display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,122,255,.35),inset 0 1px 0 rgba(255,255,255,.35)}
+.authIcon::after{content:"🛠️";font-size:48px;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.15))}
+.authHead h1{margin:0;font-size:32px;line-height:1.1;font-weight:700;letter-spacing:-.6px}
+.authHead p{margin:10px auto 0;max-width:30ch;color:var(--muted);font-size:16px;line-height:1.4;letter-spacing:-.2px}
+.authGroup{background:var(--card);border-radius:14px;overflow:hidden;margin:0 16px 18px}
+.authGroup h2{margin:0;padding:14px 18px 8px;font-size:13px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.authGroup .row{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:none;border:0;padding:14px 16px;border-bottom:.5px solid var(--line);color:var(--ink);font-size:17px;letter-spacing:-.2px;min-height:58px}
+.authGroup .row:last-child{border-bottom:0}
+.authGroup .row:active{background:var(--fill)}
+.authGroup .row .ic{flex:none;width:38px;height:38px;border-radius:9px;background:var(--tint);display:grid;place-items:center;font-size:20px}
+.authGroup .row .tx{flex:1;min-width:0}
+.authGroup .row .tx b{display:block;font-size:17px;font-weight:600;line-height:1.2}
+.authGroup .row .tx span{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+.authGroup .row::after{content:"";flex:none;width:8px;height:14px;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14'%3E%3Cpath d='M1 1l6 6-6 6' fill='none' stroke='%23c4c4c7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.authGroup .row.plain{justify-content:center;color:var(--blue);font-weight:500}
+.authGroup .row.plain::after{display:none}
+.authFoot{text-align:center;color:var(--muted);font-size:13px;padding:0 24px}
+
+/* Forma */
+.sheet{padding:8px 0 40px}
+.sheet h2{margin:0 0 14px 4px;font-size:22px;font-weight:700;letter-spacing:-.4px}
+label{display:block;font-size:13px;font-weight:500;color:var(--muted);margin:16px 4px 6px;text-transform:uppercase;letter-spacing:.4px}
+input,select,textarea{width:100%;background:var(--card);border:0;border-radius:12px;padding:14px 16px;font-size:17px;letter-spacing:-.2px}
 select{-webkit-appearance:none;appearance:none;padding-right:34px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='18' viewBox='0 0 12 18'%3E%3Cpath d='M2 7l4-4 4 4M2 11l4 4 4-4' fill='none' stroke='%238e8e93' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:0}
 ::placeholder{color:#8e8e93;opacity:1}
-.err{color:var(--err);font-size:14px;min-height:22px;margin:10px 0 0 14px}
+.err{color:var(--err);font-size:14px;min-height:22px;margin:10px 4px 0}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-weight:600;font-size:17px;border:0;border-radius:12px;padding:13px 16px;background:var(--blue);color:#fff}
 .btn.wide{width:100%}
 .btn.alt{background:var(--tint);color:var(--blue)}
 .btn.line{background:var(--card);color:var(--red);font-weight:400}
+.link{background:none;border:0;color:var(--blue);font-weight:500;font-size:17px;padding:8px 0}
 
 /* Ilova */
 .top{padding:16px 0 4px}
@@ -173,17 +184,22 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 <body>
 
 <section id="auth">
-  <div class="hero"><div class="wrap">
-    <div class="brand"><i></i>Usta Makon</div>
-    <h1>Ishonchli usta, yaqin joyda</h1>
-    <p>Elektrik, santexnik, duradgor va boshqa ustalarni topib, bevosita bogʻlaning.</p>
-  </div></div>
-  <div class="sheet"><div class="wrap">
+  <div class="authWrap">
+    <div class="authHead">
+      <div class="authIcon"></div>
+      <h1>Usta Makon</h1>
+      <p>Ishonchli usta, yaqin joyda. Elektrik, santexnik, duradgor va boshqalar.</p>
+    </div>
     <div id="stepRole">
-      <h2>Kim sifatida kirasiz?</h2>
-      <button class="role" type="button" data-mode="mijoz"><span class="ic">🔍</span><span><b>Men mijozman</b><span>Kerakli ustani qidiraman</span></span></button>
-      <button class="role" type="button" data-mode="usta"><span class="ic">🛠️</span><span><b>Men ustaman</b><span>Mijozlar meni topsin</span></span></button>
-      <button class="link" type="button" data-mode="kirish">Akkauntim bor, kirish</button>
+      <div class="authGroup">
+        <h2>Kim sifatida kirasiz?</h2>
+        <button class="row" type="button" data-mode="mijoz"><span class="ic">🔍</span><span class="tx"><b>Men mijozman</b><span>Kerakli ustani qidiraman</span></span></button>
+        <button class="row" type="button" data-mode="usta"><span class="ic">🛠️</span><span class="tx"><b>Men ustaman</b><span>Mijozlar meni topsin</span></span></button>
+      </div>
+      <div class="authGroup">
+        <button class="row plain" type="button" data-mode="kirish">Akkauntim bor — kirish</button>
+      </div>
+      <p class="authFoot">Davom etish orqali siz foydalanish shartlariga rozilik bildirasiz.</p>
     </div>
     <div id="stepForm" hidden>
       <button class="link" type="button" id="back">‹ Orqaga</button>
@@ -201,9 +217,9 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
         <label for="fAbout">Oʻzingiz haqingizda</label><textarea id="fAbout" rows="3"></textarea>
       </div>
       <div class="err" id="err" role="alert"></div>
-      <button class="btn wide" type="button" id="submit"></button>
+      <button class="btn wide" type="button" id="submit" style="margin-top:8px"></button>
     </div>
-  </div></div>
+  </div>
 </section>
 
 <section id="app" hidden>
@@ -289,7 +305,6 @@ function allMasters(){
 function showAuth(){
   $("app").hidden=true;$("auth").hidden=false;
   $("stepRole").hidden=false;$("stepForm").hidden=true;
-  window.scrollTo(0,0);
 }
 function openForm(mode){
   formMode=mode;
