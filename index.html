@@ -4,115 +4,172 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Usta Makon</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <style>
-:root{--bg:#f4f6fb;--ink:#10193a;--card:#fff;--line:#dfe4f0;--cobalt:#1b3fa0;--link:#1b3fa0;--sun:#f5b400;--sunbg:#fff3cc;--sunink:#6b4d00;--muted:#5b6586;--ok:#0b7a52;--okbg:#dff5ea;--soft:#e8edfb;--field:#eef1f9;--err:#b3261e}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1226;--ink:#eef1fb;--card:#161d38;--line:#2a3358;--cobalt:#3556d6;--link:#9bb3ff;--sunbg:#3a2f08;--sunink:#ffd75e;--muted:#a3adcf;--ok:#6fe0ae;--okbg:#10382a;--soft:#1f2850;--field:#1f2850;--err:#ff8a80}}
-:root[data-theme="dark"]{--bg:#0d1226;--ink:#eef1fb;--card:#161d38;--line:#2a3358;--cobalt:#3556d6;--link:#9bb3ff;--sunbg:#3a2f08;--sunink:#ffd75e;--muted:#a3adcf;--ok:#6fe0ae;--okbg:#10382a;--soft:#1f2850;--field:#1f2850;--err:#ff8a80}
+:root{--bg:#f2f2f7;--card:#fff;--ink:#000;--muted:#6c6c70;--line:rgba(60,60,67,.2);--blue:#007aff;--tint:rgba(0,122,255,.12);--fill:rgba(118,118,128,.12);--green:#248a3d;--greenbg:rgba(52,199,89,.16);--orange:#b25000;--orangebg:rgba(255,149,0,.16);--red:#d70015;--bar:rgba(249,249,249,.86);--err:#d70015;--chev:%23c4c4c7}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--card:#1c1c1e;--ink:#fff;--muted:#98989f;--line:rgba(84,84,88,.6);--blue:#0a84ff;--tint:rgba(10,132,255,.2);--fill:rgba(118,118,128,.24);--green:#30d158;--greenbg:rgba(48,209,88,.18);--orange:#ff9f0a;--orangebg:rgba(255,159,10,.18);--red:#ff453a;--bar:rgba(29,29,31,.86);--err:#ff453a;--chev:%233a3a3c}}
+:root[data-theme="dark"]{--bg:#000;--card:#1c1c1e;--ink:#fff;--muted:#98989f;--line:rgba(84,84,88,.6);--blue:#0a84ff;--tint:rgba(10,132,255,.2);--fill:rgba(118,118,128,.24);--green:#30d158;--greenbg:rgba(48,209,88,.18);--orange:#ff9f0a;--orangebg:rgba(255,159,10,.18);--red:#ff453a;--bar:rgba(29,29,31,.86);--err:#ff453a;--chev:%233a3a3c}
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:inherit;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.45}
-button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer}
-:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
-.wrap{max-width:620px;margin:0 auto;padding:0 18px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",system-ui,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.35;letter-spacing:-.2px;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit;letter-spacing:inherit}
+button{cursor:pointer;-webkit-appearance:none;transition:opacity .15s}
+button:active,.btn:active{opacity:.55}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrap{max-width:620px;margin:0 auto;padding:0 16px}
 
 /* Kirish */
-.hero{background:var(--cobalt);color:#fff;padding:34px 0 40px;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 2px,transparent 2px 18px)}
-.brand{font-weight:800;font-size:15px;letter-spacing:.2px;display:flex;align-items:center;gap:8px;margin-bottom:26px}
-.brand i{width:22px;height:22px;background:var(--sun);border-radius:6px;display:inline-block}
-.hero h1{margin:0;font-size:34px;line-height:1.1;font-weight:800;max-width:14ch}
-.hero p{margin:12px 0 0;max-width:36ch;opacity:.9}
-.sheet{background:var(--card);border-radius:22px 22px 0 0;margin-top:-18px;padding:24px 0 40px;min-height:50vh}
-.sheet h2{margin:0 0 14px;font-size:20px}
-.role{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
-.role:hover{border-color:var(--cobalt)}
-.role .ic{flex:none;width:44px;height:44px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-size:22px}
-.role b{display:block;font-size:17px}
+.hero{padding:44px 0 6px;text-align:center}
+.brand{display:flex;flex-direction:column;align-items:center;gap:10px;font-weight:600;font-size:15px;color:var(--muted);margin-bottom:22px}
+.brand i{width:84px;height:84px;border-radius:22px;background:linear-gradient(160deg,#5ac8fa,#007aff 55%,#0a4fd6);display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,122,255,.3)}
+.brand i::after{content:"🛠️";font-size:42px;line-height:1}
+.hero h1{margin:0 auto;font-size:30px;line-height:1.12;font-weight:700;letter-spacing:.3px;max-width:16ch}
+.hero p{margin:12px auto 0;max-width:34ch;color:var(--muted);font-size:16px}
+.sheet{padding:26px 0 40px}
+.sheet h2{margin:0 0 12px 4px;font-size:22px;font-weight:700;letter-spacing:.3px}
+.role{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:0;border-radius:12px;padding:12px 14px;margin-bottom:10px;position:relative}
+.role::after{content:"";flex:none;width:8px;height:14px;margin-left:auto;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 14'%3E%3Cpath d='M1 1l6 6-6 6' fill='none' stroke='%23c4c4c7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.role .ic{flex:none;width:40px;height:40px;border-radius:10px;background:var(--tint);display:grid;place-items:center;font-size:21px}
+.role b{display:block;font-size:17px;font-weight:600}
 .role span{color:var(--muted);font-size:14px}
-.link{background:none;border:0;color:var(--link);font-weight:700;padding:10px 0}
-label{display:block;font-size:14px;font-weight:700;margin:14px 0 6px}
-input,select,textarea{width:100%;background:var(--field);border:1.5px solid transparent;border-radius:12px;padding:13px 14px}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--cobalt)}
-.err{color:var(--err);font-size:14px;min-height:22px;margin:10px 0 0}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-weight:800;border:0;border-radius:12px;padding:13px 16px;background:var(--cobalt);color:#fff}
+.link{background:none;border:0;color:var(--blue);font-weight:400;font-size:17px;padding:10px 4px}
+label{display:block;font-size:13px;font-weight:400;color:var(--muted);margin:16px 0 6px 14px}
+input,select,textarea{width:100%;background:var(--card);border:0;border-radius:10px;padding:12px 14px;font-size:17px}
+select{-webkit-appearance:none;appearance:none;padding-right:34px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='18' viewBox='0 0 12 18'%3E%3Cpath d='M2 7l4-4 4 4M2 11l4 4 4-4' fill='none' stroke='%238e8e93' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:0}
+::placeholder{color:#8e8e93;opacity:1}
+.err{color:var(--err);font-size:14px;min-height:22px;margin:10px 0 0 14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;font-weight:600;font-size:17px;border:0;border-radius:12px;padding:13px 16px;background:var(--blue);color:#fff}
 .btn.wide{width:100%}
-.btn.alt{background:var(--soft);color:var(--link)}
-.btn.line{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+.btn.alt{background:var(--tint);color:var(--blue)}
+.btn.line{background:var(--card);color:var(--red);font-weight:400}
 
 /* Ilova */
-.top{background:var(--cobalt);color:#fff;padding:22px 0 64px;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 2px,transparent 2px 18px)}
-.top h1{margin:0;font-size:26px;font-weight:800;line-height:1.15}
-.top p{margin:6px 0 0;opacity:.9;font-size:15px}
-.finder{margin-top:-44px;background:var(--card);border-radius:16px;padding:12px;border:1px solid var(--line)}
+.top{padding:16px 0 4px}
+.top h1{margin:0;font-size:34px;font-weight:700;letter-spacing:.37px;line-height:1.1}
+.top p{margin:4px 0 0;color:var(--muted);font-size:15px}
+.finder{margin-top:14px}
+.finder input[type=search]{-webkit-appearance:none;appearance:none;background:var(--fill) no-repeat 10px center/17px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='M15.5 15.5L20 20'/%3E%3C/svg%3E");padding:9px 12px 9px 36px;border-radius:10px}
 .finder .two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:16px 18px 4px;margin:0 -18px;scrollbar-width:none}
+.finder select{background-color:var(--fill);padding-top:9px;padding-bottom:9px;font-size:15px;font-weight:500;color:var(--blue)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:14px 16px 4px;margin:0 -16px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:none;background:transparent;border:1.5px solid var(--line);border-radius:10px;padding:8px 14px;font-weight:700;font-size:14px;color:var(--ink)}
-.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
-.count{margin:14px 0 4px;color:var(--muted);font-size:14px;font-weight:600}
-.note{background:var(--okbg);color:var(--ok);border-radius:12px;padding:12px 14px;margin-top:14px;font-size:14px;font-weight:700}
-.list{border-top:1.5px solid var(--ink)}
-.row{padding:18px 0;border-bottom:1px solid var(--line)}
-.head{display:flex;gap:14px;align-items:flex-start}
-.mono{flex:none;width:52px;height:52px;border-radius:12px;background:var(--cobalt);color:#fff;font-weight:800;font-size:22px;display:grid;place-items:center;border-bottom:4px solid var(--sun)}
+.chip{flex:none;background:var(--card);border:0;border-radius:999px;padding:7px 14px;font-weight:500;font-size:15px;color:var(--ink)}
+.chip[aria-pressed=true]{background:var(--blue);color:#fff}
+.count{margin:16px 0 6px 16px;color:var(--muted);font-size:13px}
+.note{background:var(--greenbg);color:var(--green);border-radius:12px;padding:12px 14px;margin-top:14px;font-size:14px;font-weight:600}
+.list{background:var(--card);border-radius:12px;overflow:hidden}
+.row{padding:14px 16px 16px;border-bottom:.5px solid var(--line)}
+.row:last-child{border-bottom:0}
+.head{display:flex;gap:12px;align-items:center}
+.mono{flex:none;width:48px;height:48px;border-radius:50%;background:linear-gradient(#a7abb8,#858a98);color:#fff;font-weight:600;font-size:21px;display:grid;place-items:center}
 .who{flex:1;min-width:0}
-.name{margin:0;font-size:18px;font-weight:800;line-height:1.2}
-.job{margin:2px 0 0;color:var(--link);font-weight:700;font-size:15px}
-.rate{background:var(--sunbg);color:var(--sunink);border-radius:8px;padding:4px 9px;font-weight:800;font-size:14px;white-space:nowrap}
-.rate.new{background:var(--okbg);color:var(--ok)}
-.fav{flex:none;width:40px;height:40px;border-radius:10px;border:1.5px solid var(--line);background:transparent;font-size:19px;line-height:1;color:var(--muted)}
-.fav[aria-pressed=true]{background:var(--sunbg);border-color:var(--sun);color:var(--sunink)}
-.facts{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:4px 22px;margin:14px 0 10px}
-.facts div{font-size:14px;font-weight:700}
-.facts small{display:block;color:var(--muted);font-weight:600;font-size:12px}
+.name{margin:0;font-size:17px;font-weight:600;line-height:1.2}
+.job{margin:1px 0 0;color:var(--muted);font-size:15px}
+.rate{background:var(--orangebg);color:var(--orange);border-radius:999px;padding:3px 9px;font-weight:600;font-size:13px;white-space:nowrap}
+.rate.new{background:var(--greenbg);color:var(--green)}
+.fav{flex:none;width:34px;height:34px;border-radius:50%;border:0;background:none;font-size:22px;line-height:1;color:var(--blue)}
+.fav[aria-pressed=true]{color:#ff9f0a}
+.facts{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:4px 24px;margin:14px 0 10px}
+.facts div{font-size:15px;font-weight:600}
+.facts small{display:block;color:var(--muted);font-weight:400;font-size:12px}
 .about{margin:0 0 14px;color:var(--muted);font-size:15px}
-.acts{display:flex;gap:10px}
-.acts .btn{flex:1}
-.mine{background:var(--okbg);color:var(--ok);border-radius:12px;padding:11px;text-align:center;font-weight:800}
-.empty{text-align:center;color:var(--muted);padding:44px 12px}
-.empty b{display:block;color:var(--ink);font-size:18px;margin-bottom:6px}
-.prof{padding:22px 0}
-.prof dl{margin:16px 0;display:grid;grid-template-columns:auto 1fr;gap:10px 18px}
-.prof dt{color:var(--muted);font-weight:600}
-.prof dd{margin:0;font-weight:700}
-main.pad{padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}
-nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
-nav.tabs button{flex:1;background:none;border:0;border-radius:10px;padding:8px 4px;font-weight:700;font-size:12px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px}
-nav.tabs button b{font-size:20px;line-height:1}
-nav.tabs button[aria-current=page]{color:var(--link);background:var(--soft)}
-.chead{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.acts .btn{flex:1;padding:10px 12px;font-size:16px;white-space:nowrap}
+.mine{background:var(--greenbg);color:var(--green);border-radius:12px;padding:10px;text-align:center;font-weight:600;font-size:15px}
+.empty{text-align:center;color:var(--muted);padding:44px 20px;font-size:15px}
+.empty b{display:block;color:var(--ink);font-size:20px;font-weight:700;margin-bottom:6px}
+.prof{padding:12px 0}
+.prof dl{margin:0 0 20px;display:grid;grid-template-columns:auto 1fr;gap:0 18px;background:var(--card);border-radius:12px;padding:4px 16px}
+.prof dt,.prof dd{padding:12px 0;border-bottom:.5px solid var(--line)}
+.prof dt:nth-last-of-type(1),.prof dd:last-of-type{border-bottom:0}
+.prof dt{color:var(--ink)}
+.prof dd{margin:0;color:var(--muted);text-align:right}
+main.pad{padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--bar);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid var(--line);display:flex;justify-content:center;padding:6px 8px calc(4px + env(safe-area-inset-bottom,0px));z-index:5}
+nav.tabs button{flex:1;max-width:150px;background:none;border:0;padding:4px 2px;font-weight:500;font-size:10px;letter-spacing:.1px;color:#8e8e93;display:flex;flex-direction:column;align-items:center;gap:3px}
+nav.tabs svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+nav.tabs button[aria-current=page]{color:var(--blue)}
+nav.tabs button[aria-current=page] svg{fill:currentColor;fill-opacity:.22}
+.chead{display:flex;align-items:center;gap:8px;padding:6px 0 10px}
 .chead small{display:block;color:var(--muted);font-size:13px}
-.cnote{background:var(--sunbg);color:var(--sunink);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:14px;font-weight:600}
-.msgs{display:flex;flex-direction:column;gap:8px;padding:16px 0;max-height:52vh;overflow-y:auto}
-.bub{max-width:82%;padding:10px 12px;border-radius:14px;overflow-wrap:anywhere}
-.bub small{display:block;font-size:11px;opacity:.7;margin-top:3px}
-.bub.me{align-self:flex-end;background:var(--cobalt);color:#fff;border-bottom-right-radius:4px}
-.bub.he{align-self:flex-start;background:var(--soft);border-bottom-left-radius:4px}
-.cform{display:flex;gap:8px}
-.cform .btn{flex:none}
-.inb{display:flex;gap:14px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:16px 0;color:var(--ink)}
-.inb .mono{width:44px;height:44px;font-size:18px}
-.inb span{display:block;color:var(--muted);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.inb em{font-style:normal;color:var(--muted);font-size:12px}
-.badge{display:inline-block;border-radius:8px;padding:3px 9px;font-weight:800;font-size:12px;margin-left:8px;vertical-align:middle}
-.badge.free{background:var(--okbg);color:var(--ok)}
-.badge.busy{background:color-mix(in srgb,var(--err) 16%,transparent);color:var(--err)}
-.calc{margin:0 0 14px;background:var(--field);border-radius:12px;padding:10px 12px}
-.calc summary{cursor:pointer;font-weight:800;color:var(--link)}
-.calc input{margin-top:8px}
-.res{margin-top:8px;font-weight:700}
-.offer{background:var(--field);border-radius:12px;padding:10px 12px;margin-top:10px;font-size:14px}
-.offer b{display:block}
-.offer a{color:var(--link);font-weight:800}
-#vOrders{margin-top:-44px}
+.chead .link{padding-left:0}
+.cnote{background:var(--orangebg);color:var(--orange);border-radius:12px;padding:10px 12px;margin-top:4px;font-size:14px;font-weight:500}
+.msgs{display:flex;flex-direction:column;gap:6px;padding:14px 0;max-height:52vh;overflow-y:auto}
+.bub{max-width:80%;padding:8px 13px;border-radius:19px;overflow-wrap:anywhere}
+.bub small{display:block;font-size:11px;opacity:.65;margin-top:2px}
+.bub.me{align-self:flex-end;background:var(--blue);color:#fff;border-bottom-right-radius:5px}
+.bub.he{align-self:flex-start;background:var(--card);border-bottom-left-radius:5px}
+.cform{display:flex;gap:8px;align-items:center}
+.cform input{border-radius:999px;padding:9px 16px;border:.5px solid var(--line)}
+.send{flex:none;width:34px;height:34px;border-radius:50%;border:0;background:var(--blue);display:grid;place-items:center}
+.send svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+#vChat>div:not(.chat){background:var(--card);border-radius:12px;overflow:hidden}
+.inb{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:.5px solid var(--line);padding:12px 16px;color:var(--ink)}
+.inb:last-child{border-bottom:0}
+.inb .who b{font-weight:600}
+.inb span{display:block;color:var(--muted);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inb em{font-style:normal;color:var(--muted);font-size:13px;align-self:flex-start;margin-top:2px}
+
+.proj{display:flex;justify-content:space-between;align-items:center;width:100%;background:var(--fill);border:0;border-radius:10px;padding:10px 12px;margin:0 0 12px;font-weight:600;font-size:16px;color:var(--ink)}
+.proj em{font-style:normal;color:var(--muted);font-weight:400;margin-left:auto;margin-right:8px}
+.proj::after{content:"›";color:var(--muted);font-size:20px;line-height:1}
+.who[data-pro],.mono[data-pro]{cursor:pointer}
+.pro .pcard .row{border:0}
+.sh{display:flex;justify-content:space-between;align-items:center;margin:22px 0 8px}
+.sh h2{margin:0 0 0 4px;font-size:22px;font-weight:700;letter-spacing:.3px}
+.sh .link{padding:6px 4px}
+#myProj{margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.pc{display:block;text-align:left;background:var(--card);border:0;border-radius:12px;overflow:hidden;padding:0}
+.pt{position:relative;aspect-ratio:4/3;background:var(--fill)}
+.pt img,.pt video{width:100%;height:100%;object-fit:cover;display:block}
+.ph0{height:100%;display:grid;place-items:center;font-size:36px;background:var(--tint)}
+.play{position:absolute;right:8px;bottom:8px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font-size:11px;display:grid;place-items:center;padding-left:2px}
+.more{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;font-weight:600;border-radius:999px;padding:2px 8px}
+.px{padding:9px 11px 11px}
+.px b{display:block;font-size:15px;font-weight:600;line-height:1.25}
+.px span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--muted);font-size:13px;margin-top:2px}
+dialog{border:0;padding:0 16px 16px;background:var(--bg);color:var(--ink);border-radius:14px;width:min(560px,calc(100% - 24px));max-height:88vh;overflow:auto}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+@media (max-width:620px){dialog{margin-bottom:max(12px,env(safe-area-inset-bottom))}}
+.dh{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 -16px 6px;padding:10px 16px;position:sticky;top:0;background:var(--bg);z-index:1}
+.dh b{font-size:17px;font-weight:700}
+.dd{margin:4px 0 12px;color:var(--muted);font-size:15px}
+.dm{display:block;width:100%;border-radius:12px;margin:0 0 10px;background:#000;max-height:60vh;object-fit:contain}
+.pick{position:relative;margin:14px 0 0;font-size:17px}
+.pick:focus-within{outline:3px solid var(--blue);outline-offset:2px}
+.pick input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.prev{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.prev img,.prev video{width:64px;height:64px;object-fit:cover;border-radius:10px}
+.tags{margin:6px 0 0;display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--fill);color:var(--muted)}
+.tag.ok{background:var(--greenbg);color:var(--green)}
+.sub{display:flex;gap:18px;margin:-2px 0 8px;flex-wrap:wrap}
+.sub .link{font-size:15px;padding:4px 0}
+#cmpBar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:6;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th,.tbl td{padding:9px 6px;border-bottom:.5px solid var(--line);text-align:left;vertical-align:top}
+.tbl th{color:var(--muted);font-weight:400}
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.steps span{font-size:12px;padding:3px 9px;border-radius:999px;background:var(--fill);color:var(--muted)}
+.steps .on{background:var(--tint);color:var(--blue);font-weight:600}
+.stars button{background:none;border:0;font-size:30px;color:#ff9f0a;padding:0 4px;line-height:1}
+.rv input{margin:8px 0}
+.sets{margin:18px 0 0}
+.cap{font-size:13px;color:var(--muted);margin:10px 0 0 4px}
+.seg{display:flex;background:var(--fill);border-radius:9px;padding:2px;margin:6px 0}
+.seg button{flex:1;border:0;background:none;padding:7px 4px;border-radius:7px;font-size:14px;font-weight:500}
+.seg button[aria-pressed=true]{background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.25);font-weight:600}
+@media (prefers-reduced-motion:reduce){button{transition:none}}
 </style>
 </head>
 <body>
 
-<section id="auth" hidden>
+<section id="auth">
   <div class="hero"><div class="wrap">
     <div class="brand"><i></i>Usta Makon</div>
     <h1>Ishonchli usta, yaqin joyda</h1>
@@ -120,15 +177,10 @@ nav.tabs button[aria-current=page]{color:var(--link);background:var(--soft)}
   </div></div>
   <div class="sheet"><div class="wrap">
     <div id="stepRole">
-      <h2>Xush kelibsiz</h2>
-      <button class="btn wide" type="button" id="goReg">Roʻyxatdan oʻtish</button>
-      <button class="btn line wide" type="button" data-mode="kirish" style="margin-top:12px">Akkauntim bor, kirish</button>
-    </div>
-    <div id="stepPick" hidden>
-      <button class="link" type="button" id="pickBack">‹ Orqaga</button>
-      <h2>Kim sifatida roʻyxatdan oʻtasiz?</h2>
+      <h2>Kim sifatida kirasiz?</h2>
       <button class="role" type="button" data-mode="mijoz"><span class="ic">🔍</span><span><b>Men mijozman</b><span>Kerakli ustani qidiraman</span></span></button>
       <button class="role" type="button" data-mode="usta"><span class="ic">🛠️</span><span><b>Men ustaman</b><span>Mijozlar meni topsin</span></span></button>
+      <button class="link" type="button" data-mode="kirish">Akkauntim bor, kirish</button>
     </div>
     <div id="stepForm" hidden>
       <button class="link" type="button" id="back">‹ Orqaga</button>
@@ -136,14 +188,13 @@ nav.tabs button[aria-current=page]{color:var(--link);background:var(--soft)}
       <div id="nameBox"><label for="fName">Ism</label><input id="fName" autocomplete="name"></div>
       <label for="fPhone">Telefon raqam</label>
       <input id="fPhone" type="tel" placeholder="+998 90 123 45 67" autocomplete="tel">
-      <label for="fPass">Parol (kamida 6 belgi)</label>
-      <input id="fPass" type="password" autocomplete="new-password">
       <div id="ustaBox">
         <label for="fJob">Kasb</label><select id="fJob"></select>
         <label for="fRegion">Hudud</label><select id="fRegion"></select>
         <label for="fTg">Telegram (ixtiyoriy)</label><input id="fTg" placeholder="@foydalanuvchi">
         <label for="fPrice">Narx (masalan: 100 000 soʻmdan)</label><input id="fPrice">
         <label for="fExp">Tajriba (yil)</label><input id="fExp" type="number" min="0" max="60">
+        <label for="fWar">Kafolat muddati (oy)</label><input id="fWar" type="number" min="0" max="60">
         <label for="fAbout">Oʻzingiz haqingizda</label><textarea id="fAbout" rows="3"></textarea>
       </div>
       <div class="err" id="err" role="alert"></div>
@@ -171,72 +222,67 @@ nav.tabs button[aria-current=page]{color:var(--link);background:var(--soft)}
         </div>
       </div>
       <div class="chips" id="chips" role="group" aria-label="Kasb"></div>
+      <button type="button" class="proj" id="calcBtn" style="margin-top:8px"><span>Narx hisoblagich</span><em>Smeta va materiallar</em></button>
       <div class="note" id="note" hidden>Siz usta sifatida roʻyxatdan oʻtgansiz. Profilingiz mijozlarga koʻrinadi.</div>
     </div>
     <div id="vMe" hidden></div>
     <div id="vChat" hidden></div>
-    <div id="vOrders" hidden></div>
+    <div id="vPro" hidden></div>
     <div class="count" id="count"></div>
     <div class="list" id="list"></div>
   </main>
+  <button type="button" class="btn" id="cmpBar" hidden></button>
   <nav class="tabs" aria-label="Boʻlimlar">
-    <button type="button" data-tab="home"><b>⌕</b>Ustalar</button>
-    <button type="button" data-tab="orders"><b>▤</b>Eʼlonlar</button>
-    <button type="button" data-tab="chat"><b>✉</b>Xabarlar</button>
-    <button type="button" data-tab="saved"><b>★</b>Saqlanganlar</button>
-    <button type="button" data-tab="me"><b>☺</b>Profil</button>
+    <button type="button" data-tab="home"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>Ustalar</button>
+    <button type="button" data-tab="chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16a1 1 0 0 1 1 1V16a1 1 0 0 1-1 1H10l-4.5 3.5V17H4a1 1 0 0 1-1-1V6.5a1 1 0 0 1 1-1z"/></svg>Xabarlar</button>
+    <button type="button" data-tab="saved"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9 6.8 19.6l1-5.8L3.5 9.7l5.9-.8z"/></svg>Saqlanganlar</button>
+    <button type="button" data-tab="me"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/></svg>Profil</button>
   </nav>
 </section>
 
-<script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,collection,doc,setDoc,addDoc,updateDoc,deleteDoc,onSnapshot} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-var firebaseConfig={
-  apiKey:"AIzaSyCtmkSBt20R1jzpFGC2YdVQfSdCy5XkqPc",
-  authDomain:"usta-makon.firebaseapp.com",
-  projectId:"usta-makon",
-  storageBucket:"usta-makon.firebasestorage.app",
-  messagingSenderId:"28126756580",
-  appId:"1:28126756580:web:2d9776785f684f24b4b6f1"
-};
-var fbApp=initializeApp(firebaseConfig), auth=getAuth(fbApp), db=getFirestore(fbApp);
-var C={users:[],orders:[],offers:[]}, unsubs=[], regBusy=false;
+<dialog id="dlg" aria-label="Loyiha"></dialog>
+<script>
 var JOBS = ["Elektrik","Santexnik","Quruvchi","Duradgor","Plitka ustasi","Pardozchi","Konditsioner ustasi","Maishiy texnika"];
 var REGIONS = ["Toshkent","Samarqand","Buxoro","Andijon","Fargʻona","Namangan","Qashqadaryo","Xorazm"];
 var SEED = [
  {name:"Aziz Karimov",job:"Elektrik",region:"Toshkent",phone:"+998901112233",tg:"",price:"80 000 soʻmdan",exp:9,rating:4.8,about:"Simlarni almashtirish, rozetka va shitlar, yoritish."},
- {name:"Bobur Rahmonov",job:"Santexnik",region:"Samarqand",phone:"+998933334455",tg:"",price:"100 000 soʻmdan",exp:6,rating:4.6,busy:true,about:"Quvur, kran, unitaz va isitish tizimlari."},
+ {name:"Bobur Rahmonov",job:"Santexnik",region:"Samarqand",phone:"+998933334455",tg:"",price:"100 000 soʻmdan",exp:6,rating:4.6,about:"Quvur, kran, unitaz va isitish tizimlari."},
  {name:"Dilshod Yoʻldoshev",job:"Plitka ustasi",region:"Toshkent",phone:"+998975556677",tg:"",price:"45 000 soʻm/m²",exp:12,rating:4.9,about:"Hammom va oshxona plitkasi, aniq va tekis."},
  {name:"Sardor Tursunov",job:"Duradgor",region:"Andijon",phone:"+998887778899",tg:"",price:"Kelishilgan holda",exp:15,rating:4.7,about:"Eshik, shkaf va mebel yasash hamda taʼmirlash."},
  {name:"Jasur Ergashev",job:"Konditsioner ustasi",region:"Buxoro",phone:"+998901239876",tg:"",price:"120 000 soʻmdan",exp:5,rating:4.5,about:"Oʻrnatish, tozalash va gaz toʻldirish."}
 ];
+SEED.forEach(function(m,i){m.war=[6,3,12,12,6][i];m.free=[1,0,1,0,1][i]===1;});
 var UK="um_users", MK="um_me", FK="um_fav";
 var state={q:"",region:"Barcha hudud",job:"Hammasi",sort:"rating",tab:"home"};
 var formMode="mijoz", me=null;
 
 function $(id){return document.getElementById(id);}
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
-function fillSelect(el,items){el.innerHTML=items.map(function(x){return "<option>"+esc(x)+"</option>";}).join("");}
+function fillSelect(el,items){el.innerHTML=items.map(function(x){return '<option value="'+esc(x)+'">'+esc(x)+'</option>';}).join("");}
 function norm(p){var d=String(p).replace(/\D/g,"");if(d.length===9)d="998"+d;return d;}
 function read(k,def){try{return JSON.parse(localStorage.getItem(k))||def;}catch(e){return def;}}
 function write(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
-function getUsers(){return C.users;}
+function getUsers(){return read(UK,[]);}
 function getFavs(){return read(FK,[]);}
-function setMe(){}
+function setMe(d){try{localStorage.setItem(MK,d);}catch(e){}}
 function currentUser(){
-  var id=auth.currentUser?auth.currentUser.uid:"";
-  return id?(C.users.find(function(u){return u.uid===id;})||null):null;
+  var d="";try{d=localStorage.getItem(MK)||"";}catch(e){}
+  if(!d)return null;
+  return getUsers().find(function(u){return norm(u.phone)===d;})||null;
 }
 function allMasters(){
-  var mine=getUsers().filter(function(u){return u.role==="usta";}).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0);});
-  return mine.concat(SEED);
+  var mine=getUsers().filter(function(u){return u.role==="usta";}).reverse();
+  return mine.concat(SEED).map(function(m){
+    var r=revs(norm(m.phone));
+    if(r.length){m=Object.assign({},m);m.rating=r.reduce(function(a,o){return a+o.rv.n;},0)/r.length;m.rn=r.length;}
+    return m;
+  });
 }
 
 /* Kirish */
 function showAuth(){
   $("app").hidden=true;$("auth").hidden=false;
-  $("stepRole").hidden=false;$("stepPick").hidden=true;$("stepForm").hidden=true;
+  $("stepRole").hidden=false;$("stepForm").hidden=true;
   window.scrollTo(0,0);
 }
 function openForm(mode){
@@ -246,43 +292,29 @@ function openForm(mode){
   $("nameBox").hidden=mode==="kirish";
   $("ustaBox").hidden=mode!=="usta";
   $("err").textContent="";
-  $("fPass").autocomplete=mode==="kirish"?"current-password":"new-password";
-  $("stepRole").hidden=true;$("stepPick").hidden=true;$("stepForm").hidden=false;
+  $("stepRole").hidden=true;$("stepForm").hidden=false;
 }
-function fbErr(e){
-  var c=e&&e.code||"";
-  if(c==="auth/email-already-in-use")return "Bu raqam roʻyxatdan oʻtgan. Orqaga qaytib, Kirish ni tanlang.";
-  if(c==="auth/invalid-credential"||c==="auth/user-not-found"||c==="auth/wrong-password")return "Raqam yoki parol notoʻgʻri.";
-  if(c==="auth/weak-password")return "Parol kamida 6 ta belgi boʻlsin.";
-  if(c==="auth/network-request-failed")return "Internet yoʻq. Qayta urinib koʻring.";
-  if(c==="auth/operation-not-allowed")return "Firebase'da Email/Password yoqilmagan.";
-  return "Xatolik: "+(c||e);
-}
-async function submitForm(){
-  var d=norm($("fPhone").value), pass=$("fPass").value, btn=$("submit");
+function submitForm(){
+  var d=norm($("fPhone").value), users=getUsers();
+  var found=users.find(function(u){return norm(u.phone)===d;});
   if(d.length!==12){$("err").textContent="Telefon raqamni toʻliq kiriting: +998 90 123 45 67";return;}
-  if(pass.length<6){$("err").textContent="Parol kamida 6 ta belgi boʻlsin.";return;}
-  var email=d+"@usta-makon.app", name=$("fName").value.trim();
-  if(formMode!=="kirish"&&name.length<2){$("err").textContent="Ismingizni kiriting.";return;}
-  btn.disabled=true;$("err").textContent="";
-  try{
-    if(formMode==="kirish"){
-      await signInWithEmailAndPassword(auth,email,pass);
-    }else{
-      var u={role:formMode,name:name,phone:"+"+d,createdAt:Date.now()};
-      if(formMode==="usta"){
-        u.job=$("fJob").value;u.region=$("fRegion").value;u.tg=$("fTg").value.trim();
-        u.price=$("fPrice").value.trim()||"Kelishilgan holda";
-        u.exp=Number($("fExp").value)||0;u.rating=0;u.busy=false;
-        u.about=$("fAbout").value.trim()||"Maʼlumot kiritilmagan.";
-      }
-      regBusy=true;
-      var cred=await createUserWithEmailAndPassword(auth,email,pass);
-      await setDoc(doc(db,"users",cred.user.uid),u);
-    }
-    ["fName","fPhone","fPass","fTg","fPrice","fExp","fAbout"].forEach(function(id){$(id).value="";});
-  }catch(e){$("err").textContent=fbErr(e);}
-  regBusy=false;btn.disabled=false;
+  if(formMode==="kirish"){
+    if(!found){$("err").textContent="Bu raqam topilmadi. Avval roʻyxatdan oʻting.";return;}
+    setMe(d);showApp();return;
+  }
+  var name=$("fName").value.trim();
+  if(name.length<2){$("err").textContent="Ismingizni kiriting.";return;}
+  if(found){$("err").textContent="Bu raqam roʻyxatdan oʻtgan. Orqaga qaytib, Kirish ni tanlang.";return;}
+  var u={role:formMode,name:name,phone:"+"+d};
+  if(formMode==="usta"){
+    u.job=$("fJob").value;u.region=$("fRegion").value;u.tg=$("fTg").value.trim();
+    u.price=$("fPrice").value.trim()||"Kelishilgan holda";
+    u.exp=Number($("fExp").value)||0;u.war=Number($("fWar").value)||0;u.free=false;u.rating=0;
+    u.about=$("fAbout").value.trim()||"Maʼlumot kiritilmagan.";
+  }
+  users.push(u);write(UK,users);setMe(d);
+  ["fName","fPhone","fTg","fPrice","fExp","fAbout"].forEach(function(id){$(id).value="";});
+  showApp();
 }
 
 /* Ilova */
@@ -296,39 +328,45 @@ function showApp(){
   renderChips();setTab("home");
 }
 function setTab(t){
+  state.viewing=null;$("vPro").hidden=true;
   state.tab=t;
   var first=me.name.split(" ")[0];
-  $("title").textContent=t==="home"?"Usta toping":t==="orders"?"Eʼlonlar":t==="saved"?"Saqlangan ustalar":t==="chat"?"Xabarlar":"Profilim";
-  $("hello").textContent=t==="home"?"Salom, "+first+". Kerakli ustani tanlang.":t==="orders"?(me.role==="usta"?"Mijozlar eʼlonlariga taklif yuboring.":"Ishni eʼlon qiling, ustalar taklif yuboradi."):t==="saved"?"Keyinroq bogʻlanish uchun belgilaganlaringiz.":t==="chat"?"Ustalar va mijozlar bilan yozishmalar.":first+" · "+(me.role==="usta"?"usta":"mijoz");
+  $("title").textContent=t==="home"?"Usta toping":t==="saved"?"Saqlangan ustalar":t==="chat"?"Xabarlar":"Profilim";
+  $("hello").textContent=t==="home"?"Salom, "+first+". Kerakli ustani tanlang.":t==="saved"?"Keyinroq bogʻlanish uchun belgilaganlaringiz.":t==="chat"?"Ustalar va mijozlar bilan yozishmalar.":first+" · "+(me.role==="usta"?"usta":"mijoz");
   $("vHome").hidden=t!=="home";
   $("vMe").hidden=t!=="me";
-  var other=t==="me"||t==="chat"||t==="orders";
-  $("vOrders").hidden=t!=="orders";
+  var other=t==="me"||t==="chat";
   $("vChat").hidden=t!=="chat";
   $("list").hidden=other;
   $("count").hidden=other;
   document.querySelectorAll("nav.tabs button").forEach(function(b){
     if(b.getAttribute("data-tab")===t)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
   });
-  if(t==="me")renderMe();else if(t==="chat")renderChat();else if(t==="orders")renderOrders();else render();
+  if(t==="me")renderMe();else if(t==="chat")renderChat();else render();
   window.scrollTo(0,0);
 }
 function renderChips(){
-  $("chips").innerHTML=["Hammasi"].concat(JOBS).map(function(j){
+  $("chips").innerHTML='<button type="button" class="chip" data-free="1" aria-pressed="'+!!state.free+'">Bugun boʻsh</button>'+["Hammasi"].concat(JOBS).map(function(j){
     return '<button type="button" class="chip" data-job="'+esc(j)+'" aria-pressed="'+(state.job===j)+'">'+esc(j)+'</button>';
   }).join("");
 }
 function renderMe(){
   var rows='<dt>Ism</dt><dd>'+esc(me.name)+'</dd><dt>Telefon</dt><dd>'+esc(me.phone)+'</dd><dt>Rol</dt><dd>'+(me.role==="usta"?"Usta":"Mijoz")+'</dd>';
-  if(me.role==="usta")rows+='<dt>Kasb</dt><dd>'+esc(me.job)+'</dd><dt>Hudud</dt><dd>'+esc(me.region)+'</dd><dt>Narx</dt><dd>'+esc(me.price)+'</dd><dt>Tajriba</dt><dd>'+esc(me.exp)+' yil</dd>';
-  $("vMe").innerHTML='<div class="prof"><dl>'+rows+'</dl><button class="btn line wide" type="button" id="logout">Akkauntdan chiqish</button></div>';
-  $("logout").addEventListener("click",function(){signOut(auth);});
+  if(me.role==="usta")rows+='<dt>Kasb</dt><dd>'+esc(me.job)+'</dd><dt>Hudud</dt><dd>'+esc(me.region)+'</dd><dt>Narx</dt><dd>'+esc(me.price)+'</dd><dt>Tajriba</dt><dd>'+esc(me.exp)+' yil</dd><dt>Kafolat</dt><dd>'+(me.war?me.war+' oy':'Yoʻq')+'</dd>'+statRows(norm(me.phone));
+  $("vMe").innerHTML='<div class="prof">'+(me.role==="usta"?'<button class="btn alt wide" type="button" id="freeTog" style="margin-bottom:14px"></button>':"")+'<dl>'+rows+'</dl>'+SETS+'<div id="myOrd"></div><div id="myProj"></div><button class="btn line wide" type="button" id="logout">Akkauntdan chiqish</button></div>';
+  renderOrd();bindFree();updateSets();
+  if(me.role==="usta")fillProj($("myProj"),norm(me.phone),true);
+  $("logout").addEventListener("click",function(){
+    try{localStorage.removeItem(MK);}catch(e){}
+    me=null;showAuth();
+  });
 }
 function render(){
   var q=state.q.trim().toLowerCase(), favs=getFavs(), saved=state.tab==="saved";
   var res=allMasters().filter(function(m){
     if(saved&&favs.indexOf(norm(m.phone))===-1)return false;
     if(!saved){
+      if(state.free&&!m.free)return false;
       if(state.job!=="Hammasi"&&m.job!==state.job)return false;
       if(state.region!=="Barcha hudud"&&m.region!==state.region)return false;
       if(q&&(m.name+" "+m.job+" "+m.about).toLowerCase().indexOf(q)===-1)return false;
@@ -347,53 +385,15 @@ function render(){
   $("list").innerHTML=res.map(function(m){
     var key=norm(m.phone), own=me&&key===norm(me.phone), on=favs.indexOf(key)!==-1;
     var tg=m.tg?'<a class="btn alt" target="_blank" rel="noopener" href="https://t.me/'+esc(m.tg.replace("@",""))+'">Telegram</a>':"";
-    var rate=m.rating?'<span class="rate">★ '+m.rating.toFixed(1)+'</span>':'<span class="rate new">Yangi</span>';
-    var share='<button type="button" class="btn line wide" data-share="'+esc(m.name+" — "+m.job+", "+m.region)+'" style="margin-top:10px">Ulashish</button>';
-    var acts=own?'<div class="mine">Bu sizning profilingiz</div><button type="button" class="btn alt wide" data-busy="1" style="margin-top:10px">'+(m.busy?"Boʻsh deb belgilash":"Band deb belgilash")+'</button>'+share
-      :'<div class="acts"><a class="btn" href="tel:'+esc(m.phone)+'">Qoʻngʻiroq qilish</a><button type="button" class="btn alt" data-msg="'+esc(key)+'">Xabar</button>'+tg+'</div>'+share;
-    var base=pbase(m.price), unit=String(m.price).indexOf("m²")>-1?"m²":"marta";
-    var calc=base?'<details class="calc"><summary>Narxni hisoblash</summary><label>Miqdor ('+unit+')</label><input type="number" min="0" data-base="'+base+'" placeholder="Masalan: 12"><div class="res" aria-live="polite"></div></details>':"";
-    var badge='<span class="badge '+(m.busy?"busy":"free")+'">'+(m.busy?"Band":"Boʻsh")+'</span>';
-    return '<article class="row"><div class="head"><div class="mono" aria-hidden="true">'+esc(m.name.charAt(0).toUpperCase())+'</div>'+
-      '<div class="who"><h3 class="name">'+esc(m.name)+badge+'</h3><p class="job">'+esc(m.job)+'</p></div>'+rate+
+    var rate=m.rating?'<span class="rate">★ '+m.rating.toFixed(1)+(m.rn?' ('+m.rn+')':'')+'</span>':'<span class="rate new">Yangi</span>';
+    var acts=own?'<div class="mine">Bu sizning profilingiz</div>'
+      :'<div class="acts"><a class="btn" data-call="'+esc(key)+'" href="tel:'+esc(m.phone)+'">Qoʻngʻiroq qilish</a><button type="button" class="btn alt" data-msg="'+esc(key)+'">Xabar</button>'+tg+'</div>';
+    return '<article class="row"><div class="head"><div class="mono" data-pro="'+esc(key)+'" aria-hidden="true">'+esc(m.name.charAt(0).toUpperCase())+'</div>'+
+      '<div class="who" data-pro="'+esc(key)+'"><h3 class="name">'+esc(m.name)+'</h3><p class="job">'+esc(m.job)+'</p>'+tags(m)+'</div>'+rate+
       '<button type="button" class="fav" data-fav="'+esc(key)+'" aria-pressed="'+on+'" aria-label="'+(on?"Saqlanganlardan olib tashlash":"Saqlash")+'">'+(on?"★":"☆")+'</button></div>'+
       '<div class="facts"><div><small>Hudud</small>'+esc(m.region)+'</div><div><small>Tajriba</small>'+esc(m.exp)+' yil</div><div><small>Narx</small>'+esc(m.price)+'</div></div>'+
-      '<p class="about">'+esc(m.about)+'</p>'+calc+acts+'</article>';
+      '<p class="about">'+esc(m.about)+'</p>'+projRow(key)+subRow(m,key,own)+acts+'</article>';
   }).join("");
-}
-
-/* Eʼlonlar */
-var OK="um_orders", FO="um_offers", ojob="Barcha kasb";
-var OSEED=[
- {id:"s1",name:"Malika Aliyeva",phone:"+998901000011",job:"Plitka ustasi",region:"Toshkent",about:"Hammomga 8 m² plitka yotqizish kerak, material tayyor.",budget:"400 000 soʻm",ts:0},
- {id:"s2",name:"Otabek Nazarov",phone:"+998901000022",job:"Elektrik",region:"Samarqand",about:"Yangi uyda rozetka va yoritishni ulash kerak.",budget:"",ts:0}
-];
-function pbase(p){var m=String(p).replace(/\s/g,"").match(/\d+/);return m?Number(m[0]):0;}
-function money(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g," ");}
-function ago(ts){
-  if(!ts)return "";
-  var d=Math.floor((Date.now()-ts)/86400000);
-  return d<=0?"Bugun":d===1?"Kecha":d<7?d+" kun oldin":fmt(ts).split(" ")[0];
-}
-function renderOrders(){
-  var box=$("vOrders"), offers=C.offers, my=norm(me.phone), h='<div class="finder">';
-  if(me.role==="mijoz")h+='<details class="calc" style="margin-bottom:8px"><summary>+ Yangi eʼlon berish</summary><label for="nJob">Qanday usta kerak?</label><select id="nJob"></select><label for="nReg">Hudud</label><select id="nReg"></select><label for="nAbout">Ish haqida</label><textarea id="nAbout" rows="3" placeholder="Masalan: hammomga 12 m² plitka kerak"></textarea><label for="nBud">Byudjet (ixtiyoriy)</label><input id="nBud" placeholder="500 000 soʻm"><div class="err" id="oerr" role="alert"></div><button class="btn wide" type="button" id="opost">Joylash</button></details>';
-  h+='<select id="ojob" aria-label="Kasb"></select></div><div class="count">Eʼlonlar</div><div class="list">';
-  var res=C.orders.slice().sort(function(a,b){return b.ts-a.ts;}).concat(OSEED).filter(function(o){return ojob==="Barcha kasb"||o.job===ojob;});
-  if(!res.length)h+='<div class="empty"><b>Eʼlon yoʻq</b>Boshqa kasbni tanlab koʻring.</div>';
-  h+=res.map(function(o){
-    var own=norm(o.phone)===my, of=offers.filter(function(x){return x.oid===o.id;}), acts="";
-    if(own){
-      acts=(of.length?of.map(function(x){return '<div class="offer"><b>'+esc(x.name)+' · '+esc(x.price)+'</b>'+(x.msg?esc(x.msg)+'<br>':'')+'<a href="tel:'+esc(x.phone)+'">Qoʻngʻiroq qilish</a></div>';}).join(""):'<p class="about">Hozircha takliflar yoʻq.</p>')+'<button type="button" class="btn line wide" data-odel="'+esc(o.id)+'" style="margin-top:10px">Eʼlonni oʻchirish</button>';
-    }else if(me.role==="usta"){
-      var sent=of.find(function(x){return norm(x.phone)===my;});
-      acts='<a class="btn wide" href="tel:'+esc(o.phone)+'">Qoʻngʻiroq qilish</a>'+(sent?'<div class="mine" style="margin-top:10px">Taklifingiz yuborilgan: '+esc(sent.price)+'</div>':'<details class="calc" style="margin:10px 0 0"><summary>Taklif yuborish</summary><input data-op placeholder="Narx: 300 000 soʻm"><input data-om placeholder="Qisqa izoh (ixtiyoriy)"><div class="err" data-oe role="alert"></div><button type="button" class="btn wide" data-offer="'+esc(o.id)+'">Yuborish</button></details>');
-    }
-    return '<article class="row"><div class="head"><div class="who"><h3 class="name">'+esc(o.job)+'</h3><p class="job">'+esc(o.region)+(o.budget?' · '+esc(o.budget):'')+'</p></div>'+(o.ts?'<span class="rate">'+esc(ago(o.ts))+'</span>':'')+'</div><p class="about" style="margin-top:10px">'+esc(o.about)+'<br>Mijoz: '+esc(o.name)+'</p>'+acts+'</article>';
-  }).join("")+'</div>';
-  box.innerHTML=h;
-  fillSelect($("ojob"),["Barcha kasb"].concat(JOBS));$("ojob").value=ojob;
-  if($("nJob")){fillSelect($("nJob"),JOBS);fillSelect($("nReg"),REGIONS);}
 }
 
 /* Xabarlar */
@@ -411,7 +411,7 @@ function fmt(t){
   var d=new Date(t);
   return ("0"+d.getDate()).slice(-2)+"."+("0"+(d.getMonth()+1)).slice(-2)+" "+d.getHours()+":"+("0"+d.getMinutes()).slice(-2);
 }
-function openChat(key){state.chatWith=key;setTab("chat");}
+function openChat(key){if(me.role==="mijoz")bump(key,"m");state.chatWith=key;setTab("chat");}
 function sendMsg(){
   var inp=$("ctext"), text=inp.value.trim();
   if(!text)return;
@@ -428,7 +428,7 @@ function renderChat(){
     html+='<div class="msgs" id="msgs">'+(msgs.length?msgs.map(function(m){
       return '<div class="bub '+(m.from===my?"me":"he")+'">'+esc(m.text)+'<small>'+fmt(m.t)+'</small></div>';
     }).join(""):'<div class="empty">Birinchi xabarni yozing.</div>')+'</div>';
-    html+='<div class="cform"><input id="ctext" placeholder="Xabar yozing" maxlength="500" aria-label="Xabar"><button class="btn" type="button" id="csend">Yuborish</button></div></div>';
+    html+='<div class="cform"><input id="ctext" placeholder="Xabar yozing" maxlength="500" aria-label="Xabar"><button class="send" type="button" id="csend" aria-label="Yuborish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg></button></div></div>';
     box.innerHTML=html;
     $("cback").addEventListener("click",function(){state.chatWith=null;setTab("chat");});
     $("csend").addEventListener("click",sendMsg);
@@ -455,7 +455,404 @@ function renderChat(){
   });
 }
 
+/* Loyihalar */
+var PK="um_proj";
+var EMO={"Elektrik":"⚡","Santexnik":"🚰","Quruvchi":"🧱","Duradgor":"🪚","Plitka ustasi":"🧩","Pardozchi":"🎨","Konditsioner ustasi":"❄️","Maishiy texnika":"🔧"};
+var SEEDP={
+ "998901112233":[{id:"s1",title:"Uch xonali kvartirada elektr",desc:"Yangi sim tortildi, 18 ta rozetka va avtomat shit oʻrnatildi."},{id:"s2",title:"Ofis yoritishi",desc:"LED panellar va sensorli chiroqlar."}],
+ "998933334455":[{id:"s3",title:"Hammom quvurlari",desc:"Eski quvurlar polipropilenga almashtirildi."}],
+ "998975556677":[{id:"s4",title:"Hammom plitkasi",desc:"Devor va pol, 14 m², choklar tekis."},{id:"s5",title:"Oshxona fartugi",desc:"Mozaika plitka, 6 m²."}],
+ "998887778899":[{id:"s6",title:"Oshxona shkafi",desc:"Buyurtma boʻyicha yasalgan, 3 metrli."}],
+ "998901239876":[{id:"s7",title:"Ikki xonaga konditsioner",desc:"Oʻrnatish va quvur tortish bir kunda."}]
+};
+function getProj(){return read(PK,[]);}
+function projsOf(key){
+  var mine=getProj().filter(function(p){return p.owner===key;}).sort(function(a,b){return b.t-a.t;});
+  return mine.concat((SEEDP[key]||[]).map(function(p){return {id:p.id,title:p.title,desc:p.desc,media:[],seed:true};}));
+}
+function projRow(key){
+  var n=projsOf(key).length;
+  return '<button type="button" class="proj" data-pro="'+esc(key)+'"><span>Loyihalar</span><em>'+(n?n+" ta":"Yoʻq")+'</em></button>';
+}
+/* Rasm va video: IndexedDB */
+var dbp=null, urls={};
+function db(){
+  if(!dbp)dbp=new Promise(function(res,rej){
+    var r=indexedDB.open("um_media",1);
+    r.onupgradeneeded=function(){r.result.createObjectStore("f");};
+    r.onsuccess=function(){res(r.result);};r.onerror=function(){rej(r.error);};
+  });
+  return dbp;
+}
+function idb(mode,fn){
+  return db().then(function(d){return new Promise(function(res,rej){
+    var t=d.transaction("f",mode), rq=fn(t.objectStore("f"));
+    t.oncomplete=function(){res(rq&&rq.result);};t.onerror=t.onabort=function(){rej(t.error);};
+  });});
+}
+function mPut(id,b){return idb("readwrite",function(s){return s.put(b,id);});}
+function mGet(id){return idb("readonly",function(s){return s.get(id);});}
+function mDel(id){return idb("readwrite",function(s){return s["delete"](id);});}
+function mUrl(id){
+  if(urls[id])return Promise.resolve(urls[id]);
+  return mGet(id).then(function(b){return b?(urls[id]=URL.createObjectURL(b)):"";});
+}
+function hydrate(root){
+  root.querySelectorAll("[data-mid]").forEach(function(el){
+    mUrl(el.getAttribute("data-mid")).then(function(u){
+      if(u)el.src=u+(el.tagName==="VIDEO"&&!el.controls?"#t=0.1":"");
+    }).catch(function(){});
+  });
+}
+function shrink(file){
+  return new Promise(function(res,rej){
+    var u=URL.createObjectURL(file), im=new Image();
+    im.onload=function(){
+      var k=Math.min(1,1600/Math.max(im.width,im.height)), c=document.createElement("canvas");
+      c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+      c.getContext("2d").drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);
+      c.toBlob(function(b){b?res(b):rej();},"image/jpeg",.82);
+    };
+    im.onerror=function(){URL.revokeObjectURL(u);rej();};
+    im.src=u;
+  });
+}
+var COV={
+"Elektrik":["#ffd60a","#ff9f0a",'<rect x="68" y="30" width="64" height="90" rx="14" fill="#fff"/><circle cx="88" cy="62" r="7" fill="#333"/><circle cx="112" cy="62" r="7" fill="#333"/><rect x="90" y="86" width="20" height="8" rx="4" fill="#333"/>'],
+"Santexnik":["#5ac8fa","#0a84ff",'<rect x="48" y="58" width="26" height="20" rx="5" fill="#fff"/><path d="M70 62h50a16 16 0 0 1 16 16v14h-18V80H70z" fill="#fff"/><circle cx="127" cy="108" r="6" fill="#fff"/><circle cx="127" cy="128" r="5" fill="#fff" opacity=".7"/>'],
+"Quruvchi":["#ff9f0a","#ff453a",'<g fill="#fff" opacity=".92"><rect x="40" y="35" width="56" height="26" rx="3"/><rect x="102" y="35" width="56" height="26" rx="3"/><rect x="70" y="67" width="56" height="26" rx="3"/><rect x="132" y="67" width="40" height="26" rx="3"/><rect x="28" y="67" width="36" height="26" rx="3"/><rect x="40" y="99" width="56" height="26" rx="3"/><rect x="102" y="99" width="56" height="26" rx="3"/></g>'],
+"Duradgor":["#c68642","#8d5524",'<g fill="#e8c9a0"><rect x="30" y="28" width="140" height="28" rx="4"/><rect x="30" y="61" width="140" height="28" rx="4"/><rect x="30" y="94" width="140" height="28" rx="4"/></g><path d="M50 42h30M110 75h40M60 108h36" stroke="#a9733f" stroke-width="3" stroke-linecap="round"/>'],
+"Plitka ustasi":["#64d2ff","#30b0c7",'<g fill="#fff" opacity=".9"><rect x="45" y="25" width="34" height="34" rx="4"/><rect x="83" y="25" width="34" height="34" rx="4"/><rect x="121" y="25" width="34" height="34" rx="4"/><rect x="45" y="63" width="34" height="34" rx="4"/><rect x="83" y="63" width="34" height="34" rx="4"/><rect x="121" y="63" width="34" height="34" rx="4"/><rect x="45" y="101" width="34" height="34" rx="4"/><rect x="83" y="101" width="34" height="34" rx="4"/><rect x="121" y="101" width="34" height="34" rx="4"/></g>'],
+"Pardozchi":["#bf5af2","#5e5ce6",'<rect x="45" y="35" width="100" height="32" rx="8" fill="#fff"/><path d="M145 51h14v32H105v16" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="97" y="99" width="16" height="30" rx="5" fill="#fff"/>'],
+"Konditsioner ustasi":["#a5d8ff","#4dabf7",'<rect x="32" y="32" width="136" height="48" rx="12" fill="#fff"/><rect x="46" y="62" width="108" height="6" rx="3" fill="#74c0fc"/><path d="M60 100c14-8 14 8 28 0s14 8 28 0 14 8 28 0M60 120c14-8 14 8 28 0s14 8 28 0 14 8 28 0" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".85"/>'],
+"Maishiy texnika":["#8e8e93","#48484a",'<rect x="55" y="25" width="90" height="108" rx="12" fill="#fff"/><rect x="65" y="35" width="40" height="10" rx="5" fill="#c7c7cc"/><circle cx="100" cy="87" r="30" fill="#8ecae6"/><circle cx="100" cy="87" r="20" fill="#fff" opacity=".5"/>']
+};
+function cover(job){
+  var c=COV[job];if(!c)return "";
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+c[0]+'"/><stop offset="1" stop-color="'+c[1]+'"/></linearGradient></defs><rect width="200" height="150" fill="url(#g)"/>'+c[2]+'</svg>';
+  return "data:image/svg+xml,"+encodeURIComponent(svg);
+}
+function tile(p,job){
+  var m=p.media[0], h;
+  if(!m)h=COV[job]?'<img src="'+cover(job)+'" alt="">':'<div class="ph0" aria-hidden="true">'+(EMO[job]||"🛠️")+'</div>';
+  else if(m.type==="video")h='<video data-mid="'+m.id+'" muted playsinline preload="metadata"></video><span class="play" aria-hidden="true">▶</span>';
+  else h='<img data-mid="'+m.id+'" alt="">';
+  if(p.media.length>1)h+='<span class="more">+'+(p.media.length-1)+'</span>';
+  return h;
+}
+function fillProj(box,key,own){
+  var ps=projsOf(key), person=findPerson(key), job=person&&person.job;
+  box.innerHTML='<div class="sh"><h2>Loyihalar</h2>'+(own?'<button class="link padd" type="button">+ Qoʻshish</button>':"")+'</div>'+
+    (ps.length?'<div class="grid">'+ps.map(function(p,i){
+      return '<button type="button" class="pc" data-pi="'+i+'"><div class="pt">'+tile(p,job)+'</div><div class="px"><b>'+esc(p.title)+'</b>'+(p.desc?'<span>'+esc(p.desc)+'</span>':"")+'</div></button>';
+    }).join("")+'</div>'
+    :'<div class="empty">'+(own?'<b>Hali loyiha yoʻq</b>Bajargan ishingizni rasm yoki video bilan qoʻshing.':'<b>Loyihalar yoʻq</b>Usta hali loyiha qoʻshmagan.')+'</div>');
+  hydrate(box);
+  box.querySelectorAll("[data-pi]").forEach(function(b){
+    b.addEventListener("click",function(){viewProj(ps[+b.getAttribute("data-pi")],own,job);});
+  });
+  if(own)box.querySelector(".padd").addEventListener("click",function(){addProj(key);});
+}
+function viewProj(p,own,job){
+  var d=$("dlg");
+  d.innerHTML='<div class="dh"><b>'+esc(p.title)+'</b><button class="link" type="button" id="dx">Yopish</button></div>'+
+    (p.desc?'<p class="dd">'+esc(p.desc)+'</p>':"")+
+    (p.seed&&COV[job]?'<img class="dm" src="'+cover(job)+'" alt="">':"")+
+    p.media.map(function(m){
+      return m.type==="video"?'<video class="dm" data-mid="'+m.id+'" controls playsinline preload="metadata"></video>':'<img class="dm" data-mid="'+m.id+'" alt="'+esc(p.title)+'">';
+    }).join("")+
+    (own&&!p.seed?'<button class="btn line wide" type="button" id="ddel">Loyihani oʻchirish</button>':"");
+  hydrate(d);
+  $("dx").addEventListener("click",function(){d.close();});
+  var del=$("ddel");
+  if(del)del.addEventListener("click",function(){
+    if(del.getAttribute("data-sure")!=="1"){del.setAttribute("data-sure","1");del.textContent="Ha, oʻchirish";return;}
+    write(PK,getProj().filter(function(x){return x.id!==p.id;}));
+    p.media.forEach(function(m){mDel(m.id).catch(function(){});delete urls[m.id];});
+    d.close();refreshPro();
+  });
+  d.showModal();
+}
+function addProj(key){
+  var d=$("dlg"), files=[];
+  d.innerHTML='<div class="dh"><b>Yangi loyiha</b><button class="link" type="button" id="dx">Bekor qilish</button></div>'+
+    '<label for="pTitle">Nomi</label><input id="pTitle" maxlength="60" placeholder="Masalan: Hammom taʼmiri">'+
+    '<label for="pDesc">Tavsif</label><textarea id="pDesc" rows="3" maxlength="300"></textarea>'+
+    '<label class="pick btn alt wide"><input id="pFiles" type="file" accept="image/*,video/*" multiple>Rasm yoki video tanlash</label>'+
+    '<div class="prev" id="prev"></div><div class="err" id="perr" role="alert"></div>'+
+    '<button class="btn wide" type="button" id="psave">Saqlash</button>';
+  $("dx").addEventListener("click",function(){d.close();});
+  $("pFiles").addEventListener("change",function(e){
+    files=[].slice.call(e.target.files).slice(0,8);
+    $("prev").innerHTML=files.map(function(f,i){
+      var u=URL.createObjectURL(f);
+      return f.type.indexOf("video")===0?'<video src="'+u+'#t=0.1" muted playsinline preload="metadata"></video>':'<img src="'+u+'" alt="">';
+    }).join("");
+  });
+  $("psave").addEventListener("click",function(){
+    var title=$("pTitle").value.trim(), desc=$("pDesc").value.trim(), err=$("perr"), btn=$("psave"), media=[];
+    if(title.length<2){err.textContent="Loyiha nomini kiriting.";return;}
+    if(!files.length&&!desc){err.textContent="Rasm, video yoki tavsif qoʻshing.";return;}
+    for(var i=0;i<files.length;i++){
+      if(files[i].type.indexOf("video")===0&&files[i].size>60*1024*1024){err.textContent="Video hajmi 60 MB dan oshmasligi kerak.";return;}
+    }
+    btn.disabled=true;btn.textContent="Saqlanmoqda…";err.textContent="";
+    files.reduce(function(chain,f){
+      return chain.then(function(){
+        var isV=f.type.indexOf("video")===0, id="m"+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+        return (isV?Promise.resolve(f):shrink(f)).then(function(b){return mPut(id,b);}).then(function(){media.push({id:id,type:isV?"video":"image"});});
+      });
+    },Promise.resolve()).then(function(){
+      var all=getProj();all.push({id:"p"+Date.now(),owner:key,title:title,desc:desc,media:media,t:Date.now()});
+      write(PK,all);d.close();refreshPro();
+    }).catch(function(){
+      media.forEach(function(m){mDel(m.id).catch(function(){});});
+      err.textContent="Faylni saqlab boʻlmadi. Boshqa rasm yoki videoni sinab koʻring.";
+      btn.disabled=false;btn.textContent="Saqlash";
+    });
+  });
+  d.showModal();
+}
+function refreshPro(){if(state.viewing)renderPro(state.viewing);else if(state.tab==="me")renderMe();}
+function openPro(key){
+  var p=findPerson(key);if(!p)return;
+  state.viewing=key;if(!me||key!==norm(me.phone))bump(key,"v");
+  ["vHome","vMe","vChat","list","count"].forEach(function(id){$(id).hidden=true;});
+  $("title").textContent=p.name;
+  $("hello").textContent=(p.job||"Mijoz")+(p.region?" · "+p.region:"");
+  $("vPro").hidden=false;renderPro(key);window.scrollTo(0,0);
+}
+function renderPro(key){
+  var p=findPerson(key), own=!!me&&key===norm(me.phone)&&me.role==="usta";
+  var tg=p.tg?'<a class="btn alt" target="_blank" rel="noopener" href="https://t.me/'+esc(p.tg.replace("@",""))+'">Telegram</a>':"";
+  var acts=own?'<div class="mine">Bu sizning profilingiz</div>'
+    :'<div class="acts"><a class="btn" data-call="'+esc(key)+'" href="tel:'+esc(p.phone)+'">Qoʻngʻiroq qilish</a><button type="button" class="btn alt" data-msg="'+esc(key)+'">Xabar</button>'+tg+'</div>';
+  $("vPro").innerHTML='<div class="pro"><button class="link" type="button" id="pback">‹ Orqaga</button>'+
+    '<div class="list pcard"><div class="row"><div class="facts"><div><small>Hudud</small>'+esc(p.region)+'</div><div><small>Tajriba</small>'+esc(p.exp)+' yil</div><div><small>Narx</small>'+esc(p.price)+'</div></div>'+
+    tags(p)+'<p class="about">'+esc(p.about)+'</p>'+acts+'</div></div><div class="sub"><button class="link" type="button" id="pshare">Profilni ulashish</button>'+(!own&&me.role==="mijoz"&&!isSeed(key)?'<button class="link" type="button" id="phire">Ishga yollash</button>':"")+'</div><div id="pbox"></div><div id="rbox"></div></div>';
+  $("pback").addEventListener("click",function(){setTab(state.tab);});
+  var mb=$("vPro").querySelector("[data-msg]");
+  if(mb)mb.addEventListener("click",function(){openChat(key);});
+  fillProj($("pbox"),key,own);
+  $("rbox").innerHTML=revBox(key);
+  $("pshare").onclick=function(){
+    var u=location.href.split("#")[0]+"#u="+key, b=this;
+    if(navigator.share)navigator.share({title:p.name,url:u}).catch(function(){});
+    else if(navigator.clipboard)navigator.clipboard.writeText(u).then(function(){b.textContent="Havola nusxalandi";});
+  };
+  var ph=$("phire");if(ph)ph.onclick=function(){hire(key);};
+}
+
+/* Yangi funksiyalar */
+var OK="um_ord", STK="um_st", ST=["Yangi","Qabul qilindi","Jarayonda","Bajarildi"], CMP=[];
+var CALC={
+ "Plitka yotqizish":{u:"m²",lo:40000,hi:70000,mat:[["Plitka",1.1,"m²"],["Plitka yelimi",5,"kg"],["Fuga",0.4,"kg"],["Plitka krestlari",4,"dona"]]},
+ "Elektr nuqtasi (rozetka, chiroq)":{u:"nuqta",lo:25000,hi:50000,mat:[["Rozetka yoki vyklyuchatel",1,"dona"],["Sim 2,5 mm²",6,"m"],["Gofra",5,"m"],["Podrozetnik",1,"dona"]]},
+ "Quvur almashtirish":{u:"m",lo:30000,hi:60000,mat:[["Polipropilen quvur",1.05,"m"],["Fitinglar",0.5,"dona"],["Mahkamlagich",1,"dona"]]},
+ "Devor boʻyash":{u:"m²",lo:15000,hi:30000,mat:[["Boʻyoq",0.25,"l"],["Gruntovka",0.15,"l"],["Shpaklyovka",1,"kg"],["Maskalovchi lenta",0.1,"dona"]]},
+ "Konditsioner oʻrnatish":{u:"dona",lo:400000,hi:700000,mat:[["Mis quvur",4,"m"],["Kronshteyn",1,"toʻplam"],["Drenaj shlangi",4,"m"],["Kabel",5,"m"]]}
+};
+function sp(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g," ");}
+function getOrd(){return read(OK,[]);}
+function revs(key){return getOrd().filter(function(o){return o.m===key&&o.rv;});}
+function bump(key,f){var a=read(STK,{});a[key]=a[key]||{};a[key][f]=(a[key][f]||0)+1;write(STK,a);}
+function statRows(key){var t=read(STK,{})[key]||{};return '<dt>Koʻrishlar</dt><dd>'+(t.v||0)+'</dd><dt>Qoʻngʻiroqlar</dt><dd>'+(t.c||0)+'</dd><dt>Xabarlar</dt><dd>'+(t.m||0)+'</dd>';}
+function stars(n){return "★★★★★".slice(0,n)+"☆☆☆☆☆".slice(0,5-n);}
+function tags(m){
+  var h="";
+  if(m.free)h+='<span class="tag ok">Bugun boʻsh</span>';
+  if(m.war)h+='<span class="tag">Kafolat '+m.war+' oy</span>';
+  return h?'<p class="tags">'+h+'</p>':"";
+}
+function subRow(m,key,own){
+  var h='<div class="sub"><button type="button" class="link" data-cmp="'+esc(key)+'">'+(CMP.indexOf(key)>-1?"✓ Taqqoslanmoqda":"+ Taqqoslash")+'</button>';
+  if(!own&&me.role==="mijoz"&&!isSeed(key))h+='<button type="button" class="link" data-hire="'+esc(key)+'">Ishga yollash</button>';
+  return h+'</div>';
+}
+function toggleCmp(k){
+  var i=CMP.indexOf(k);
+  if(i>-1)CMP.splice(i,1);else if(CMP.length<3)CMP.push(k);else return;
+  var b=$("cmpBar");b.hidden=CMP.length<2;b.textContent="Taqqoslash ("+CMP.length+")";
+  render();
+}
+function showCmp(){
+  var d=$("dlg"), ms=allMasters().filter(function(m){return CMP.indexOf(norm(m.phone))>-1;});
+  var rows=[["Kasb",function(m){return m.job;}],["Hudud",function(m){return m.region;}],["Tajriba",function(m){return m.exp+" yil";}],["Narx",function(m){return m.price;}],["Reyting",function(m){return m.rating?m.rating.toFixed(1):"Yangi";}],["Kafolat",function(m){return m.war?m.war+" oy":"—";}],["Bugun",function(m){return m.free?"Boʻsh":"—";}]];
+  d.innerHTML='<div class="dh"><b>Ustalarni taqqoslash</b><button class="link" type="button" id="dx">Yopish</button></div><table class="tbl"><tr><th></th>'+ms.map(function(m){return '<th><b style="color:var(--ink)">'+esc(m.name)+'</b></th>';}).join("")+'</tr>'+
+    rows.map(function(r){return '<tr><th>'+r[0]+'</th>'+ms.map(function(m){return '<td>'+esc(r[1](m))+'</td>';}).join("")+'</tr>';}).join("")+'</table>';
+  $("dx").onclick=function(){d.close();};
+  d.showModal();
+}
+function calc(){
+  var d=$("dlg");
+  d.innerHTML='<div class="dh"><b>Narx hisoblagich</b><button class="link" type="button" id="dx">Yopish</button></div><label for="cJob">Ish turi</label><select id="cJob">'+Object.keys(CALC).map(function(k){return '<option value="'+esc(k)+'">'+esc(k)+'</option>';}).join("")+'</select><label for="cQty" id="cLab"></label><input id="cQty" type="number" min="1" value="10" inputmode="decimal"><div id="cOut"></div>';
+  function up(){
+    var c=CALC[$("cJob").value], q=Math.max(0,+$("cQty").value||0);
+    $("cLab").textContent="Hajmi ("+c.u+")";
+    $("cOut").innerHTML='<div class="list" style="margin-top:16px"><div class="row"><small style="color:var(--muted)">Ish haqi (taxminiy)</small><div style="font-size:22px;font-weight:700">'+sp(c.lo*q)+" – "+sp(c.hi*q)+' soʻm</div></div><div class="row"><b>Kerakli materiallar</b>'+
+      c.mat.map(function(m){return '<div style="display:flex;justify-content:space-between;color:var(--muted);font-size:15px;margin-top:4px"><span>'+m[0]+'</span><span>'+(Math.round(m[1]*q*10)/10)+" "+m[2]+'</span></div>';}).join("")+
+      '</div></div><p class="about" style="margin:10px 4px">Narxlar taxminiy, ustaga qarab farq qiladi. Aniq narxni usta bilan kelishing.</p>';
+  }
+  $("dx").onclick=function(){d.close();};
+  $("cJob").onchange=up;$("cQty").oninput=up;up();
+  d.showModal();
+}
+function hire(key){
+  var d=$("dlg"), p=findPerson(key);
+  d.innerHTML='<div class="dh"><b>'+esc(p.name)+'</b><button class="link" type="button" id="dx">Bekor qilish</button></div><label for="oTxt">Qanday ish kerak?</label><textarea id="oTxt" rows="3" maxlength="300" placeholder="Masalan: hammomga 14 m² plitka"></textarea><div class="err" id="oerr" role="alert"></div><button class="btn wide" type="button" id="osend">Buyurtma yuborish</button>';
+  $("dx").onclick=function(){d.close();};
+  $("osend").onclick=function(){
+    var t=$("oTxt").value.trim();
+    if(t.length<3){$("oerr").textContent="Ish tavsifini yozing.";return;}
+    var o=getOrd();o.push({id:"o"+Date.now(),c:norm(me.phone),m:key,st:0,txt:t,t:Date.now(),rv:null});write(OK,o);
+    d.close();setTab("me");
+  };
+  d.showModal();
+}
+function bindFree(){
+  var b=$("freeTog");if(!b)return;
+  function lab(){b.textContent=me.free?"✓ Bugun boʻshman (oʻchirish)":"Bugun boʻshman";}
+  lab();
+  b.onclick=function(){
+    var us=getUsers();us.forEach(function(u){if(norm(u.phone)===norm(me.phone))u.free=!u.free;});
+    write(UK,us);me=currentUser();lab();
+  };
+}
+function renderOrd(){
+  var box=$("myOrd"), my=norm(me.phone), usta=me.role==="usta";
+  var os=getOrd().filter(function(o){return usta?o.m===my:o.c===my;}).sort(function(a,b){return b.t-a.t;});
+  if(!os.length){box.innerHTML="";return;}
+  box.innerHTML='<div class="sh"><h2>'+(usta?"Buyurtmalar":"Buyurtmalarim")+'</h2></div><div class="list">'+os.map(function(o){
+    var p=findPerson(usta?o.c:o.m);
+    var h='<div class="row"><b>'+esc(p?p.name:"Foydalanuvchi")+'</b><p class="about" style="margin:2px 0 8px">'+esc(o.txt)+'</p><div class="steps">'+ST.map(function(t,i){return '<span class="'+(i<=o.st?"on":"")+'">'+t+'</span>';}).join("")+'</div>';
+    if(usta&&o.st<3)h+='<button type="button" class="btn alt wide" data-adv="'+o.id+'">“'+ST[o.st+1]+'” deb belgilash</button>';
+    if(!usta&&o.st===3)h+=o.rv?'<p class="about" style="margin:0">'+stars(o.rv.n)+' '+esc(o.rv.txt)+'</p>'
+      :'<div class="rv" data-rv="'+o.id+'" data-val="0"><div class="stars">'+[1,2,3,4,5].map(function(n){return '<button type="button" data-n="'+n+'" aria-label="'+n+' yulduz">☆</button>';}).join("")+'</div><input placeholder="Sharh (ixtiyoriy)" maxlength="200" aria-label="Sharh"><button type="button" class="btn wide" data-send>Sharh yuborish</button></div>';
+    return h+'</div>';
+  }).join("")+'</div>';
+  function save(id,fn){var o=getOrd();o.forEach(function(x){if(x.id===id)fn(x);});write(OK,o);renderOrd();}
+  box.querySelectorAll("[data-adv]").forEach(function(b){
+    b.onclick=function(){save(b.getAttribute("data-adv"),function(x){x.st++;});};
+  });
+  box.querySelectorAll("[data-rv]").forEach(function(r){
+    var bs=r.querySelectorAll("[data-n]"), send=r.querySelector("[data-send]");
+    bs.forEach(function(b){b.onclick=function(){
+      var n=+b.getAttribute("data-n");r.setAttribute("data-val",n);
+      bs.forEach(function(x,i){x.textContent=i<n?"★":"☆";});send.textContent="Sharh yuborish";
+    };});
+    send.onclick=function(){
+      var n=+r.getAttribute("data-val");
+      if(!n){send.textContent="Avval yulduzni tanlang";return;}
+      var t=r.querySelector("input").value.trim();
+      save(r.getAttribute("data-rv"),function(x){x.rv={n:n,txt:t};});
+    };
+  });
+}
+function revBox(key){
+  var rs=revs(key);if(!rs.length)return "";
+  return '<div class="sh"><h2>Sharhlar</h2></div><div class="list">'+rs.map(function(o){
+    var c=findPerson(o.c);
+    return '<div class="row"><b>'+esc(c?c.name:"Mijoz")+'</b> <span class="rate">'+stars(o.rv.n)+'</span>'+(o.rv.txt?'<p class="about" style="margin:6px 0 0">'+esc(o.rv.txt)+'</p>':"")+'<small style="color:var(--muted)">Tasdiqlangan: ish bajarilgan</small></div>';
+  }).join("")+'</div>';
+}
+
+/* Til va rejim */
+var LANG=read("um_lang","lat"), TH=read("um_th","auto"), TO=new WeakMap(), AO=new WeakMap();
+var RU={"Ishonchli usta, yaqin joyda": "Надёжный мастер рядом", "Elektrik, santexnik, duradgor va boshqa ustalarni topib, bevosita bogʻlaning.": "Находите электриков, сантехников, плотников и других мастеров и связывайтесь напрямую.", "Kim sifatida kirasiz?": "Кто вы?", "Men mijozman": "Я клиент", "Kerakli ustani qidiraman": "Ищу мастера", "Men ustaman": "Я мастер", "Mijozlar meni topsin": "Пусть клиенты найдут меня", "Akkauntim bor, kirish": "У меня есть аккаунт, войти", "‹ Orqaga": "‹ Назад", "Ism": "Имя", "Telefon raqam": "Номер телефона", "Telefon": "Телефон", "Kasb": "Профессия", "Hudud": "Регион", "Telegram (ixtiyoriy)": "Telegram (необязательно)", "Narx (masalan: 100 000 soʻmdan)": "Цена (например: от 100 000 сум)", "Tajriba (yil)": "Опыт (лет)", "Kafolat muddati (oy)": "Гарантия (мес.)", "Oʻzingiz haqingizda": "О себе", "Usta sifatida roʻyxatdan oʻtish": "Регистрация мастера", "Mijoz sifatida roʻyxatdan oʻtish": "Регистрация клиента", "Akkauntga kirish": "Вход в аккаунт", "Kirish": "Войти", "Roʻyxatdan oʻtish": "Зарегистрироваться", "Telefon raqamni toʻliq kiriting: +998 90 123 45 67": "Введите номер полностью: +998 90 123 45 67", "Bu raqam topilmadi. Avval roʻyxatdan oʻting.": "Номер не найден. Сначала зарегистрируйтесь.", "Ismingizni kiriting.": "Введите имя.", "Bu raqam roʻyxatdan oʻtgan. Orqaga qaytib, Kirish ni tanlang.": "Номер уже зарегистрирован. Вернитесь и выберите «Войти».", "Ustalar": "Мастера", "Xabarlar": "Сообщения", "Saqlanganlar": "Избранное", "Profil": "Профиль", "Usta toping": "Найти мастера", "Saqlangan ustalar": "Избранные мастера", "Profilim": "Мой профиль", "Keyinroq bogʻlanish uchun belgilaganlaringiz.": "Мастера, которых вы отметили.", "Ustalar va mijozlar bilan yozishmalar.": "Переписка с мастерами и клиентами.", "Ism yoki ish turi boʻyicha qidiring": "Поиск по имени или виду работ", "Barcha hudud": "Все регионы", "Reyting boʻyicha": "По рейтингу", "Tajriba boʻyicha": "По опыту", "Yangilar oldin": "Сначала новые", "Toshkent": "Ташкент", "Samarqand": "Самарканд", "Buxoro": "Бухара", "Andijon": "Андижан", "Fargʻona": "Фергана", "Namangan": "Наманган", "Qashqadaryo": "Кашкадарья", "Xorazm": "Хорезм", "Elektrik": "Электрик", "Santexnik": "Сантехник", "Quruvchi": "Строитель", "Duradgor": "Плотник", "Plitka ustasi": "Плиточник", "Pardozchi": "Отделочник", "Konditsioner ustasi": "Мастер по кондиционерам", "Maishiy texnika": "Бытовая техника", "Hammasi": "Все", "Bugun boʻsh": "Свободен сегодня", "Siz usta sifatida roʻyxatdan oʻtgansiz. Profilingiz mijozlarga koʻrinadi.": "Вы зарегистрированы как мастер. Ваш профиль виден клиентам.", "Narx hisoblagich": "Калькулятор цены", "Smeta va materiallar": "Смета и материалы", "Tajriba": "Опыт", "Narx": "Цена", "Qoʻngʻiroq qilish": "Позвонить", "Xabar": "Написать", "Bu sizning profilingiz": "Это ваш профиль", "Yangi": "Новый", "Loyihalar": "Проекты", "Yoʻq": "Нет", "Hali hech kim saqlanmagan": "Пока никого нет", "Usta kartasidagi ★ tugmasini bosing, usta shu yerda paydo boʻladi.": "Нажмите ★ на карточке мастера, и он появится здесь.", "Hech narsa topilmadi": "Ничего не найдено", "Boshqa kasb yoki hududni tanlab koʻring.": "Попробуйте другую профессию или регион.", "Xabarlar yoʻq": "Сообщений нет", "Ustalar sahifasida usta kartasidagi “Xabar” tugmasini bosib yozishni boshlang.": "Нажмите «Написать» на карточке мастера, чтобы начать переписку.", "Bu namunaviy profil, javob kelmaydi. Haqiqiy roʻyxatdan oʻtgan ustalarga yozing.": "Это демо-профиль, ответа не будет. Пишите зарегистрированным мастерам.", "Birinchi xabarni yozing.": "Напишите первое сообщение.", "Xabar yozing": "Напишите сообщение", "Yuborish": "Отправить", "Foydalanuvchi": "Пользователь", "Mijoz": "Клиент", "Usta": "Мастер", "Rol": "Роль", "Kafolat": "Гарантия", "Koʻrishlar": "Просмотры", "Qoʻngʻiroqlar": "Звонки", "Akkauntdan chiqish": "Выйти из аккаунта", "Bugun boʻshman": "Я свободен сегодня", "✓ Bugun boʻshman (oʻchirish)": "✓ Я свободен сегодня (снять)", "+ Qoʻshish": "+ Добавить", "Hali loyiha yoʻq": "Проектов пока нет", "Bajargan ishingizni rasm yoki video bilan qoʻshing.": "Добавьте свои работы с фото или видео.", "Loyihalar yoʻq": "Нет проектов", "Usta hali loyiha qoʻshmagan.": "Мастер ещё не добавил проекты.", "Yopish": "Закрыть", "Loyihani oʻchirish": "Удалить проект", "Ha, oʻchirish": "Да, удалить", "Yangi loyiha": "Новый проект", "Bekor qilish": "Отмена", "Nomi": "Название", "Tavsif": "Описание", "Rasm yoki video tanlash": "Выбрать фото или видео", "Masalan: Hammom taʼmiri": "Например: ремонт ванной", "Loyiha nomini kiriting.": "Введите название проекта.", "Rasm, video yoki tavsif qoʻshing.": "Добавьте фото, видео или описание.", "Video hajmi 60 MB dan oshmasligi kerak.": "Видео не должно превышать 60 МБ.", "Saqlanmoqda…": "Сохранение…", "Saqlash": "Сохранить", "Faylni saqlab boʻlmadi. Boshqa rasm yoki videoni sinab koʻring.": "Не удалось сохранить файл. Попробуйте другое фото или видео.", "Profilni ulashish": "Поделиться профилем", "Ishga yollash": "Нанять", "Havola nusxalandi": "Ссылка скопирована", "Sharhlar": "Отзывы", "Tasdiqlangan: ish bajarilgan": "Подтверждено: работа выполнена", "Buyurtmalar": "Заказы", "Buyurtmalarim": "Мои заказы", "Qabul qilindi": "Принят", "Jarayonda": "В работе", "Bajarildi": "Выполнен", "Sharh (ixtiyoriy)": "Отзыв (необязательно)", "Sharh yuborish": "Отправить отзыв", "Avval yulduzni tanlang": "Сначала выберите оценку", "Qanday ish kerak?": "Какая работа нужна?", "Masalan: hammomga 14 m² plitka": "Например: плитка в ванной, 14 м²", "Buyurtma yuborish": "Отправить заказ", "Ish tavsifini yozing.": "Опишите работу.", "Ustalarni taqqoslash": "Сравнение мастеров", "+ Taqqoslash": "+ Сравнить", "✓ Taqqoslanmoqda": "✓ В сравнении", "Reyting": "Рейтинг", "Bugun": "Сегодня", "Boʻsh": "Свободен", "Ish turi": "Вид работ", "Ish haqi (taxminiy)": "Стоимость работ (примерно)", "Kerakli materiallar": "Необходимые материалы", "Narxlar taxminiy, ustaga qarab farq qiladi. Aniq narxni usta bilan kelishing.": "Цены примерные и зависят от мастера. Точную цену уточняйте у мастера.", "Plitka yotqizish": "Укладка плитки", "Elektr nuqtasi (rozetka, chiroq)": "Электроточка (розетка, светильник)", "Quvur almashtirish": "Замена труб", "Devor boʻyash": "Покраска стен", "Konditsioner oʻrnatish": "Установка кондиционера", "Til": "Язык", "Koʻrinish": "Оформление", "Avto": "Авто", "Kunduzgi": "Светлая", "Tungi": "Тёмная"};
+var CY={a:"а",b:"б",d:"д",e:"е",f:"ф",g:"г",h:"ҳ",i:"и",j:"ж",k:"к",l:"л",m:"м",n:"н",o:"о",p:"п",q:"қ",r:"р",s:"с",t:"т",u:"у",v:"в",x:"х",y:"й",z:"з",sh:"ш",ch:"ч",yo:"ё",yu:"ю",ya:"я",ye:"е","oʻ":"ў","gʻ":"ғ"};
+var SETS='<div class="sets"><div class="cap">Til</div><div class="seg" data-nt="1"><button type="button" data-lang="lat">Lotin</button><button type="button" data-lang="cyr">Кирилл</button><button type="button" data-lang="ru">Русский</button></div><div class="cap">Koʻrinish</div><div class="seg"><button type="button" data-th="auto">Avto</button><button type="button" data-th="light">Kunduzgi</button><button type="button" data-th="dark">Tungi</button></div></div>';
+function applyTheme(){var r=document.documentElement;if(TH==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",TH);}
+function setTheme(v){TH=v;write("um_th",v);applyTheme();updateSets();}
+function updateSets(){
+  document.querySelectorAll("[data-lang]").forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-lang")===LANG);});
+  document.querySelectorAll("[data-th]").forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-th")===TH);});
+}
+function toCyr(t){
+  return t.replace(/(sh|ch|yo(?![ʻ‘’'])|yu|ya|ye|o[ʻ‘’']|g[ʻ‘’']|[a-z])|[ʼʻ’‘']/gi,function(m,x,off,str){
+    if(!x)return "ъ";
+    var k=x.toLowerCase();
+    if(k.length===2&&!/[a-z]/.test(k.charAt(1)))k=k.charAt(0)+"ʻ";
+    var v=CY[k];
+    if(k==="e"&&(off===0||!/[a-zʻʼ]/i.test(str.charAt(off-1))))v="э";
+    if(x.length>1&&x===x.toUpperCase())return v.toUpperCase();
+    return x.charAt(0)!==x.charAt(0).toLowerCase()?v.charAt(0).toUpperCase()+v.slice(1):v;
+  });
+}
+function ruPat(c){
+  var m,n,k,h;
+  if(m=c.match(/^(\d+) ta usta$/))return "Мастеров: "+m[1];
+  if(m=c.match(/^(\d+) yil$/)){n=+m[1];k=n%10;h=n%100;return n+" "+(k===1&&h!==11?"год":(k>1&&k<5&&(h<10||h>20))?"года":"лет");}
+  if(m=c.match(/^(\d+) oy$/))return m[1]+" мес.";
+  if(m=c.match(/^(\d+) ta$/))return m[1]+" шт.";
+  if(m=c.match(/^Kafolat (\d+) oy$/))return "Гарантия "+m[1]+" мес.";
+  if(m=c.match(/^Salom, (.+)\. Kerakli ustani tanlang\.$/))return "Привет, "+m[1]+". Выберите нужного мастера.";
+  if(m=c.match(/^(.+) · (usta|mijoz)$/))return m[1]+" · "+(m[2]==="usta"?"мастер":"клиент");
+  if(m=c.match(/^“(.+)” deb belgilash$/))return "Отметить: «"+(RU[m[1]]||m[1])+"»";
+  if(m=c.match(/^Taqqoslash \((\d+)\)$/))return "Сравнить ("+m[1]+")";
+  if(m=c.match(/^Hajmi \((.+)\)$/))return "Объём ("+m[1]+")";
+  if(c.indexOf("Siz: ")===0)return "Вы: "+c.slice(5);
+}
+function tr(t){
+  if(LANG==="lat")return t;
+  if(LANG==="cyr")return /^\s*@/.test(t)?t:toCyr(t);
+  var m=t.match(/^(\s*)([\s\S]*?)(\s*)$/), r=RU[m[2]];
+  if(r===undefined)r=ruPat(m[2]);
+  return r===undefined?t:m[1]+r+m[3];
+}
+function skip(el){return !el||/^(SCRIPT|STYLE|TEXTAREA)$/.test(el.nodeName)||(el.closest&&el.closest("[data-nt]"));}
+function trText(n){
+  if(skip(n.parentNode))return;
+  var v=n.nodeValue, r=TO.get(n);
+  if(!v.trim())return;
+  var o=(r&&v===r.t)?r.o:v;
+  if(r&&v===r.t&&r.l===LANG)return;
+  var t=tr(o);TO.set(n,{o:o,t:t,l:LANG});
+  if(t!==v)n.nodeValue=t;
+}
+function trAttr(el,a){
+  var v=el.getAttribute(a);if(v===null||skip(el))return;
+  var m=AO.get(el)||{}, r=m[a], o=(r&&v===r.t)?r.o:v;
+  if(r&&v===r.t&&r.l===LANG)return;
+  var t=tr(o);m[a]={o:o,t:t,l:LANG};AO.set(el,m);
+  if(t!==v)el.setAttribute(a,t);
+}
+function trWalk(root){
+  var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null), n, list=[];
+  while((n=w.nextNode()))list.push(n);
+  list.forEach(trText);
+  var els=root.querySelectorAll?[].slice.call(root.querySelectorAll("[placeholder],[aria-label]")):[];
+  if(root.getAttribute)els.push(root);
+  els.forEach(function(el){["placeholder","aria-label"].forEach(function(a){trAttr(el,a);});});
+}
+function setLang(v){
+  LANG=v;write("um_lang",v);
+  document.documentElement.lang=v==="ru"?"ru":"uz";
+  trWalk(document.body);updateSets();
+}
+function initI18n(){
+  applyTheme();updateSets();
+  document.documentElement.lang=LANG==="ru"?"ru":"uz";
+  if(LANG!=="lat")trWalk(document.body);
+  new MutationObserver(function(rs){
+    rs.forEach(function(r){
+      if(r.type==="characterData")trText(r.target);
+      else if(r.type==="attributes")trAttr(r.target,r.attributeName);
+      else r.addedNodes.forEach(function(n){if(n.nodeType===3)trText(n);else if(n.nodeType===1)trWalk(n);});
+    });
+  }).observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:["placeholder","aria-label"]});
+}
+applyTheme();
+
 function init(){
+  $("dlg").addEventListener("close",function(){$("dlg").innerHTML="";});
+  $("calcBtn").addEventListener("click",calc);
+  $("stepRole").insertAdjacentHTML("beforeend",SETS);
+  document.addEventListener("click",function(e){
+    var l=e.target.closest("[data-lang]");if(l){setLang(l.getAttribute("data-lang"));return;}
+    var t=e.target.closest("[data-th]");if(t)setTheme(t.getAttribute("data-th"));
+  });
+  $("cmpBar").addEventListener("click",showCmp);
+  document.addEventListener("click",function(e){var a=e.target.closest("[data-call]");if(a)bump(a.getAttribute("data-call"),"c");});
   fillSelect($("region"),["Barcha hudud"].concat(REGIONS));
   fillSelect($("fJob"),JOBS);
   fillSelect($("fRegion"),REGIONS);
@@ -463,28 +860,18 @@ function init(){
     b.addEventListener("click",function(){openForm(b.getAttribute("data-mode"));});
   });
   $("back").addEventListener("click",showAuth);
-  $("goReg").addEventListener("click",function(){$("stepRole").hidden=true;$("stepPick").hidden=false;});
-  $("pickBack").addEventListener("click",showAuth);
   $("submit").addEventListener("click",submitForm);
   $("q").addEventListener("input",function(e){state.q=e.target.value;render();});
   $("region").addEventListener("change",function(e){state.region=e.target.value;render();});
   $("sort").addEventListener("change",function(e){state.sort=e.target.value;render();});
   $("chips").addEventListener("click",function(e){
     var b=e.target.closest(".chip");if(!b)return;
-    state.job=b.getAttribute("data-job");renderChips();render();
+    if(b.hasAttribute("data-free"))state.free=!state.free;else state.job=b.getAttribute("data-job");renderChips();render();
   });
   $("list").addEventListener("click",function(e){
-    var bz=e.target.closest("[data-busy]");
-    if(bz){
-      updateDoc(doc(db,"users",me.uid),{busy:!me.busy});return;
-    }
-    var sh=e.target.closest("[data-share]");
-    if(sh){
-      var txt=sh.getAttribute("data-share")+". Usta Makon ilovasida:", url=location.href.split("#")[0];
-      if(navigator.share){navigator.share({title:"Usta Makon",text:txt,url:url}).catch(function(){});return;}
-      try{navigator.clipboard.writeText(txt+" "+url).then(function(){sh.textContent="Nusxalandi";});}catch(err){sh.textContent=url;}
-      return;
-    }
+    var pr=e.target.closest("[data-pro]");if(pr){openPro(pr.getAttribute("data-pro"));return;}
+    var cb=e.target.closest("[data-cmp]");if(cb){toggleCmp(cb.getAttribute("data-cmp"));return;}
+    var hb=e.target.closest("[data-hire]");if(hb){hire(hb.getAttribute("data-hire"));return;}
     var mb=e.target.closest("[data-msg]");
     if(mb){openChat(mb.getAttribute("data-msg"));return;}
     var b=e.target.closest(".fav");if(!b)return;
@@ -492,69 +879,14 @@ function init(){
     if(i===-1)f.push(k);else f.splice(i,1);
     write(FK,f);render();
   });
-  $("list").addEventListener("input",function(e){
-    var i=e.target.closest("[data-base]");if(!i)return;
-    var q=Number(i.value);
-    i.parentNode.querySelector(".res").textContent=q>0?"Taxminan "+money(q*Number(i.getAttribute("data-base")))+" soʻm. Aniq narx usta bilan kelishiladi.":"";
-  });
-  $("vOrders").addEventListener("change",function(e){if(e.target.id==="ojob"){ojob=e.target.value;renderOrders();}});
-  $("vOrders").addEventListener("click",function(e){
-    var t=e.target;
-    if(t.id==="opost"){
-      var about=$("nAbout").value.trim();
-      if(about.length<5){$("oerr").textContent="Ish haqida qisqacha yozing.";return;}
-      addDoc(collection(db,"orders"),{uid:me.uid,name:me.name,phone:me.phone,job:$("nJob").value,region:$("nReg").value,about:about,budget:$("nBud").value.trim(),ts:Date.now()}).then(renderOrders);return;
-    }
-    var f=t.closest("[data-offer]");
-    if(f){
-      var bx=f.parentNode, pr=bx.querySelector("[data-op]").value.trim();
-      if(pr.length<2){bx.querySelector("[data-oe]").textContent="Narxni yozing.";return;}
-      var oid=f.getAttribute("data-offer"), ord=C.orders.find(function(o){return o.id===oid;});
-      addDoc(collection(db,"offers"),{oid:oid,uid:me.uid,ownerUid:ord?ord.uid:"",name:me.name,phone:me.phone,price:pr,msg:bx.querySelector("[data-om]").value.trim()});return;
-    }
-    var d=t.closest("[data-odel]");
-    if(d&&confirm("Eʼlon oʻchirilsinmi?")){
-      var id=d.getAttribute("data-odel");
-      C.offers.filter(function(x){return x.oid===id;}).forEach(function(x){deleteDoc(doc(db,"offers",x.id));});
-      deleteDoc(doc(db,"orders",id));
-    }
-  });
   document.querySelectorAll("nav.tabs button").forEach(function(b){
     b.addEventListener("click",function(){state.chatWith=null;setTab(b.getAttribute("data-tab"));});
   });
+  if(currentUser())showApp();else showAuth();
+  initI18n();
+  var hm=location.hash.match(/u=(\d+)/);if(hm&&currentUser())openPro(hm[1]);
 }
 init();
-
-function refresh(){
-  if(!me)return;
-  var a=document.activeElement;
-  if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)&&(a.closest("#vOrders")||a.closest("#list")))return;
-  if(state.tab==="orders")renderOrders();
-  else if(state.tab==="home"||state.tab==="saved")render();
-}
-function dbErr(e){console.error(e);alert("Maʼlumotlar bazasiga ulanib boʻlmadi ("+(e.code||e)+"). Firestore qoidalarini tekshiring.");}
-function pack(s){return s.docs.map(function(d){return Object.assign({},d.data(),{id:d.id});});}
-function listen(){
-  if(unsubs.length)return;
-  unsubs=[
-    onSnapshot(collection(db,"users"),function(s){
-      C.users=s.docs.map(function(d){return Object.assign({},d.data(),{uid:d.id});});
-      if(!auth.currentUser)return;
-      var u=currentUser();
-      if(u){if($("app").hidden)showApp();else{me=u;refresh();}}
-      else if(!regBusy)signOut(auth);
-    },dbErr),
-    onSnapshot(collection(db,"orders"),function(s){C.orders=pack(s);refresh();},dbErr),
-    onSnapshot(collection(db,"offers"),function(s){C.offers=pack(s);refresh();},dbErr)
-  ];
-}
-onAuthStateChanged(auth,function(user){
-  if(user)listen();
-  else{
-    unsubs.forEach(function(f){f();});unsubs=[];
-    C={users:[],orders:[],offers:[]};me=null;showAuth();
-  }
-});
 </script>
 </body>
 </html>
