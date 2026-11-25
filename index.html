@@ -49,8 +49,15 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-of
 
 /* Ilova */
 .top{padding:16px 0 4px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .top h1{margin:0;font-size:34px;font-weight:700;letter-spacing:.37px;line-height:1.1}
 .top p{margin:4px 0 0;color:var(--muted);font-size:15px}
+#topSets{flex:none}
+#topSets .sets{margin:0}
+#topSets .cap{display:none}
+#topSets .seg{margin:0 0 6px;padding:2px;background:var(--fill);border-radius:8px}
+#topSets .seg:last-child{margin-bottom:0}
+#topSets .seg button{font-size:12px;padding:4px 7px;border-radius:6px;white-space:nowrap}
 .finder{margin-top:14px}
 .finder input[type=search]{-webkit-appearance:none;appearance:none;background:var(--fill) no-repeat 10px center/17px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='M15.5 15.5L20 20'/%3E%3C/svg%3E");padding:9px 12px 9px 36px;border-radius:10px}
 .finder .two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
@@ -113,7 +120,6 @@ nav.tabs button[aria-current=page] svg{fill:currentColor;fill-opacity:.22}
 .inb .who b{font-weight:600}
 .inb span{display:block;color:var(--muted);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .inb em{font-style:normal;color:var(--muted);font-size:13px;align-self:flex-start;margin-top:2px}
-
 .proj{display:flex;justify-content:space-between;align-items:center;width:100%;background:var(--fill);border:0;border-radius:10px;padding:10px 12px;margin:0 0 12px;font-weight:600;font-size:16px;color:var(--ink)}
 .proj em{font-style:normal;color:var(--muted);font-weight:400;margin-left:auto;margin-right:8px}
 .proj::after{content:"›";color:var(--muted);font-size:20px;line-height:1}
@@ -205,7 +211,10 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 
 <section id="app" hidden>
   <div class="top"><div class="wrap">
-    <h1 id="title"></h1>
+    <div class="topbar">
+      <h1 id="title"></h1>
+      <div id="topSets"></div>
+    </div>
     <p id="hello"></p>
   </div></div>
   <main class="wrap pad">
@@ -325,7 +334,12 @@ function showApp(){
   $("note").hidden=me.role!=="usta";
   state={q:"",region:"Barcha hudud",job:"Hammasi",sort:"rating",tab:"home"};
   $("q").value="";$("region").value="Barcha hudud";$("sort").value="rating";
+  renderTopSets();
   renderChips();setTab("home");
+}
+function renderTopSets(){
+  $("topSets").innerHTML=SETS;
+  updateSets();
 }
 function setTab(t){
   state.viewing=null;$("vPro").hidden=true;
@@ -345,6 +359,7 @@ function setTab(t){
   if(t==="me")renderMe();else if(t==="chat")renderChat();else render();
   window.scrollTo(0,0);
 }
+
 function renderChips(){
   $("chips").innerHTML='<button type="button" class="chip" data-free="1" aria-pressed="'+!!state.free+'">Bugun boʻsh</button>'+["Hammasi"].concat(JOBS).map(function(j){
     return '<button type="button" class="chip" data-job="'+esc(j)+'" aria-pressed="'+(state.job===j)+'">'+esc(j)+'</button>';
@@ -353,8 +368,8 @@ function renderChips(){
 function renderMe(){
   var rows='<dt>Ism</dt><dd>'+esc(me.name)+'</dd><dt>Telefon</dt><dd>'+esc(me.phone)+'</dd><dt>Rol</dt><dd>'+(me.role==="usta"?"Usta":"Mijoz")+'</dd>';
   if(me.role==="usta")rows+='<dt>Kasb</dt><dd>'+esc(me.job)+'</dd><dt>Hudud</dt><dd>'+esc(me.region)+'</dd><dt>Narx</dt><dd>'+esc(me.price)+'</dd><dt>Tajriba</dt><dd>'+esc(me.exp)+' yil</dd><dt>Kafolat</dt><dd>'+(me.war?me.war+' oy':'Yoʻq')+'</dd>'+statRows(norm(me.phone));
-  $("vMe").innerHTML='<div class="prof">'+(me.role==="usta"?'<button class="btn alt wide" type="button" id="freeTog" style="margin-bottom:14px"></button>':"")+'<dl>'+rows+'</dl>'+SETS+'<div id="myOrd"></div><div id="myProj"></div><button class="btn line wide" type="button" id="logout">Akkauntdan chiqish</button></div>';
-  renderOrd();bindFree();updateSets();
+  $("vMe").innerHTML='<div class="prof">'+(me.role==="usta"?'<button class="btn alt wide" type="button" id="freeTog" style="margin-bottom:14px"></button>':"")+'<dl>'+rows+'</dl><div id="myOrd"></div><div id="myProj"></div><button class="btn line wide" type="button" id="logout">Akkauntdan chiqish</button></div>';
+  renderOrd();bindFree();
   if(me.role==="usta")fillProj($("myProj"),norm(me.phone),true);
   $("logout").addEventListener("click",function(){
     try{localStorage.removeItem(MK);}catch(e){}
@@ -584,7 +599,7 @@ function addProj(key){
   $("dx").addEventListener("click",function(){d.close();});
   $("pFiles").addEventListener("change",function(e){
     files=[].slice.call(e.target.files).slice(0,8);
-    $("prev").innerHTML=files.map(function(f,i){
+    $("prev").innerHTML=files.map(function(f){
       var u=URL.createObjectURL(f);
       return f.type.indexOf("video")===0?'<video src="'+u+'#t=0.1" muted playsinline preload="metadata"></video>':'<img src="'+u+'" alt="">';
     }).join("");
@@ -757,9 +772,7 @@ function revBox(key){
 }
 
 /* Til va rejim */
-var LANG=read("um_lang","lat"), TH=read("um_th","auto"), TO=new WeakMap(), AO=new WeakMap();
-var RU={"Ishonchli usta, yaqin joyda": "Надёжный мастер рядом", "Elektrik, santexnik, duradgor va boshqa ustalarni topib, bevosita bogʻlaning.": "Находите электриков, сантехников, плотников и других мастеров и связывайтесь напрямую.", "Kim sifatida kirasiz?": "Кто вы?", "Men mijozman": "Я клиент", "Kerakli ustani qidiraman": "Ищу мастера", "Men ustaman": "Я мастер", "Mijozlar meni topsin": "Пусть клиенты найдут меня", "Akkauntim bor, kirish": "У меня есть аккаунт, войти", "‹ Orqaga": "‹ Назад", "Ism": "Имя", "Telefon raqam": "Номер телефона", "Telefon": "Телефон", "Kasb": "Профессия", "Hudud": "Регион", "Telegram (ixtiyoriy)": "Telegram (необязательно)", "Narx (masalan: 100 000 soʻmdan)": "Цена (например: от 100 000 сум)", "Tajriba (yil)": "Опыт (лет)", "Kafolat muddati (oy)": "Гарантия (мес.)", "Oʻzingiz haqingizda": "О себе", "Usta sifatida roʻyxatdan oʻtish": "Регистрация мастера", "Mijoz sifatida roʻyxatdan oʻtish": "Регистрация клиента", "Akkauntga kirish": "Вход в аккаунт", "Kirish": "Войти", "Roʻyxatdan oʻtish": "Зарегистрироваться", "Telefon raqamni toʻliq kiriting: +998 90 123 45 67": "Введите номер полностью: +998 90 123 45 67", "Bu raqam topilmadi. Avval roʻyxatdan oʻting.": "Номер не найден. Сначала зарегистрируйтесь.", "Ismingizni kiriting.": "Введите имя.", "Bu raqam roʻyxatdan oʻtgan. Orqaga qaytib, Kirish ni tanlang.": "Номер уже зарегистрирован. Вернитесь и выберите «Войти».", "Ustalar": "Мастера", "Xabarlar": "Сообщения", "Saqlanganlar": "Избранное", "Profil": "Профиль", "Usta toping": "Найти мастера", "Saqlangan ustalar": "Избранные мастера", "Profilim": "Мой профиль", "Keyinroq bogʻlanish uchun belgilaganlaringiz.": "Мастера, которых вы отметили.", "Ustalar va mijozlar bilan yozishmalar.": "Переписка с мастерами и клиентами.", "Ism yoki ish turi boʻyicha qidiring": "Поиск по имени или виду работ", "Barcha hudud": "Все регионы", "Reyting boʻyicha": "По рейтингу", "Tajriba boʻyicha": "По опыту", "Yangilar oldin": "Сначала новые", "Toshkent": "Ташкент", "Samarqand": "Самарканд", "Buxoro": "Бухара", "Andijon": "Андижан", "Fargʻona": "Фергана", "Namangan": "Наманган", "Qashqadaryo": "Кашкадарья", "Xorazm": "Хорезм", "Elektrik": "Электрик", "Santexnik": "Сантехник", "Quruvchi": "Строитель", "Duradgor": "Плотник", "Plitka ustasi": "Плиточник", "Pardozchi": "Отделочник", "Konditsioner ustasi": "Мастер по кондиционерам", "Maishiy texnika": "Бытовая техника", "Hammasi": "Все", "Bugun boʻsh": "Свободен сегодня", "Siz usta sifatida roʻyxatdan oʻtgansiz. Profilingiz mijozlarga koʻrinadi.": "Вы зарегистрированы как мастер. Ваш профиль виден клиентам.", "Narx hisoblagich": "Калькулятор цены", "Smeta va materiallar": "Смета и материалы", "Tajriba": "Опыт", "Narx": "Цена", "Qoʻngʻiroq qilish": "Позвонить", "Xabar": "Написать", "Bu sizning profilingiz": "Это ваш профиль", "Yangi": "Новый", "Loyihalar": "Проекты", "Yoʻq": "Нет", "Hali hech kim saqlanmagan": "Пока никого нет", "Usta kartasidagi ★ tugmasini bosing, usta shu yerda paydo boʻladi.": "Нажмите ★ на карточке мастера, и он появится здесь.", "Hech narsa topilmadi": "Ничего не найдено", "Boshqa kasb yoki hududni tanlab koʻring.": "Попробуйте другую профессию или регион.", "Xabarlar yoʻq": "Сообщений нет", "Ustalar sahifasida usta kartasidagi “Xabar” tugmasini bosib yozishni boshlang.": "Нажмите «Написать» на карточке мастера, чтобы начать переписку.", "Bu namunaviy profil, javob kelmaydi. Haqiqiy roʻyxatdan oʻtgan ustalarga yozing.": "Это демо-профиль, ответа не будет. Пишите зарегистрированным мастерам.", "Birinchi xabarni yozing.": "Напишите первое сообщение.", "Xabar yozing": "Напишите сообщение", "Yuborish": "Отправить", "Foydalanuvchi": "Пользователь", "Mijoz": "Клиент", "Usta": "Мастер", "Rol": "Роль", "Kafolat": "Гарантия", "Koʻrishlar": "Просмотры", "Qoʻngʻiroqlar": "Звонки", "Akkauntdan chiqish": "Выйти из аккаунта", "Bugun boʻshman": "Я свободен сегодня", "✓ Bugun boʻshman (oʻchirish)": "✓ Я свободен сегодня (снять)", "+ Qoʻshish": "+ Добавить", "Hali loyiha yoʻq": "Проектов пока нет", "Bajargan ishingizni rasm yoki video bilan qoʻshing.": "Добавьте свои работы с фото или видео.", "Loyihalar yoʻq": "Нет проектов", "Usta hali loyiha qoʻshmagan.": "Мастер ещё не добавил проекты.", "Yopish": "Закрыть", "Loyihani oʻchirish": "Удалить проект", "Ha, oʻchirish": "Да, удалить", "Yangi loyiha": "Новый проект", "Bekor qilish": "Отмена", "Nomi": "Название", "Tavsif": "Описание", "Rasm yoki video tanlash": "Выбрать фото или видео", "Masalan: Hammom taʼmiri": "Например: ремонт ванной", "Loyiha nomini kiriting.": "Введите название проекта.", "Rasm, video yoki tavsif qoʻshing.": "Добавьте фото, видео или описание.", "Video hajmi 60 MB dan oshmasligi kerak.": "Видео не должно превышать 60 МБ.", "Saqlanmoqda…": "Сохранение…", "Saqlash": "Сохранить", "Faylni saqlab boʻlmadi. Boshqa rasm yoki videoni sinab koʻring.": "Не удалось сохранить файл. Попробуйте другое фото или видео.", "Profilni ulashish": "Поделиться профилем", "Ishga yollash": "Нанять", "Havola nusxalandi": "Ссылка скопирована", "Sharhlar": "Отзывы", "Tasdiqlangan: ish bajarilgan": "Подтверждено: работа выполнена", "Buyurtmalar": "Заказы", "Buyurtmalarim": "Мои заказы", "Qabul qilindi": "Принят", "Jarayonda": "В работе", "Bajarildi": "Выполнен", "Sharh (ixtiyoriy)": "Отзыв (необязательно)", "Sharh yuborish": "Отправить отзыв", "Avval yulduzni tanlang": "Сначала выберите оценку", "Qanday ish kerak?": "Какая работа нужна?", "Masalan: hammomga 14 m² plitka": "Например: плитка в ванной, 14 м²", "Buyurtma yuborish": "Отправить заказ", "Ish tavsifini yozing.": "Опишите работу.", "Ustalarni taqqoslash": "Сравнение мастеров", "+ Taqqoslash": "+ Сравнить", "✓ Taqqoslanmoqda": "✓ В сравнении", "Reyting": "Рейтинг", "Bugun": "Сегодня", "Boʻsh": "Свободен", "Ish turi": "Вид работ", "Ish haqi (taxminiy)": "Стоимость работ (примерно)", "Kerakli materiallar": "Необходимые материалы", "Narxlar taxminiy, ustaga qarab farq qiladi. Aniq narxni usta bilan kelishing.": "Цены примерные и зависят от мастера. Точную цену уточняйте у мастера.", "Plitka yotqizish": "Укладка плитки", "Elektr nuqtasi (rozetka, chiroq)": "Электроточка (розетка, светильник)", "Quvur almashtirish": "Замена труб", "Devor boʻyash": "Покраска стен", "Konditsioner oʻrnatish": "Установка кондиционера", "Til": "Язык", "Koʻrinish": "Оформление", "Avto": "Авто", "Kunduzgi": "Светлая", "Tungi": "Тёмная"};
-var CY={a:"а",b:"б",d:"д",e:"е",f:"ф",g:"г",h:"ҳ",i:"и",j:"ж",k:"к",l:"л",m:"м",n:"н",o:"о",p:"п",q:"қ",r:"р",s:"с",t:"т",u:"у",v:"в",x:"х",y:"й",z:"з",sh:"ш",ch:"ч",yo:"ё",yu:"ю",ya:"я",ye:"е","oʻ":"ў","gʻ":"ғ"};
+var LANG=read("um_lang","lat"), TH=read("um_th","auto");
 var SETS='<div class="sets"><div class="cap">Til</div><div class="seg" data-nt="1"><button type="button" data-lang="lat">Lotin</button><button type="button" data-lang="cyr">Кирилл</button><button type="button" data-lang="ru">Русский</button></div><div class="cap">Koʻrinish</div><div class="seg"><button type="button" data-th="auto">Avto</button><button type="button" data-th="light">Kunduzgi</button><button type="button" data-th="dark">Tungi</button></div></div>';
 function applyTheme(){var r=document.documentElement;if(TH==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",TH);}
 function setTheme(v){TH=v;write("um_th",v);applyTheme();updateSets();}
@@ -767,86 +780,15 @@ function updateSets(){
   document.querySelectorAll("[data-lang]").forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-lang")===LANG);});
   document.querySelectorAll("[data-th]").forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-th")===TH);});
 }
-function toCyr(t){
-  return t.replace(/(sh|ch|yo(?![ʻ‘’'])|yu|ya|ye|o[ʻ‘’']|g[ʻ‘’']|[a-z])|[ʼʻ’‘']/gi,function(m,x,off,str){
-    if(!x)return "ъ";
-    var k=x.toLowerCase();
-    if(k.length===2&&!/[a-z]/.test(k.charAt(1)))k=k.charAt(0)+"ʻ";
-    var v=CY[k];
-    if(k==="e"&&(off===0||!/[a-zʻʼ]/i.test(str.charAt(off-1))))v="э";
-    if(x.length>1&&x===x.toUpperCase())return v.toUpperCase();
-    return x.charAt(0)!==x.charAt(0).toLowerCase()?v.charAt(0).toUpperCase()+v.slice(1):v;
-  });
-}
-function ruPat(c){
-  var m,n,k,h;
-  if(m=c.match(/^(\d+) ta usta$/))return "Мастеров: "+m[1];
-  if(m=c.match(/^(\d+) yil$/)){n=+m[1];k=n%10;h=n%100;return n+" "+(k===1&&h!==11?"год":(k>1&&k<5&&(h<10||h>20))?"года":"лет");}
-  if(m=c.match(/^(\d+) oy$/))return m[1]+" мес.";
-  if(m=c.match(/^(\d+) ta$/))return m[1]+" шт.";
-  if(m=c.match(/^Kafolat (\d+) oy$/))return "Гарантия "+m[1]+" мес.";
-  if(m=c.match(/^Salom, (.+)\. Kerakli ustani tanlang\.$/))return "Привет, "+m[1]+". Выберите нужного мастера.";
-  if(m=c.match(/^(.+) · (usta|mijoz)$/))return m[1]+" · "+(m[2]==="usta"?"мастер":"клиент");
-  if(m=c.match(/^“(.+)” deb belgilash$/))return "Отметить: «"+(RU[m[1]]||m[1])+"»";
-  if(m=c.match(/^Taqqoslash \((\d+)\)$/))return "Сравнить ("+m[1]+")";
-  if(m=c.match(/^Hajmi \((.+)\)$/))return "Объём ("+m[1]+")";
-  if(c.indexOf("Siz: ")===0)return "Вы: "+c.slice(5);
-}
-function tr(t){
-  if(LANG==="lat")return t;
-  if(LANG==="cyr")return /^\s*@/.test(t)?t:toCyr(t);
-  var m=t.match(/^(\s*)([\s\S]*?)(\s*)$/), r=RU[m[2]];
-  if(r===undefined)r=ruPat(m[2]);
-  return r===undefined?t:m[1]+r+m[3];
-}
-function skip(el){return !el||/^(SCRIPT|STYLE|TEXTAREA)$/.test(el.nodeName)||(el.closest&&el.closest("[data-nt]"));}
-function trText(n){
-  if(skip(n.parentNode))return;
-  var v=n.nodeValue, r=TO.get(n);
-  if(!v.trim())return;
-  var o=(r&&v===r.t)?r.o:v;
-  if(r&&v===r.t&&r.l===LANG)return;
-  var t=tr(o);TO.set(n,{o:o,t:t,l:LANG});
-  if(t!==v)n.nodeValue=t;
-}
-function trAttr(el,a){
-  var v=el.getAttribute(a);if(v===null||skip(el))return;
-  var m=AO.get(el)||{}, r=m[a], o=(r&&v===r.t)?r.o:v;
-  if(r&&v===r.t&&r.l===LANG)return;
-  var t=tr(o);m[a]={o:o,t:t,l:LANG};AO.set(el,m);
-  if(t!==v)el.setAttribute(a,t);
-}
-function trWalk(root){
-  var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null), n, list=[];
-  while((n=w.nextNode()))list.push(n);
-  list.forEach(trText);
-  var els=root.querySelectorAll?[].slice.call(root.querySelectorAll("[placeholder],[aria-label]")):[];
-  if(root.getAttribute)els.push(root);
-  els.forEach(function(el){["placeholder","aria-label"].forEach(function(a){trAttr(el,a);});});
-}
 function setLang(v){
   LANG=v;write("um_lang",v);
   document.documentElement.lang=v==="ru"?"ru":"uz";
-  trWalk(document.body);updateSets();
+  updateSets();
 }
-function initI18n(){
-  applyTheme();updateSets();
-  document.documentElement.lang=LANG==="ru"?"ru":"uz";
-  if(LANG!=="lat")trWalk(document.body);
-  new MutationObserver(function(rs){
-    rs.forEach(function(r){
-      if(r.type==="characterData")trText(r.target);
-      else if(r.type==="attributes")trAttr(r.target,r.attributeName);
-      else r.addedNodes.forEach(function(n){if(n.nodeType===3)trText(n);else if(n.nodeType===1)trWalk(n);});
-    });
-  }).observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:["placeholder","aria-label"]});
-}
-applyTheme();
 
 function init(){
   $("dlg").addEventListener("close",function(){$("dlg").innerHTML="";});
   $("calcBtn").addEventListener("click",calc);
-  $("stepRole").insertAdjacentHTML("beforeend",SETS);
   document.addEventListener("click",function(e){
     var l=e.target.closest("[data-lang]");if(l){setLang(l.getAttribute("data-lang"));return;}
     var t=e.target.closest("[data-th]");if(t)setTheme(t.getAttribute("data-th"));
@@ -882,8 +824,8 @@ function init(){
   document.querySelectorAll("nav.tabs button").forEach(function(b){
     b.addEventListener("click",function(){state.chatWith=null;setTab(b.getAttribute("data-tab"));});
   });
+  applyTheme();
   if(currentUser())showApp();else showAuth();
-  initI18n();
   var hm=location.hash.match(/u=(\d+)/);if(hm&&currentUser())openPro(hm[1]);
 }
 init();
