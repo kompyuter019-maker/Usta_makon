@@ -52,12 +52,13 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-of
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .top h1{margin:0;font-size:34px;font-weight:700;letter-spacing:.37px;line-height:1.1}
 .top p{margin:4px 0 0;color:var(--muted);font-size:15px}
-#topSets{flex:none}
-#topSets .sets{margin:0}
-#topSets .cap{display:none}
-#topSets .seg{margin:0 0 6px;padding:2px;background:var(--fill);border-radius:8px}
-#topSets .seg:last-child{margin-bottom:0}
-#topSets .seg button{font-size:12px;padding:4px 7px;border-radius:6px;white-space:nowrap}
+#topSets{flex:none;display:flex;gap:6px;align-items:center}
+.iconbtn{width:38px;height:38px;border-radius:50%;border:0;background:var(--fill);color:var(--ink);font-size:19px;display:grid;place-items:center;padding:0;line-height:1}
+.iconbtn[aria-expanded=true]{background:var(--tint);color:var(--blue)}
+.pop{position:fixed;z-index:20;background:var(--card);border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.25);padding:6px;min-width:150px}
+.pop button{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:none;padding:10px 12px;border-radius:8px;font-size:15px;font-weight:500;color:var(--ink)}
+.pop button[aria-pressed=true]{background:var(--tint);color:var(--blue);font-weight:600}
+.pop button:active{opacity:.6}
 .finder{margin-top:14px}
 .finder input[type=search]{-webkit-appearance:none;appearance:none;background:var(--fill) no-repeat 10px center/17px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='M15.5 15.5L20 20'/%3E%3C/svg%3E");padding:9px 12px 9px 36px;border-radius:10px}
 .finder .two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
@@ -165,11 +166,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .steps .on{background:var(--tint);color:var(--blue);font-weight:600}
 .stars button{background:none;border:0;font-size:30px;color:#ff9f0a;padding:0 4px;line-height:1}
 .rv input{margin:8px 0}
-.sets{margin:18px 0 0}
 .cap{font-size:13px;color:var(--muted);margin:10px 0 0 4px}
-.seg{display:flex;background:var(--fill);border-radius:9px;padding:2px;margin:6px 0}
-.seg button{flex:1;border:0;background:none;padding:7px 4px;border-radius:7px;font-size:14px;font-weight:500}
-.seg button[aria-pressed=true]{background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.25);font-weight:600}
 @media (prefers-reduced-motion:reduce){button{transition:none}}
 </style>
 </head>
@@ -339,6 +336,9 @@ function showApp(){
 }
 function renderTopSets(){
   $("topSets").innerHTML=SETS;
+  $("thBtn").textContent=TH==="dark"?"🌙":TH==="light"?"☀️":"🌓";
+  $("langBtn").onclick=function(e){e.stopPropagation();openPop(this,"lang");};
+  $("thBtn").onclick=function(e){e.stopPropagation();openPop(this,"th");};
   updateSets();
 }
 function setTab(t){
@@ -773,26 +773,66 @@ function revBox(key){
 
 /* Til va rejim */
 var LANG=read("um_lang","lat"), TH=read("um_th","auto");
-var SETS='<div class="sets"><div class="cap">Til</div><div class="seg" data-nt="1"><button type="button" data-lang="lat">Lotin</button><button type="button" data-lang="cyr">Кирилл</button><button type="button" data-lang="ru">Русский</button></div><div class="cap">Koʻrinish</div><div class="seg"><button type="button" data-th="auto">Avto</button><button type="button" data-th="light">Kunduzgi</button><button type="button" data-th="dark">Tungi</button></div></div>';
+var SETS='<button type="button" class="iconbtn" id="langBtn" aria-haspopup="menu" aria-expanded="false" aria-label="Til">🌐</button>'+
+         '<button type="button" class="iconbtn" id="thBtn" aria-haspopup="menu" aria-expanded="false" aria-label="Koʻrinish">'+(TH==="dark"?"🌙":TH==="light"?"☀️":"🌓")+'</button>';
 function applyTheme(){var r=document.documentElement;if(TH==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",TH);}
-function setTheme(v){TH=v;write("um_th",v);applyTheme();updateSets();}
-function updateSets(){
-  document.querySelectorAll("[data-lang]").forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-lang")===LANG);});
-  document.querySelectorAll("[data-th]").forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-th")===TH);});
+function setTheme(v){
+  TH=v;write("um_th",v);applyTheme();
+  var b=$("thBtn");if(b)b.textContent=v==="dark"?"🌙":v==="light"?"☀️":"🌓";
+  updateSets();
 }
 function setLang(v){
   LANG=v;write("um_lang",v);
   document.documentElement.lang=v==="ru"?"ru":"uz";
   updateSets();
 }
+function updateSets(){
+  var lb=$("langBtn"), tb=$("thBtn");
+  if(lb)lb.setAttribute("aria-label","Til: "+(LANG==="lat"?"Lotin":LANG==="cyr"?"Кирилл":"Русский"));
+  if(tb)tb.setAttribute("aria-label","Koʻrinish: "+(TH==="auto"?"Avto":TH==="light"?"Kunduzgi":"Tungi"));
+}
+
+/* Popover menyu */
+var popEl=null;
+function closePop(){
+  if(popEl){popEl.remove();popEl=null;}
+  document.querySelectorAll(".iconbtn[aria-expanded]").forEach(function(b){b.setAttribute("aria-expanded","false");});
+}
+function openPop(btn,kind){
+  var same=popEl&&popEl.dataset.kind===kind;
+  closePop();
+  if(same)return;
+  btn.setAttribute("aria-expanded","true");
+  popEl=document.createElement("div");
+  popEl.className="pop";popEl.dataset.kind=kind;
+  var items=kind==="lang"
+    ?[["lat","Lotin"],["cyr","Кирилл"],["ru","Русский"]].map(function(x){return {v:x[0],l:x[1],cur:LANG===x[0]};})
+    :[["auto","🌓 Avto"],["light","☀️ Kunduzgi"],["dark","🌙 Tungi"]].map(function(x){return {v:x[0],l:x[1],cur:TH===x[0]};});
+  popEl.innerHTML=items.map(function(it){
+    return '<button type="button" data-v="'+it.v+'" aria-pressed="'+it.cur+'">'+it.l+'</button>';
+  }).join("");
+  document.body.appendChild(popEl);
+  var r=btn.getBoundingClientRect();
+  popEl.style.top=(r.bottom+6)+"px";
+  popEl.style.right=(window.innerWidth-r.right)+"px";
+  popEl.style.left="auto";
+  popEl.querySelectorAll("button").forEach(function(b){
+    b.onclick=function(){
+      var v=b.getAttribute("data-v");
+      if(kind==="lang")setLang(v);else setTheme(v);
+      closePop();
+      renderTopSets();
+    };
+  });
+}
+document.addEventListener("click",function(e){
+  if(popEl&&!popEl.contains(e.target)&&!e.target.closest(".iconbtn"))closePop();
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closePop();});
 
 function init(){
   $("dlg").addEventListener("close",function(){$("dlg").innerHTML="";});
   $("calcBtn").addEventListener("click",calc);
-  document.addEventListener("click",function(e){
-    var l=e.target.closest("[data-lang]");if(l){setLang(l.getAttribute("data-lang"));return;}
-    var t=e.target.closest("[data-th]");if(t)setTheme(t.getAttribute("data-th"));
-  });
   $("cmpBar").addEventListener("click",showCmp);
   document.addEventListener("click",function(e){var a=e.target.closest("[data-call]");if(a)bump(a.getAttribute("data-call"),"c");});
   fillSelect($("region"),["Barcha hudud"].concat(REGIONS));
